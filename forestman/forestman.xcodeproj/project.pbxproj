@@ -24,6 +24,7 @@
 		BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CB1E3F338600911C8F /* discovery_tab.png */; };
 		BB9EB4D01E3F339400911C8F /* mine_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */; };
 		BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CF1E3F339400911C8F /* mine_tab.png */; };
+		BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		BB9EB4CB1E3F338600911C8F /* discovery_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discovery_tab.png; path = "../../../coding/salt-App效果图/discovery_tab.png"; sourceTree = "<group>"; };
 		BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mine_tab_focus.png; path = "../../../coding/salt-App效果图/mine_tab_focus.png"; sourceTree = "<group>"; };
 		BB9EB4CF1E3F339400911C8F /* mine_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mine_tab.png; path = "../../../coding/salt-App效果图/mine_tab.png"; sourceTree = "<group>"; };
+		BB9EB4D41E3F3A4300911C8F /* FTMFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMFriendsCell.h; sourceTree = "<group>"; };
+		BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMFriendsCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,7 @@
 			children = (
 				BB9EB4C51E3F330100911C8F /* pics */,
 				BB9EB4C11E3F314000911C8F /* color manager */,
+				BB9EB4D21E3F398500911C8F /* cells */,
 				BB9EB4B31E3F2D3700911C8F /* first layer */,
 				BB9EB4AF1E3F2C3B00911C8F /* root layer */,
 				BB9EB4791E3F2A5800911C8F /* AppDelegate.h */,
@@ -215,6 +219,15 @@
 				BB9EB4CF1E3F339400911C8F /* mine_tab.png */,
 			);
 			name = pics;
+			sourceTree = "<group>";
+		};
+		BB9EB4D21E3F398500911C8F /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4D41E3F3A4300911C8F /* FTMFriendsCell.h */,
+				BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */,
+			);
+			name = cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,6 +371,7 @@
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
+				BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */,
 				BB9EB4C01E3F2EA400911C8F /* FTMMineViewController.m in Sources */,
 				BB9EB4781E3F2A5800911C8F /* main.m in Sources */,
 			);

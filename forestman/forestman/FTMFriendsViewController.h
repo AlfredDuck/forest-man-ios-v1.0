@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "FTMTabBarViewController.h"
 
-@interface FTMFriendsViewController : FTMTabBarViewController
+@interface FTMFriendsViewController : FTMTabBarViewController <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
+/* uitableview */
+@property (nonatomic, strong) UITableView *oneTableView;
 @end
