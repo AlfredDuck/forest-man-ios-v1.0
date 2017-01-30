@@ -176,6 +176,8 @@
     
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
+    personPage.nickname = @"Illinois";
+    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/thumb/public/p2167961223.jpg";
     [self.navigationController pushViewController:personPage animated:YES];
     
     // 开启iOS7的滑动返回效果
