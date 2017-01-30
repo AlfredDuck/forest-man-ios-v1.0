@@ -9,6 +9,7 @@
 #import "FTMFriendsViewController.h"
 #import "colorManager.h"
 #import "FTMFriendsCell.h"
+#import "FTMPersonViewController.h"
 
 @interface FTMFriendsViewController ()
 
@@ -173,7 +174,11 @@
 {
     NSUInteger row = [indexPath row];
     
-    //开启iOS7的滑动返回效果
+    // 打开新页面
+    FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
+    [self.navigationController pushViewController:personPage animated:YES];
+    
+    // 开启iOS7的滑动返回效果
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }

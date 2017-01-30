@@ -26,6 +26,8 @@
 		BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CF1E3F339400911C8F /* mine_tab.png */; };
 		BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */; };
 		BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */; };
+		BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */; };
+		BB9EB4DF1E3F617500911C8F /* back_black.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4DE1E3F617500911C8F /* back_black.png */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,9 @@
 		BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMFriendsCell.m; sourceTree = "<group>"; };
 		BB9EB4D71E3F44D300911C8F /* FTMMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMessageCell.h; sourceTree = "<group>"; };
 		BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMessageCell.m; sourceTree = "<group>"; };
+		BB9EB4DB1E3F5F5C00911C8F /* FTMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMPersonViewController.h; sourceTree = "<group>"; };
+		BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMPersonViewController.m; sourceTree = "<group>"; };
+		BB9EB4DE1E3F617500911C8F /* back_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_black.png; path = "../../../coding/salt-App效果图/back_black.png"; sourceTree = "<group>"; };
 		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
 		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +154,7 @@
 				BB9EB4C51E3F330100911C8F /* pics */,
 				BB9EB4C11E3F314000911C8F /* color manager */,
 				BB9EB4D21E3F398500911C8F /* cells */,
+				BB9EB4DA1E3F5F0200911C8F /* person */,
 				BB9EB4B31E3F2D3700911C8F /* first layer */,
 				BB9EB4AF1E3F2C3B00911C8F /* root layer */,
 				BB9EB4791E3F2A5800911C8F /* AppDelegate.h */,
@@ -236,6 +242,7 @@
 				BB9EB4CB1E3F338600911C8F /* discovery_tab.png */,
 				BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */,
 				BB9EB4CF1E3F339400911C8F /* mine_tab.png */,
+				BB9EB4DE1E3F617500911C8F /* back_black.png */,
 			);
 			name = pics;
 			sourceTree = "<group>";
@@ -249,6 +256,15 @@
 				BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */,
 			);
 			name = cells;
+			sourceTree = "<group>";
+		};
+		BB9EB4DA1E3F5F0200911C8F /* person */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4DB1E3F5F5C00911C8F /* FTMPersonViewController.h */,
+				BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */,
+			);
+			name = person;
 			sourceTree = "<group>";
 		};
 		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
@@ -372,6 +388,7 @@
 				BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */,
 				BB9EB4D01E3F339400911C8F /* mine_tab_focus.png in Resources */,
 				BB9EB4C91E3F337700911C8F /* home_tab.png in Resources */,
+				BB9EB4DF1E3F617500911C8F /* back_black.png in Resources */,
 				BB9EB4CC1E3F338600911C8F /* discovery_tab_focus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,6 +464,7 @@
 			files = (
 				BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */,
 				BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */,
+				BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */,
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
@@ -667,6 +685,7 @@
 				BB9EB4A81E3F2A5800911C8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB9EB4A91E3F2A5800911C8F /* Build configuration list for PBXNativeTarget "forestmanTests" */ = {
 			isa = XCConfigurationList;
@@ -675,6 +694,7 @@
 				BB9EB4AB1E3F2A5800911C8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB9EB4AC1E3F2A5800911C8F /* Build configuration list for PBXNativeTarget "forestmanUITests" */ = {
 			isa = XCConfigurationList;
@@ -683,6 +703,7 @@
 				BB9EB4AE1E3F2A5800911C8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
