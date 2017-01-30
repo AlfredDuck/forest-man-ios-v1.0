@@ -25,6 +25,8 @@
 		BB9EB4D01E3F339400911C8F /* mine_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */; };
 		BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CF1E3F339400911C8F /* mine_tab.png */; };
 		BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */; };
+		BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */; };
+		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +79,11 @@
 		BB9EB4CF1E3F339400911C8F /* mine_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mine_tab.png; path = "../../../coding/salt-App效果图/mine_tab.png"; sourceTree = "<group>"; };
 		BB9EB4D41E3F3A4300911C8F /* FTMFriendsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMFriendsCell.h; sourceTree = "<group>"; };
 		BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMFriendsCell.m; sourceTree = "<group>"; };
+		BB9EB4D71E3F44D300911C8F /* FTMMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMessageCell.h; sourceTree = "<group>"; };
+		BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMessageCell.m; sourceTree = "<group>"; };
+		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
+		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +112,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		254A09FE5837318DA1CEA72E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */,
+				DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BB9EB46A1E3F2A5800911C8F = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +128,8 @@
 				BB9EB4951E3F2A5800911C8F /* forestmanTests */,
 				BB9EB4A01E3F2A5800911C8F /* forestmanUITests */,
 				BB9EB4741E3F2A5800911C8F /* Products */,
+				254A09FE5837318DA1CEA72E /* Pods */,
+				E8CA3B2DFB9567425855E2D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -226,8 +245,18 @@
 			children = (
 				BB9EB4D41E3F3A4300911C8F /* FTMFriendsCell.h */,
 				BB9EB4D51E3F3A4300911C8F /* FTMFriendsCell.m */,
+				BB9EB4D71E3F44D300911C8F /* FTMMessageCell.h */,
+				BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */,
 			);
 			name = cells;
+			sourceTree = "<group>";
+		};
+		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C1BFDA92F0485A65A167786A /* libPods-forestman.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,9 +266,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB9EB4A61E3F2A5800911C8F /* Build configuration list for PBXNativeTarget "forestman" */;
 			buildPhases = (
+				FA90BDFDD72FDB73FF3AE9C4 /* [CP] Check Pods Manifest.lock */,
 				BB9EB46F1E3F2A5800911C8F /* Sources */,
 				BB9EB4701E3F2A5800911C8F /* Frameworks */,
 				BB9EB4711E3F2A5800911C8F /* Resources */,
+				0BEED65B30F796C371B33515 /* [CP] Embed Pods Frameworks */,
+				155015EFE51053109A6687DE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -360,6 +392,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0BEED65B30F796C371B33515 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-forestman/Pods-forestman-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		155015EFE51053109A6687DE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-forestman/Pods-forestman-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA90BDFDD72FDB73FF3AE9C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		BB9EB46F1E3F2A5800911C8F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -370,6 +450,7 @@
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
+				BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
 				BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */,
 				BB9EB4C01E3F2EA400911C8F /* FTMMineViewController.m in Sources */,
@@ -491,6 +572,7 @@
 		};
 		BB9EB4A71E3F2A5800911C8F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -505,6 +587,7 @@
 		};
 		BB9EB4A81E3F2A5800911C8F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

@@ -8,6 +8,7 @@
 
 #import "FTMFriendsCell.h"
 #import "colorManager.h"
+#import "YYWebImage.h"
 
 @implementation FTMFriendsCell
 
@@ -47,7 +48,7 @@
         _portraitImageView.layer.borderWidth = 1.0;
         _portraitImageView.layer.borderColor = (__bridge CGColorRef _Nullable)([colorManager lightTextColor]);
         // 普通加载网络图片 yy库
-        // _portraitImageView.yy_imageURL = [NSURL URLWithString:_portraitURL];
+        _portraitImageView.yy_imageURL = [NSURL URLWithString:_portraitURL];
         [self.contentView addSubview:_portraitImageView];
         
         
@@ -64,10 +65,7 @@
         _partLine.backgroundColor = [colorManager lightGrayBackground];
         [self.contentView addSubview:_partLine];
         self.contentView.backgroundColor = [UIColor whiteColor];
-        
-        // not usefull
-        self.frame = CGRectMake(0, 0, 300, 300);
-        NSLog(@"%f", self.frame.size.height);
+    
     }
     return self;
 }
