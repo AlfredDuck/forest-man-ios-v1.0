@@ -14,8 +14,10 @@
 @property (nonatomic, copy) UILabel *messageLabel;
 /* 发送人 */
 @property (nonatomic, copy) NSString *owner;
-@property (nonatomic, copy) NSString *ownerLabel;
+@property (nonatomic, copy) UILabel *ownerLabel;
 /* 发送时间 */
+@property (nonatomic, copy) NSString *sendTime;
+@property (nonatomic, copy) UILabel *sendTimeLabel;
 /* 分割线 */
 @property (nonatomic, copy) UIView *partLine;
 
