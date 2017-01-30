@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "FTMRootViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,9 +17,37 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+//    [NSThread sleepForTimeInterval:1.0];  //   启动等待时间
+    // [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;  // 状态栏小菊花
+    
+//    // weibo SDK
+//    [WeiboSDK enableDebugMode:YES];
+//    [WeiboSDK registerApp:kAPPKey];
+//    // weixin SDK 向微信注册
+//    [WXApi registerApp:WXKey];
+//    // 设置YY图片缓存的最大内存上限
+//    YYImageCache *YYcache = [YYWebImageManager sharedManager].cache;
+//    YYcache.memoryCache.costLimit = 100 * 1024 * 1024;
+//    YYcache.diskCache.costLimit = 500 * 1024 * 1024;
+//    // 启动GrowingIO
+//    [Growing startWithAccountId:@"9491a71dbf459795"];
+    
+    
+    // 设置 RootViewController
+    FTMRootViewController *rootVC = [[FTMRootViewController alloc] init];
+    //    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:rootVC];
+    //    [navVC setNavigationBarHidden:YES];
+    self.window.rootViewController = rootVC;
+    
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

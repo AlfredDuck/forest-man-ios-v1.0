@@ -12,6 +12,18 @@
 		BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4881E3F2A5800911C8F /* Assets.xcassets */; };
 		BB9EB4971E3F2A5800911C8F /* forestmanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4961E3F2A5800911C8F /* forestmanTests.m */; };
 		BB9EB4A21E3F2A5800911C8F /* forestmanUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4A11E3F2A5800911C8F /* forestmanUITests.m */; };
+		BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4B11E3F2C7200911C8F /* FTMRootViewController.m */; };
+		BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4B61E3F2DB100911C8F /* FTMTabBarViewController.m */; };
+		BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4B91E3F2E5900911C8F /* FTMFriendsViewController.m */; };
+		BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4BC1E3F2E7800911C8F /* FTMMessageViewController.m */; };
+		BB9EB4C01E3F2EA400911C8F /* FTMMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4BF1E3F2EA400911C8F /* FTMMineViewController.m */; };
+		BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4C31E3F319200911C8F /* colorManager.m */; };
+		BB9EB4C81E3F337700911C8F /* home_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4C61E3F337700911C8F /* home_tab_focus.png */; };
+		BB9EB4C91E3F337700911C8F /* home_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4C71E3F337700911C8F /* home_tab.png */; };
+		BB9EB4CC1E3F338600911C8F /* discovery_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CA1E3F338600911C8F /* discovery_tab_focus.png */; };
+		BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CB1E3F338600911C8F /* discovery_tab.png */; };
+		BB9EB4D01E3F339400911C8F /* mine_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */; };
+		BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4CF1E3F339400911C8F /* mine_tab.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +56,24 @@
 		BB9EB49D1E3F2A5800911C8F /* forestmanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = forestmanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9EB4A11E3F2A5800911C8F /* forestmanUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = forestmanUITests.m; sourceTree = "<group>"; };
 		BB9EB4A31E3F2A5800911C8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB9EB4B01E3F2C7200911C8F /* FTMRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMRootViewController.h; sourceTree = "<group>"; };
+		BB9EB4B11E3F2C7200911C8F /* FTMRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMRootViewController.m; sourceTree = "<group>"; };
+		BB9EB4B51E3F2DB100911C8F /* FTMTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMTabBarViewController.h; sourceTree = "<group>"; };
+		BB9EB4B61E3F2DB100911C8F /* FTMTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMTabBarViewController.m; sourceTree = "<group>"; };
+		BB9EB4B81E3F2E5900911C8F /* FTMFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMFriendsViewController.h; sourceTree = "<group>"; };
+		BB9EB4B91E3F2E5900911C8F /* FTMFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMFriendsViewController.m; sourceTree = "<group>"; };
+		BB9EB4BB1E3F2E7800911C8F /* FTMMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMessageViewController.h; sourceTree = "<group>"; };
+		BB9EB4BC1E3F2E7800911C8F /* FTMMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMessageViewController.m; sourceTree = "<group>"; };
+		BB9EB4BE1E3F2EA400911C8F /* FTMMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMineViewController.h; sourceTree = "<group>"; };
+		BB9EB4BF1E3F2EA400911C8F /* FTMMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMineViewController.m; sourceTree = "<group>"; };
+		BB9EB4C21E3F319200911C8F /* colorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = colorManager.h; sourceTree = "<group>"; };
+		BB9EB4C31E3F319200911C8F /* colorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = colorManager.m; sourceTree = "<group>"; };
+		BB9EB4C61E3F337700911C8F /* home_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_tab_focus.png; path = "../../../coding/salt-App效果图/home_tab_focus.png"; sourceTree = "<group>"; };
+		BB9EB4C71E3F337700911C8F /* home_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_tab.png; path = "../../../coding/salt-App效果图/home_tab.png"; sourceTree = "<group>"; };
+		BB9EB4CA1E3F338600911C8F /* discovery_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discovery_tab_focus.png; path = "../../../coding/salt-App效果图/discovery_tab_focus.png"; sourceTree = "<group>"; };
+		BB9EB4CB1E3F338600911C8F /* discovery_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = discovery_tab.png; path = "../../../coding/salt-App效果图/discovery_tab.png"; sourceTree = "<group>"; };
+		BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mine_tab_focus.png; path = "../../../coding/salt-App效果图/mine_tab_focus.png"; sourceTree = "<group>"; };
+		BB9EB4CF1E3F339400911C8F /* mine_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mine_tab.png; path = "../../../coding/salt-App效果图/mine_tab.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +124,10 @@
 		BB9EB4751E3F2A5800911C8F /* forestman */ = {
 			isa = PBXGroup;
 			children = (
+				BB9EB4C51E3F330100911C8F /* pics */,
+				BB9EB4C11E3F314000911C8F /* color manager */,
+				BB9EB4B31E3F2D3700911C8F /* first layer */,
+				BB9EB4AF1E3F2C3B00911C8F /* root layer */,
 				BB9EB4791E3F2A5800911C8F /* AppDelegate.h */,
 				BB9EB47A1E3F2A5800911C8F /* AppDelegate.m */,
 				BB9EB4881E3F2A5800911C8F /* Assets.xcassets */,
@@ -127,6 +161,60 @@
 				BB9EB4A31E3F2A5800911C8F /* Info.plist */,
 			);
 			path = forestmanUITests;
+			sourceTree = "<group>";
+		};
+		BB9EB4AF1E3F2C3B00911C8F /* root layer */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4B01E3F2C7200911C8F /* FTMRootViewController.h */,
+				BB9EB4B11E3F2C7200911C8F /* FTMRootViewController.m */,
+			);
+			name = "root layer";
+			sourceTree = "<group>";
+		};
+		BB9EB4B31E3F2D3700911C8F /* first layer */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4B41E3F2D6000911C8F /* based */,
+				BB9EB4B81E3F2E5900911C8F /* FTMFriendsViewController.h */,
+				BB9EB4B91E3F2E5900911C8F /* FTMFriendsViewController.m */,
+				BB9EB4BB1E3F2E7800911C8F /* FTMMessageViewController.h */,
+				BB9EB4BC1E3F2E7800911C8F /* FTMMessageViewController.m */,
+				BB9EB4BE1E3F2EA400911C8F /* FTMMineViewController.h */,
+				BB9EB4BF1E3F2EA400911C8F /* FTMMineViewController.m */,
+			);
+			name = "first layer";
+			sourceTree = "<group>";
+		};
+		BB9EB4B41E3F2D6000911C8F /* based */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4B51E3F2DB100911C8F /* FTMTabBarViewController.h */,
+				BB9EB4B61E3F2DB100911C8F /* FTMTabBarViewController.m */,
+			);
+			name = based;
+			sourceTree = "<group>";
+		};
+		BB9EB4C11E3F314000911C8F /* color manager */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4C21E3F319200911C8F /* colorManager.h */,
+				BB9EB4C31E3F319200911C8F /* colorManager.m */,
+			);
+			name = "color manager";
+			sourceTree = "<group>";
+		};
+		BB9EB4C51E3F330100911C8F /* pics */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4C61E3F337700911C8F /* home_tab_focus.png */,
+				BB9EB4C71E3F337700911C8F /* home_tab.png */,
+				BB9EB4CA1E3F338600911C8F /* discovery_tab_focus.png */,
+				BB9EB4CB1E3F338600911C8F /* discovery_tab.png */,
+				BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */,
+				BB9EB4CF1E3F339400911C8F /* mine_tab.png */,
+			);
+			name = pics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,6 +284,7 @@
 				TargetAttributes = {
 					BB9EB4721E3F2A5800911C8F = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 3HCQXUYMF8;
 					};
 					BB9EB4911E3F2A5800911C8F = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -232,7 +321,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */,
 				BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */,
+				BB9EB4C81E3F337700911C8F /* home_tab_focus.png in Resources */,
+				BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */,
+				BB9EB4D01E3F339400911C8F /* mine_tab_focus.png in Resources */,
+				BB9EB4C91E3F337700911C8F /* home_tab.png in Resources */,
+				BB9EB4CC1E3F338600911C8F /* discovery_tab_focus.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +353,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */,
+				BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */,
+				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
+				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
+				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
+				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
+				BB9EB4C01E3F2EA400911C8F /* FTMMineViewController.m in Sources */,
 				BB9EB4781E3F2A5800911C8F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -378,7 +479,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = forestman/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Alfred.com.forestman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -389,7 +493,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = forestman/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Alfred.com.forestman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
