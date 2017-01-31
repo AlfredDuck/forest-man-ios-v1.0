@@ -177,7 +177,7 @@
 // 改变 cell 高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 83;
 }
 
 
@@ -188,8 +188,8 @@
     NSLog(@"ddd");
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
-    personPage.nickname = @"Illinois";
-    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/thumb/public/p2167961223.jpg";
+    personPage.nickname = @"张惠妹";
+    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/photo/public/p2416818851.jpg";
     [self.navigationController pushViewController:personPage animated:YES];
     
     // 开启iOS7的滑动返回效果

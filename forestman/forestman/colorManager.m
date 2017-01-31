@@ -59,6 +59,10 @@
 + (UIColor *)blueButtonColor {
     return [UIColor colorWithRed:47/255.0 green:175/255.0 blue:239/255.0 alpha:1];
 }
+//============
++ (UIColor *)lightline {
+    return [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
+}
 
 @end
 

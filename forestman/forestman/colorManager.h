@@ -23,4 +23,6 @@
 + (UIColor *)tabTextColorBlack;  // tab文字颜色（黑）
 + (UIColor *)blueLinkColor;  // 蓝色链接文字
 + (UIColor *)blueButtonColor;  // 蓝色按钮
+//=============
++ (UIColor *)lightline;
 @end

@@ -1,20 +1,22 @@
 //
-//  FTMPersonViewController.m
+//  FTMAddFriendViewController.m
 //  forestman
 //
-//  Created by alfred on 17/1/30.
+//  Created by alfred on 17/1/31.
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
 
-#import "FTMPersonViewController.h"
+#import "FTMAddFriendViewController.h"
 #import "colorManager.h"
 #import "YYWebImage.h"
+#import "AFNetworking.h"
+#import "urlManager.h"
 
-@interface FTMPersonViewController ()
-@property (nonatomic, strong) UIScrollView *basedScrollView;
+@interface FTMAddFriendViewController ()
+
 @end
 
-@implementation FTMPersonViewController
+@implementation FTMAddFriendViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -93,61 +95,45 @@
     [self.view addSubview:_nicknameLabel];
     
     
-    /* 分割线 */
-    UILabel *partLabel = [[UILabel alloc] init];
-    partLabel.text = @"选择提示音，跟ta打个招呼吧";
-    partLabel.textColor = [colorManager lightTextColor];
-    partLabel.frame = CGRectMake(15, 197, _screenWidth-30, 17);
-    partLabel.font = [UIFont fontWithName:@"Helvetica" size: 12];
-    partLabel.textAlignment = UITextAlignmentCenter;
-    [self.view addSubview:partLabel];
+    /* 加好友按钮 */
+    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake((_screenWidth-86)/2.0, 183, 86, 33)];
+    [addButton setTitle:@"加为朋友" forState:UIControlStateNormal];
+    addButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    UIColor *buttonColor = [UIColor colorWithRed:80/255.0 green:134/255.0 blue:236/255.0 alpha:1];
+    [addButton setTitleColor:buttonColor forState:UIControlStateNormal];
+    addButton.backgroundColor = [UIColor whiteColor];
+    addButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
     
-    UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(15, 226, _screenWidth-30, 0.5)];
+    [addButton.layer setMasksToBounds:YES];
+    [addButton.layer setCornerRadius:8.0]; //设置矩形四个圆角半径
+    [addButton.layer setBorderWidth:1.5];   //边框宽度
+    [addButton.layer setBorderColor:[UIColor colorWithRed:(80/255.0) green:(134/255.0) blue:(236/255.0) alpha:1].CGColor];
+    
+    [addButton addTarget:self action:@selector(clickAddButton) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:addButton];
+    
+    
+    /* 分割线 */
+    UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(15, 250, _screenWidth-30, 0.5)];
     partLine.backgroundColor = [colorManager lightline];
     [self.view addSubview:partLine];
-
+    
 }
 
 
-
-/** 创建语音区域 */
-- (void)createAudioScrollview
-{
-    // 基础scrollview
-    unsigned long hh = 30+88+20+44+31;
-    _basedScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, hh, _screenWidth, _screenHeight-hh)];
-    
-    // 频道文本区域的总长度
-    unsigned long allLengthOfChannels = 0;  // 初始化
-    
-    //这个属性很重要，它可以决定是横向还是纵向滚动，一般来说也是其中的 View 的总宽度，和总的高度
-    //这里同时考虑到每个 View 间的空隙，所以宽度是 200x3＋5＋10＋10＋5＝630
-    //高度上与 ScrollView 相同，只在横向扩展，所以只要在横向上滚动
-    _basedScrollView.contentSize = CGSizeMake(allLengthOfChannels, 30);
-    
-    //用它指定 ScrollView 中内容的当前位置，即相对于 ScrollView 的左上顶点的偏移
-    _basedScrollView.contentOffset = CGPointMake(0, 0);
-    
-    //按页滚动，总是一次一个宽度，或一个高度单位的滚动
-    //scrollView.pagingEnabled = YES;
-    
-    //隐藏滚动条
-    _basedScrollView.showsVerticalScrollIndicator = FALSE;
-    _basedScrollView.showsHorizontalScrollIndicator = FALSE;
-    
-    // 是否边缘反弹
-    _basedScrollView.bounces = YES;
-    // 不响应点击状态栏的事件（留给uitableview用）
-    _basedScrollView.scrollsToTop =NO;
-}
-
-// http://www.jianshu.com/p/9a6aacde3f00 多行标签折行思路
 
 
 #pragma mark - IBAction
+/** 点击返回按钮 */
 - (void)clickBackButton
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+/** 点击加为好友按钮 */
+- (void)clickAddButton
+{
+    NSLog(@"");
 }
 
 

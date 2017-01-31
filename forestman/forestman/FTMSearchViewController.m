@@ -9,6 +9,7 @@
 #import "FTMSearchViewController.h"
 #import "colorManager.h"
 #import "FTMFriendsCell.h"
+#import "FTMAddFriendViewController.h"
 
 @interface FTMSearchViewController ()
 
@@ -157,7 +158,10 @@
     NSUInteger row = [indexPath row];
     
     // 打开新页面
-    // code...
+    FTMAddFriendViewController *addFriendPage = [[FTMAddFriendViewController alloc] init];
+    addFriendPage.portraitURL = @"https://img5.doubanio.com/view/photo/photo/public/p2411938386.jpg";
+    addFriendPage.nickname = @"莉莉周";
+    [self.navigationController pushViewController:addFriendPage animated:YES];
     
     // 开启iOS7的滑动返回效果
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
