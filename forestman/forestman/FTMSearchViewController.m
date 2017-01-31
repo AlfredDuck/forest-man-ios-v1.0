@@ -1,22 +1,20 @@
 //
-//  FTMFriendsViewController.m
+//  FTMSearchViewController.m
 //  forestman
 //
-//  Created by alfred on 17/1/30.
+//  Created by alfred on 17/1/31.
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
 
-#import "FTMFriendsViewController.h"
+#import "FTMSearchViewController.h"
 #import "colorManager.h"
 #import "FTMFriendsCell.h"
-#import "FTMPersonViewController.h"
-#import "FTMSearchViewController.h"
 
-@interface FTMFriendsViewController ()
+@interface FTMSearchViewController ()
 
 @end
 
-@implementation FTMFriendsViewController
+@implementation FTMSearchViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,15 +29,10 @@
 }
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
-    
-    /* 构建页面元素 */
-    [self createUIParts];
-    [super createTabBarWith:0];  // 调用父类方法，构建tabbar
 }
 
 
@@ -47,6 +40,8 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    /* 构建页面元素 */
+    [self createUIParts];
 }
 
 
@@ -55,8 +50,6 @@
     [super didReceiveMemoryWarning];
     NSLog(@"内存报警...");
 }
-
-
 
 
 
@@ -70,6 +63,19 @@
     titleBarBackground.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:titleBarBackground];
     
+    /* 返回按钮 */
+    UIImage *oneImage = [UIImage imageNamed:@"back_black.png"]; // 使用ImageView通过name找到图片
+    UIImageView *oneImageView = [[UIImageView alloc] initWithImage:oneImage]; // 把oneImage添加到oneImageView上
+    oneImageView.frame = CGRectMake(11, 13.2, 22, 17.6); // 设置图片位置和大小
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 44, 44)];
+    [backView addSubview:oneImageView];
+    // 为UIView添加点击事件
+    backView.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBackButton)]; // 设置手势
+    [backView addGestureRecognizer:singleTap]; // 给图片添加手势
+    [titleBarBackground addSubview:backView];
+    
     /* 分割线 */
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 64-0.5, _screenWidth, 0.5)];
     line.backgroundColor = [colorManager lightGrayLineColor];
@@ -77,22 +83,11 @@
     
     /* title */
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, 20, 200, 44)];
-    titleLabel.text = @"朋友们";
+    titleLabel.text = @"添加朋友";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
     titleLabel.textAlignment = UITextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
-    
-    /* “添加” 按钮 */
-    UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(_screenWidth - 48, 20, 48, 43)];
-    [addButton setTitle:@"添加" forState:UIControlStateNormal];
-    addButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    UIColor *buttonColor = [UIColor colorWithRed:74/255.0 green:144/255.0 blue:226/255.0 alpha:1];
-    [addButton setTitleColor:buttonColor forState:UIControlStateNormal];
-    addButton.backgroundColor = [UIColor whiteColor];
-    addButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
-    [addButton addTarget:self action:@selector(clickAddButton) forControlEvents:UIControlEventTouchUpInside];
-    [titleBarBackground addSubview:addButton];
     
     /* 创建tableview */
     [self createTableView];
@@ -116,32 +111,7 @@
     // 响应点击状态栏的事件
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
-    
-    // 下拉刷新 MJRefresh
-//    _oneTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-//        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        //            // 结束刷新动作
-//        //            [_oneTableView.mj_header endRefreshing];
-//        //            NSLog(@"下拉刷新成功，结束刷新");
-//        //        });
-//        [self connectForHot:_oneTableView];
-//        [self connectForFollowedArticles:_oneTableView];
-//    }];
-    
-    // 上拉刷新 MJRefresh (等到页面有数据后再使用)
-    //    _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-    //        [self connectForMoreFollowedArticles:_oneTableView];
-    //    }];
-    
-    // 这个碉堡了，要珍藏！！
-    // _oneTableView.mj_header.ignoredScrollViewContentInsetTop = 100.0;
-    
-    // 禁用 mjRefresh
-    // contentTableView.mj_footer = nil;
 }
-
-
 
 
 
@@ -185,12 +155,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
-    NSLog(@"ddd");
+    
     // 打开新页面
-    FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
-    personPage.nickname = @"Illinois";
-    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/thumb/public/p2167961223.jpg";
-    [self.navigationController pushViewController:personPage animated:YES];
+    // code...
     
     // 开启iOS7的滑动返回效果
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -203,37 +170,11 @@
 
 
 
-
 #pragma mark - IBAction
-/** 点击‘添加’按钮 */
-- (void)clickAddButton
+- (void)clickBackButton
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
-    alert.delegate = self;
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+    [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
-#pragma mark - alertView代理
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //得到输入框
-    UITextField *tf=[alertView textFieldAtIndex:0];
-    NSString *str = tf.text;
-    if (buttonIndex == 1) {
-        NSLog(@"%@", str);
-        FTMSearchViewController *searchPage = [[FTMSearchViewController alloc] init];
-        [self.navigationController pushViewController:searchPage animated:YES];
-        // 开启iOS7的滑动返回效果
-        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
-        }
-    }
-}
-
-
 
 
 
