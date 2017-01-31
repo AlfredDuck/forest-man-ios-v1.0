@@ -28,6 +28,8 @@
 		BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4D81E3F44D300911C8F /* FTMMessageCell.m */; };
 		BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */; };
 		BB9EB4DF1E3F617500911C8F /* back_black.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4DE1E3F617500911C8F /* back_black.png */; };
+		BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4E11E3F812C00911C8F /* FTMExtraMessageViewController.m */; };
+		BB9EB4E61E400A6200911C8F /* urlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4E51E400A6200911C8F /* urlManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,10 @@
 		BB9EB4DB1E3F5F5C00911C8F /* FTMPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMPersonViewController.h; sourceTree = "<group>"; };
 		BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMPersonViewController.m; sourceTree = "<group>"; };
 		BB9EB4DE1E3F617500911C8F /* back_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_black.png; path = "../../../coding/salt-App效果图/back_black.png"; sourceTree = "<group>"; };
+		BB9EB4E01E3F812B00911C8F /* FTMExtraMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMExtraMessageViewController.h; sourceTree = "<group>"; };
+		BB9EB4E11E3F812C00911C8F /* FTMExtraMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMExtraMessageViewController.m; sourceTree = "<group>"; };
+		BB9EB4E41E400A6200911C8F /* urlManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urlManager.h; sourceTree = "<group>"; };
+		BB9EB4E51E400A6200911C8F /* urlManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = urlManager.m; sourceTree = "<group>"; };
 		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
 		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				BB9EB4C51E3F330100911C8F /* pics */,
+				BB9EB4E31E4009C900911C8F /* url manager */,
 				BB9EB4C11E3F314000911C8F /* color manager */,
 				BB9EB4D21E3F398500911C8F /* cells */,
 				BB9EB4DA1E3F5F0200911C8F /* person */,
@@ -263,8 +270,19 @@
 			children = (
 				BB9EB4DB1E3F5F5C00911C8F /* FTMPersonViewController.h */,
 				BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */,
+				BB9EB4E01E3F812B00911C8F /* FTMExtraMessageViewController.h */,
+				BB9EB4E11E3F812C00911C8F /* FTMExtraMessageViewController.m */,
 			);
 			name = person;
+			sourceTree = "<group>";
+		};
+		BB9EB4E31E4009C900911C8F /* url manager */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4E41E400A6200911C8F /* urlManager.h */,
+				BB9EB4E51E400A6200911C8F /* urlManager.m */,
+			);
+			name = "url manager";
 			sourceTree = "<group>";
 		};
 		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
@@ -463,10 +481,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */,
+				BB9EB4E61E400A6200911C8F /* urlManager.m in Sources */,
 				BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */,
 				BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */,
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
+				BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
 				BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
