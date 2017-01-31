@@ -63,6 +63,10 @@
 + (UIColor *)lightline {
     return [UIColor colorWithRed:233/255.0 green:233/255.0 blue:233/255.0 alpha:1];
 }
++ (UIColor *)commonBlue {
+    return [UIColor colorWithRed:21/255.0 green:130/255.0 blue:243/255.0 alpha:1];
+}
+
 
 @end
 

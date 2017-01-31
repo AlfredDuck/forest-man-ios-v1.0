@@ -100,7 +100,7 @@
 {
     /* 创建 tableview */
     static NSString *CellWithIdentifier = @"commentCell";
-    _oneTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, _screenWidth, _screenHeight-64-49)];
+    _oneTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, _screenWidth, _screenHeight-64)];
     _oneTableView.backgroundColor = [UIColor brownColor];
     [_oneTableView setDelegate:self];
     [_oneTableView setDataSource:self];
@@ -108,7 +108,7 @@
     [_oneTableView registerClass:[FTMFriendsCell class] forCellReuseIdentifier:CellWithIdentifier];
     _oneTableView.backgroundColor = [colorManager lightGrayBackground];
     _oneTableView.separatorStyle = UITableViewCellSeparatorStyleNone; // 去掉分割线
-    // _oneTableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
+    _oneTableView.contentInset = UIEdgeInsetsMake(15, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
     // 响应点击状态栏的事件
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
@@ -148,7 +148,7 @@
 // 改变 cell 高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 83;
 }
 
 

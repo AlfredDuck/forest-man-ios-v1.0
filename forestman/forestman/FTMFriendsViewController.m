@@ -87,7 +87,7 @@
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(_screenWidth - 48, 20, 48, 43)];
     [addButton setTitle:@"添加" forState:UIControlStateNormal];
     addButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    UIColor *buttonColor = [UIColor colorWithRed:74/255.0 green:144/255.0 blue:226/255.0 alpha:1];
+    UIColor *buttonColor = [colorManager commonBlue];
     [addButton setTitleColor:buttonColor forState:UIControlStateNormal];
     addButton.backgroundColor = [UIColor whiteColor];
     addButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
@@ -112,7 +112,7 @@
     [_oneTableView registerClass:[FTMFriendsCell class] forCellReuseIdentifier:CellWithIdentifier];
     _oneTableView.backgroundColor = [colorManager lightGrayBackground];
     _oneTableView.separatorStyle = UITableViewCellSeparatorStyleNone; // 去掉分割线
-    // _oneTableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
+    _oneTableView.contentInset = UIEdgeInsetsMake(15, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
     // 响应点击状态栏的事件
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
@@ -154,7 +154,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 3;
 }
 
 
@@ -185,7 +185,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
-    NSLog(@"ddd");
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
     personPage.nickname = @"张惠妹";
@@ -222,8 +221,16 @@
     //得到输入框
     UITextField *tf=[alertView textFieldAtIndex:0];
     NSString *str = tf.text;
+    
+    
     if (buttonIndex == 1) {
         NSLog(@"%@", str);
+        
+        // 如果无输入就不反应
+        if (str == nil || [str isEqualToString:@""]) {
+            return;
+        }
+        
         FTMSearchViewController *searchPage = [[FTMSearchViewController alloc] init];
         [self.navigationController pushViewController:searchPage animated:YES];
         // 开启iOS7的滑动返回效果

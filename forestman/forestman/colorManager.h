@@ -25,4 +25,5 @@
 + (UIColor *)blueButtonColor;  // 蓝色按钮
 //=============
 + (UIColor *)lightline;
++ (UIColor *)commonBlue;
 @end

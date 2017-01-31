@@ -99,7 +99,7 @@
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake((_screenWidth-86)/2.0, 183, 86, 33)];
     [addButton setTitle:@"加为朋友" forState:UIControlStateNormal];
     addButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    UIColor *buttonColor = [UIColor colorWithRed:80/255.0 green:134/255.0 blue:236/255.0 alpha:1];
+    UIColor *buttonColor = [colorManager commonBlue];
     [addButton setTitleColor:buttonColor forState:UIControlStateNormal];
     addButton.backgroundColor = [UIColor whiteColor];
     addButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
@@ -107,7 +107,7 @@
     [addButton.layer setMasksToBounds:YES];
     [addButton.layer setCornerRadius:8.0]; //设置矩形四个圆角半径
     [addButton.layer setBorderWidth:1.5];   //边框宽度
-    [addButton.layer setBorderColor:[UIColor colorWithRed:(80/255.0) green:(134/255.0) blue:(236/255.0) alpha:1].CGColor];
+    [addButton.layer setBorderColor:[colorManager commonBlue].CGColor];
     
     [addButton addTarget:self action:@selector(clickAddButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addButton];
