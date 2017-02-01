@@ -70,8 +70,8 @@
     UINavigationController *mineNav = [[UINavigationController alloc] initWithRootViewController:mineVC];
     mineNav.navigationBar.hidden = YES;
     
-    // 将这几个VC放入数组
-    NSArray *viewControllers = @[friendsNav, messageVC, mineNav];
+    // 将这几个Nav放入数组
+    NSArray *viewControllers = @[friendsNav, messageNav, mineNav];
     
     //数组添加到tabBarController
     //   UITabBarController *tabBarController = [[UITabBarController alloc] init];

@@ -89,7 +89,7 @@
     _nicknameLabel.text = _nickname;
     _nicknameLabel.textColor = [colorManager mainTextColor];
     _nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size: 18];
-    _nicknameLabel.textAlignment = UITextAlignmentCenter;
+    _nicknameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_nicknameLabel];
     
     
@@ -99,7 +99,7 @@
     partLabel.textColor = [colorManager lightTextColor];
     partLabel.frame = CGRectMake(15, 197, _screenWidth-30, 17);
     partLabel.font = [UIFont fontWithName:@"Helvetica" size: 12];
-    partLabel.textAlignment = UITextAlignmentCenter;
+    partLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:partLabel];
     
     UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(15, 226, _screenWidth-30, 0.5)];

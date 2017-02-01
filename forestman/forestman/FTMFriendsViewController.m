@@ -80,7 +80,7 @@
     titleLabel.text = @"朋友们";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
     /* “添加” 按钮 */

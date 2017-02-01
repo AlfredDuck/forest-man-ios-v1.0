@@ -9,6 +9,7 @@
 #import "FTMMessageViewController.h"
 #import "colorManager.h"
 #import "FTMMessageCell.h"
+#import "FTMPersonViewController.h"
 
 @interface FTMMessageViewController ()
 
@@ -77,7 +78,7 @@
     titleLabel.text = @"消息记录";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
     /* 创建 uitableview */
@@ -98,7 +99,7 @@
     [_oneTableView registerClass:[FTMMessageCell class] forCellReuseIdentifier:CellWithIdentifier];
     _oneTableView.backgroundColor = [colorManager lightGrayBackground];
     _oneTableView.separatorStyle = UITableViewCellSeparatorStyleNone; // 去掉分割线
-    // _oneTableView.contentInset = UIEdgeInsetsMake(100, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
+    _oneTableView.contentInset = UIEdgeInsetsMake(15, 0, 0, 0); // 设置距离顶部的一段偏移，继承自scrollview
     // 响应点击状态栏的事件
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
@@ -153,6 +154,7 @@
     if (oneCell == nil) {
         oneCell = [[FTMMessageCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
     }
+    [oneCell rewriteMessage:@"★打雷了下雨了，收拾衣服啦★"];
     oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
     return oneCell;
 }
@@ -162,7 +164,8 @@
 // 改变 cell 高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    FTMMessageCell *cell = (FTMMessageCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.cellHeight;
 }
 
 
@@ -170,6 +173,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
+    
+    // 打开页面
+    FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
+    personPage.nickname = @"张惠妹";
+    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/photo/public/p2416818851.jpg";
+    [self.navigationController pushViewController:personPage animated:YES];
     
     //开启iOS7的滑动返回效果
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

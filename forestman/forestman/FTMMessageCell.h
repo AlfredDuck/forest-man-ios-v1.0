@@ -20,7 +20,12 @@
 @property (nonatomic, copy) UILabel *sendTimeLabel;
 /* 分割线 */
 @property (nonatomic, copy) UIView *partLine;
+/* cell高度 */
+@property (nonatomic) unsigned long cellHeight;
 
 @property (nonatomic) NSInteger screenWidth;
 @property (nonatomic) NSInteger screenHeight;
+
+- (void)rewriteMessage:(NSString *)newMessage;
+
 @end
