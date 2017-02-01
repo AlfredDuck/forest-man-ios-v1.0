@@ -9,6 +9,7 @@
 #import "FTMPersonViewController.h"
 #import "colorManager.h"
 #import "YYWebImage.h"
+#import "FTMMyOwnScrollView.h"
 
 @interface FTMPersonViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -38,6 +39,8 @@
     [super viewWillAppear:YES];
     /* 构建页面元素 */
     [self createUIParts];
+    [self createAudioScrollview];
+    [self newButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,7 +105,7 @@
     partLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:partLabel];
     
-    UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(15, 226, _screenWidth-30, 0.5)];
+    UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(15, 225.5, _screenWidth-30, 0.5)];
     partLine.backgroundColor = [colorManager lightline];
     [self.view addSubview:partLine];
 
@@ -114,16 +117,14 @@
 - (void)createAudioScrollview
 {
     // 基础scrollview
-    unsigned long hh = 30+88+20+44+31;
-    _basedScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, hh, _screenWidth, _screenHeight-hh)];
-    
-    // 频道文本区域的总长度
-    unsigned long allLengthOfChannels = 0;  // 初始化
+    unsigned long hh = 226;
+    _basedScrollView = [[FTMMyOwnScrollView alloc] initWithFrame:CGRectMake(0, hh, _screenWidth, _screenHeight-hh)];
+    [self.view addSubview:_basedScrollView];
     
     //这个属性很重要，它可以决定是横向还是纵向滚动，一般来说也是其中的 View 的总宽度，和总的高度
     //这里同时考虑到每个 View 间的空隙，所以宽度是 200x3＋5＋10＋10＋5＝630
     //高度上与 ScrollView 相同，只在横向扩展，所以只要在横向上滚动
-    _basedScrollView.contentSize = CGSizeMake(allLengthOfChannels, 30);
+    _basedScrollView.contentSize = CGSizeMake(_screenWidth, _basedScrollView.frame.size.height+1);
     
     //用它指定 ScrollView 中内容的当前位置，即相对于 ScrollView 的左上顶点的偏移
     _basedScrollView.contentOffset = CGPointMake(0, 0);
@@ -132,16 +133,74 @@
     //scrollView.pagingEnabled = YES;
     
     //隐藏滚动条
-    _basedScrollView.showsVerticalScrollIndicator = FALSE;
+    _basedScrollView.showsVerticalScrollIndicator = TRUE;
     _basedScrollView.showsHorizontalScrollIndicator = FALSE;
     
     // 是否边缘反弹
     _basedScrollView.bounces = YES;
     // 不响应点击状态栏的事件（留给uitableview用）
     _basedScrollView.scrollsToTop =NO;
+    _basedScrollView.canCancelContentTouches = YES;
 }
 
-// http://www.jianshu.com/p/9a6aacde3f00 多行标签折行思路
+
+
+
+- (void)newButton
+{
+    UIView *holdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _basedScrollView.frame.size.height+1)];
+    [_basedScrollView addSubview:holdView];
+    
+    NSArray *arr = @[@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddddddddddddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~"];
+    // 循环
+    unsigned long basedX = 15;
+    unsigned long basedY = 18;
+    for (int i=0; i<[arr count]; i++) {
+        // 创建一个自适应宽度的button
+        NSString *str = arr[i];
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        //对按钮的外形做了设定，不喜可删~
+        btn.layer.masksToBounds = YES;
+        btn.layer.borderWidth = 1;
+        btn.layer.borderColor = [[colorManager commonBlue] CGColor];
+        btn.layer.cornerRadius = 8;
+        
+        [btn setTitleColor:[colorManager commonBlue] forState:UIControlStateNormal];
+        [btn setBackgroundColor:[UIColor colorWithRed:231/255.0 green:244/255.0 blue:253/255.0 alpha:1]];
+        [btn setTitle:str forState:UIControlStateNormal];
+        
+        //重要的是下面这部分哦！
+        CGSize titleSize = [str sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:btn.titleLabel.font.fontName size:btn.titleLabel.font.pointSize]}];
+        titleSize.height = 33;
+        titleSize.width += 18;
+        
+        // 各个button位置
+        unsigned long x = basedX;
+        unsigned long y = basedY;
+        // 若超出一行
+        if (basedX + titleSize.width + 10 > _screenWidth-30) {
+            basedX = 15;  // 重置basedX
+            basedY += titleSize.height + 10; // basedY 向下折行
+            x = basedX;
+            y = basedY;
+            basedX += titleSize.width + 10;
+            NSLog(@"折行%d", i);
+        } else {
+            basedX += titleSize.width + 10;
+            NSLog(@"不折行%d", i);
+        }
+        
+        btn.frame = CGRectMake(x, y, titleSize.width, titleSize.height);
+        [holdView addSubview:btn];
+        
+        // 修改holdview的高度
+        holdView.frame = CGRectMake(0, 0, _screenWidth, btn.frame.origin.y + btn.frame.size.height + 15);
+        if (holdView.frame.size.height > _basedScrollView.frame.size.height+1) {
+            _basedScrollView.contentSize = CGSizeMake(_screenWidth, holdView.frame.size.height);
+        }
+    }
+}
 
 
 #pragma mark - IBAction

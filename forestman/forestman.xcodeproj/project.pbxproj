@@ -32,6 +32,7 @@
 		BB9EB4E61E400A6200911C8F /* urlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4E51E400A6200911C8F /* urlManager.m */; };
 		BB9EB4EA1E400F4F00911C8F /* FTMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4E91E400F4F00911C8F /* FTMSearchViewController.m */; };
 		BB9EB4ED1E40A2D100911C8F /* FTMAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4EC1E40A2D100911C8F /* FTMAddFriendViewController.m */; };
+		BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,8 @@
 		BB9EB4E91E400F4F00911C8F /* FTMSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMSearchViewController.m; sourceTree = "<group>"; };
 		BB9EB4EB1E40A2D100911C8F /* FTMAddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMAddFriendViewController.h; sourceTree = "<group>"; };
 		BB9EB4EC1E40A2D100911C8F /* FTMAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMAddFriendViewController.m; sourceTree = "<group>"; };
+		BB9EB4EF1E421D5400911C8F /* FTMMyOwnScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMyOwnScrollView.h; sourceTree = "<group>"; };
+		BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMyOwnScrollView.m; sourceTree = "<group>"; };
 		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
 		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
@@ -275,6 +278,7 @@
 		BB9EB4DA1E3F5F0200911C8F /* person */ = {
 			isa = PBXGroup;
 			children = (
+				BB9EB4EE1E421D1700911C8F /* my scrollview */,
 				BB9EB4DB1E3F5F5C00911C8F /* FTMPersonViewController.h */,
 				BB9EB4DC1E3F5F5C00911C8F /* FTMPersonViewController.m */,
 				BB9EB4E01E3F812B00911C8F /* FTMExtraMessageViewController.h */,
@@ -301,6 +305,15 @@
 				BB9EB4EC1E40A2D100911C8F /* FTMAddFriendViewController.m */,
 			);
 			name = "search person";
+			sourceTree = "<group>";
+		};
+		BB9EB4EE1E421D1700911C8F /* my scrollview */ = {
+			isa = PBXGroup;
+			children = (
+				BB9EB4EF1E421D5400911C8F /* FTMMyOwnScrollView.h */,
+				BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */,
+			);
+			name = "my scrollview";
 			sourceTree = "<group>";
 		};
 		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
@@ -508,6 +521,7 @@
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
+				BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */,
 				BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
 				BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */,
