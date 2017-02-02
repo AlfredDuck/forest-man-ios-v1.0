@@ -33,6 +33,8 @@
 		BB9EB4EA1E400F4F00911C8F /* FTMSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4E91E400F4F00911C8F /* FTMSearchViewController.m */; };
 		BB9EB4ED1E40A2D100911C8F /* FTMAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4EC1E40A2D100911C8F /* FTMAddFriendViewController.m */; };
 		BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */; };
+		BB9EB4F31E422FE800911C8F /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F21E422FE800911C8F /* close.png */; };
+		BB9EB4F71E42C2F000911C8F /* direct.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F61E42C2F000911C8F /* direct.png */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
@@ -101,6 +103,8 @@
 		BB9EB4EC1E40A2D100911C8F /* FTMAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMAddFriendViewController.m; sourceTree = "<group>"; };
 		BB9EB4EF1E421D5400911C8F /* FTMMyOwnScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMyOwnScrollView.h; sourceTree = "<group>"; };
 		BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMyOwnScrollView.m; sourceTree = "<group>"; };
+		BB9EB4F21E422FE800911C8F /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = "../../../coding/salt-App效果图/close.png"; sourceTree = "<group>"; };
+		BB9EB4F61E42C2F000911C8F /* direct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = direct.png; path = "../../../coding/salt-App效果图/direct.png"; sourceTree = "<group>"; };
 		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
 		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
@@ -260,6 +264,8 @@
 				BB9EB4CE1E3F339400911C8F /* mine_tab_focus.png */,
 				BB9EB4CF1E3F339400911C8F /* mine_tab.png */,
 				BB9EB4DE1E3F617500911C8F /* back_black.png */,
+				BB9EB4F21E422FE800911C8F /* close.png */,
+				BB9EB4F61E42C2F000911C8F /* direct.png */,
 			);
 			name = pics;
 			sourceTree = "<group>";
@@ -431,7 +437,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9EB4F31E422FE800911C8F /* close.png in Resources */,
 				BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */,
+				BB9EB4F71E42C2F000911C8F /* direct.png in Resources */,
 				BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */,
 				BB9EB4C81E3F337700911C8F /* home_tab_focus.png in Resources */,
 				BB9EB4D11E3F339400911C8F /* mine_tab.png in Resources */,

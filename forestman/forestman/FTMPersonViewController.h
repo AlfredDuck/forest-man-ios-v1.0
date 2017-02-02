@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FTMPersonViewController : UIViewController
+@interface FTMPersonViewController : UIViewController <UIActionSheetDelegate>
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
 /* 用户昵称 */

@@ -12,4 +12,9 @@
 @interface FTMMineViewController : FTMTabBarViewController
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
+/* 我的头像 */
+@property (nonatomic, strong) NSString *portraitURL;
+@property (nonatomic, strong) UIImageView *portraitImageView;
+/* 通知开关 */
+@property (nonatomic, strong) UISwitch *pushSwitch;
 @end

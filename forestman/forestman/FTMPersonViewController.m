@@ -10,6 +10,7 @@
 #import "colorManager.h"
 #import "YYWebImage.h"
 #import "FTMMyOwnScrollView.h"
+#import "FTMExtraMessageViewController.h"
 
 @interface FTMPersonViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -37,6 +38,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
+    // 如果已经创建了UI，则不再重复创建
+    if (_portraitImageView) {
+        return;
+    }
     /* 构建页面元素 */
     [self createUIParts];
     [self createAudioScrollview];
@@ -138,8 +143,8 @@
     
     // 是否边缘反弹
     _basedScrollView.bounces = YES;
-    // 不响应点击状态栏的事件（留给uitableview用）
-    _basedScrollView.scrollsToTop =NO;
+    // 是否响应点击状态栏的事件
+    _basedScrollView.scrollsToTop = YES;
     _basedScrollView.canCancelContentTouches = YES;
 }
 
@@ -151,6 +156,7 @@
     UIView *holdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _basedScrollView.frame.size.height+1)];
     [_basedScrollView addSubview:holdView];
     
+//    NSArray *arr = @[@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！"];
     NSArray *arr = @[@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddddddddddddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~"];
     // 循环
     unsigned long basedX = 15;
@@ -169,6 +175,8 @@
         [btn setTitleColor:[colorManager commonBlue] forState:UIControlStateNormal];
         [btn setBackgroundColor:[UIColor colorWithRed:231/255.0 green:244/255.0 blue:253/255.0 alpha:1]];
         [btn setTitle:str forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(clickAudioButton) forControlEvents:UIControlEventTouchUpInside];
+
         
         //重要的是下面这部分哦！
         CGSize titleSize = [str sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:btn.titleLabel.font.fontName size:btn.titleLabel.font.pointSize]}];
@@ -184,18 +192,15 @@
             basedY += titleSize.height + 10; // basedY 向下折行
             x = basedX;
             y = basedY;
-            basedX += titleSize.width + 10;
-            NSLog(@"折行%d", i);
-        } else {
-            basedX += titleSize.width + 10;
-            NSLog(@"不折行%d", i);
         }
+        basedX += titleSize.width + 10;
         
         btn.frame = CGRectMake(x, y, titleSize.width, titleSize.height);
         [holdView addSubview:btn];
         
         // 修改holdview的高度
         holdView.frame = CGRectMake(0, 0, _screenWidth, btn.frame.origin.y + btn.frame.size.height + 15);
+        // 调整srollview的内容高度
         if (holdView.frame.size.height > _basedScrollView.frame.size.height+1) {
             _basedScrollView.contentSize = CGSizeMake(_screenWidth, holdView.frame.size.height);
         }
@@ -204,10 +209,34 @@
 
 
 #pragma mark - IBAction
+/** 点击返回按钮 */
 - (void)clickBackButton
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/** 点击语音按钮 */
+- (void)clickAudioButton
+{
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:@"确认发送？\n打雷了下雨了，收拾衣服啦" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"试听", @"添加附带信息", @"确认发送", nil];
+    [shareSheet showInView:self.view];
+}
+
+
+
+
+#pragma mark - UIActionSheet 代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSLog(@"试听");
+    }else if (buttonIndex == 1) {
+        NSLog(@"添加附加信息");
+        FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
+        [self.navigationController presentViewController:extraPage animated:YES completion:nil];
+    }else if(buttonIndex == 2) {
+        NSLog(@"确认发送");
+    }
+}
 
 @end
