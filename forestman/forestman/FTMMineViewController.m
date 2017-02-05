@@ -150,6 +150,10 @@
     /* 修改昵称 */
     UIView *nicknameBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168, _screenWidth, 44)];
     nicknameBackground.backgroundColor = [UIColor whiteColor];
+    // 为UIView添加点击事件
+    nicknameBackground.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapNickName = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickNickname)]; // 设置手势
+    [nicknameBackground addGestureRecognizer:singleTapNickName]; // 给图片添加手势
     [_basedScrollView addSubview:nicknameBackground];
     
     UILabel *oneLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 11, 200, 22)];
@@ -158,12 +162,19 @@
     oneLabel.textColor = [colorManager mainTextColor];
     [nicknameBackground addSubview: oneLabel];
     
+    UILabel *nicknameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-120-26, 12, 120, 20)];
+    nicknameLabel.textAlignment = NSTextAlignmentRight;
+    nicknameLabel.text = @"莉莉周";
+    nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    nicknameLabel.textColor = [colorManager lightTextColor];
+    [nicknameBackground addSubview:nicknameLabel];
+    
     // 箭头图片
     UIImage *oneImage = [UIImage imageNamed:@"direct.png"]; // 使用ImageView通过name找到图片
     UIImageView *oneImageView = [[UIImageView alloc] initWithImage:oneImage]; // 把oneImage添加到oneImageView上
     oneImageView.frame = CGRectMake(18, 15.5, 8, 13); // 设置图片位置和大小
     // [oneImageView setContentMode:UIViewContentModeCenter];
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(_screenWidth-44, 0, 44, 44)];
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(_screenWidth-38, 0, 44, 44)];
     [backView addSubview:oneImageView];
     [nicknameBackground addSubview:backView];
     
@@ -195,6 +206,10 @@
     /* 退出登录 */
     UIView *loginoutBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44+44+15, _screenWidth, 44)];
     loginoutBackground.backgroundColor = [UIColor whiteColor];
+    // 为UIView添加点击事件
+    loginoutBackground.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapLogout = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickLogout)]; // 设置手势
+    [loginoutBackground addGestureRecognizer:singleTapLogout]; // 给图片添加手势
     [_basedScrollView addSubview:loginoutBackground];
     
     UILabel *loginoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 11, _screenWidth-60, 22)];
@@ -210,9 +225,23 @@
 
 
 #pragma mark - IBAction
+
+/** 点击退出登录 */
+- (void)clickLogout
+{
+    NSLog(@"click logout");
+}
+
+/** 点击修改昵称 */
+- (void)clickNickname
+{
+    NSLog(@"click nickname");
+}
+
+/** 点击开关 */
 - (void)clickSwitch
 {
-    
+    NSLog(@"点击switch");
 }
 
 
