@@ -41,7 +41,7 @@
     line.backgroundColor = [colorManager lightGrayLineColor];
     [_tabBarBackgroundView addSubview:line];
     
-    NSArray *tabText = @[@"动态",@"发现",@"我的"];
+    NSArray *tabText = @[@"朋友们",@"消息记录",@"我的"];
     
     /* 循环创建三个底部tab（置灰状态） */
     for (int i=0; i<3; i++) {
@@ -56,11 +56,11 @@
         UIImageView *icon = [[UIImageView alloc] init];
         // 每个tab的icon图尺寸不一样，需要单独写尺寸
         if (i==0) {
-            icon.image = [UIImage imageNamed:@"home_tab.png"];
-            icon.frame = CGRectMake(3.5, 1, 25, 23);
+            icon.image = [UIImage imageNamed:@"friend_tab.png"];
+            icon.frame = CGRectMake(5.5, 0, 21, 25);
         } else if (i == 1) {
-            icon.image = [UIImage imageNamed:@"discovery_tab.png"];
-            icon.frame = CGRectMake(0.5, 0, 31, 25);
+            icon.image = [UIImage imageNamed:@"message_tab.png"];
+            icon.frame = CGRectMake(4, 0, 24, 25);
         } else if (i == 2 ) {
             icon.image = [UIImage imageNamed:@"mine_tab.png"];
             icon.frame = CGRectMake(6.5, 0, 19, 25);
@@ -104,11 +104,11 @@
         UIImageView *icon = [[UIImageView alloc] init];
         // 每个tab的icon图尺寸不一样，需要单独写尺寸
         if (i==0) {
-            icon.image = [UIImage imageNamed:@"home_tab_focus.png"];
-            icon.frame = CGRectMake(3.5, 1, 25, 23);
+            icon.image = [UIImage imageNamed:@"friend_tab_focus.png"];
+            icon.frame = CGRectMake(5.5, 0, 21, 25);
         } else if (i == 1) {
-            icon.image = [UIImage imageNamed:@"discovery_tab_focus.png"];
-            icon.frame = CGRectMake(0.5, 0, 31, 25);
+            icon.image = [UIImage imageNamed:@"message_tab_focus.png"];
+            icon.frame = CGRectMake(4, 0, 24, 25);
         } else if (i == 2 ) {
             icon.image = [UIImage imageNamed:@"mine_tab_focus.png"];
             icon.frame = CGRectMake(6.5, 0, 19, 25);

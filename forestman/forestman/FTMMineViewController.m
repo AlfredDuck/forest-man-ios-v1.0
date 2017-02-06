@@ -35,6 +35,8 @@
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     
+    _portraitURL = @"https://img3.doubanio.com/icon/ul46244960-10.jpg";
+    
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:2];  // 调用父类方法，构建tabbar
