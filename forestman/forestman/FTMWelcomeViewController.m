@@ -88,6 +88,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    
     return;
     // 检查是否登录,如果已经登录则自动退出此页面
 //    WSUUserDefault *userd = [[WSUUserDefault alloc] init];

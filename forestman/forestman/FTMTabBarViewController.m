@@ -133,8 +133,7 @@
 #pragma mark - IBAction
 - (void)clickTab:(UIGestureRecognizer *)sender
 {
-    NSLog(@"%ld", sender.view.tag);
-    
+    // NSLog(@"%ld", sender.view.tag);
     /* 移动tab焦点 */
     self.tabBarController.selectedIndex = sender.view.tag - 1;
 }

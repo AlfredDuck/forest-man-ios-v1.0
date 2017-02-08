@@ -9,6 +9,7 @@
 #import "FTMMineViewController.h"
 #import "colorManager.h"
 #import "YYWebImage.h"
+#import "FTMUserDefault.h"
 
 @interface FTMMineViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -232,6 +233,8 @@
 - (void)clickLogout
 {
     NSLog(@"click logout");
+    // 清理登录信息
+    [FTMUserDefault cleanLoginInfo];
 }
 
 /** 点击修改昵称 */

@@ -11,6 +11,7 @@
 #import "urlManager.h"
 #import "colorManager.h"
 #import "toastView.h"
+#import "FTMUserDefault.h"
 
 @interface FTMMailLoginVC ()
 
@@ -232,6 +233,10 @@
 /** 点击注册按钮 */
 - (void)clickSignupButton
 {
+    // 临时...
+    [self loginSuccessWith:nil];
+    return;
+    
     if (![_signupLabel.text isEqualToString:@"注册"]) {
         return;
     }
@@ -384,17 +389,21 @@
 {
     // 不论server下发的有什么内容，本地只按照某种标准格式储存
     NSDictionary *userData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              [data objectForKey:@"userType"], @"userType",  // 账户类型：邮箱、微博、微信等
+                              [data objectForKey:@"userType"], @"user_type",  // 账户类型：邮箱、微博、微信等
                               [data objectForKey:@"nickname"] ,@"nickname",  // 昵称
                               [data objectForKey:@"mail"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
                               [data objectForKey:@"portraitURL"], @"portrait",  // 头像url
                               nil];
+    NSDictionary *userData22 = [[NSDictionary alloc] initWithObjectsAndKeys:
+                              @"weibo", @"user_type",  // 账户类型：邮箱、微博、微信等
+                              @"lang" ,@"nickname",  // 昵称
+                              @"14538375", @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
+                              @"http://pic", @"portrait",  // 头像url
+                              nil];
     // 账号信息记录到本地
-    NSUserDefaults *sfUserDefault = [NSUserDefaults standardUserDefaults];
-    [sfUserDefault setObject:userData forKey:@"loginInfo"];
-    
-    NSLog(@"登录成功：%@", userData);
-    
+    [FTMUserDefault recordLoginInfo:userData22];
+    NSLog(@"登录成功：%@", userData22);
+
     // 退出登录页面
     [self dismissViewControllerAnimated:YES completion:^{
         NSLog(@"退出登录页面");

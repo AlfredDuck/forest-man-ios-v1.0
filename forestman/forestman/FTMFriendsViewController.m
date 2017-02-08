@@ -8,6 +8,7 @@
 
 #import "FTMFriendsViewController.h"
 #import "colorManager.h"
+#import "FTMUserDefault.h"
 #import "FTMFriendsCell.h"
 #import "FTMPersonViewController.h"
 #import "FTMSearchViewController.h"
@@ -48,6 +49,16 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    // 判断是否登录
+    if ([FTMUserDefault isLogin]) {
+        NSLog(@"已登录");
+    } else {
+        NSLog(@"未登录");
+        // 调起欢迎页面
+        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
+        [self presentViewController:welcomePage animated:YES completion:nil];
+    }
+    
 }
 
 

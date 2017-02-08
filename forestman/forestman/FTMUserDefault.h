@@ -13,7 +13,11 @@
 @interface FTMUserDefault : NSObject
 /* 读写本机token */
 + (NSString *)readDeviceToken;
-+ (void)recordDeviceToken:(NSString *)deviceToken;
++ (BOOL)recordDeviceToken:(NSString *)deviceToken;
 
-/*  */
+/* 登录注册or退出登录 */
++ (BOOL)recordLoginInfo:(NSDictionary *)loginInfo;
++ (NSDictionary *)readLoginInfo;
++ (BOOL)cleanLoginInfo;  // 退出登录后清理登录信息
++ (BOOL)isLogin;  // 判断当前是否登录
 @end
