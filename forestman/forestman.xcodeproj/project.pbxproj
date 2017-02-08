@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB168CA41E4B4B5E00C48CCC /* FTMUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CA31E4B4B5E00C48CCC /* FTMUserDefault.m */; };
+		BB168CA81E4B4E5200C48CCC /* FTMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CA71E4B4E5200C48CCC /* FTMWelcomeViewController.m */; };
+		BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB01E4B506400C48CCC /* FTMMailLoginVC.m */; };
+		BB168CB41E4B508100C48CCC /* FTMThirdLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB31E4B508100C48CCC /* FTMThirdLoginVC.m */; };
+		BB168CB81E4B513300C48CCC /* toastView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB71E4B513300C48CCC /* toastView.m */; };
 		BB6A20D71E48B19800CC810C /* message_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D51E48B19800CC810C /* message_tab_focus.png */; };
 		BB6A20D81E48B19800CC810C /* message_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D61E48B19800CC810C /* message_tab.png */; };
 		BB6A20DB1E48B57600CC810C /* friend_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D91E48B57600CC810C /* friend_tab_focus.png */; };
@@ -60,6 +65,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB168CA21E4B4B5E00C48CCC /* FTMUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMUserDefault.h; sourceTree = "<group>"; };
+		BB168CA31E4B4B5E00C48CCC /* FTMUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMUserDefault.m; sourceTree = "<group>"; };
+		BB168CA61E4B4E5200C48CCC /* FTMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMWelcomeViewController.h; sourceTree = "<group>"; };
+		BB168CA71E4B4E5200C48CCC /* FTMWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMWelcomeViewController.m; sourceTree = "<group>"; };
+		BB168CAF1E4B506400C48CCC /* FTMMailLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMMailLoginVC.h; sourceTree = "<group>"; };
+		BB168CB01E4B506400C48CCC /* FTMMailLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMailLoginVC.m; sourceTree = "<group>"; };
+		BB168CB21E4B508100C48CCC /* FTMThirdLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMThirdLoginVC.h; sourceTree = "<group>"; };
+		BB168CB31E4B508100C48CCC /* FTMThirdLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMThirdLoginVC.m; sourceTree = "<group>"; };
+		BB168CB61E4B513300C48CCC /* toastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toastView.h; sourceTree = "<group>"; };
+		BB168CB71E4B513300C48CCC /* toastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = toastView.m; sourceTree = "<group>"; };
 		BB6A20D51E48B19800CC810C /* message_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_tab_focus.png; path = "../../../coding/salt-App效果图/message_tab_focus.png"; sourceTree = "<group>"; };
 		BB6A20D61E48B19800CC810C /* message_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_tab.png; path = "../../../coding/salt-App效果图/message_tab.png"; sourceTree = "<group>"; };
 		BB6A20D91E48B57600CC810C /* friend_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friend_tab_focus.png; path = "../../../coding/salt-App效果图/friend_tab_focus.png"; sourceTree = "<group>"; };
@@ -153,6 +168,37 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		BB168CA11E4B4B1F00C48CCC /* user Default */ = {
+			isa = PBXGroup;
+			children = (
+				BB168CA21E4B4B5E00C48CCC /* FTMUserDefault.h */,
+				BB168CA31E4B4B5E00C48CCC /* FTMUserDefault.m */,
+			);
+			name = "user Default";
+			sourceTree = "<group>";
+		};
+		BB168CA51E4B4E2A00C48CCC /* login */ = {
+			isa = PBXGroup;
+			children = (
+				BB168CA61E4B4E5200C48CCC /* FTMWelcomeViewController.h */,
+				BB168CA71E4B4E5200C48CCC /* FTMWelcomeViewController.m */,
+				BB168CAF1E4B506400C48CCC /* FTMMailLoginVC.h */,
+				BB168CB01E4B506400C48CCC /* FTMMailLoginVC.m */,
+				BB168CB21E4B508100C48CCC /* FTMThirdLoginVC.h */,
+				BB168CB31E4B508100C48CCC /* FTMThirdLoginVC.m */,
+			);
+			name = login;
+			sourceTree = "<group>";
+		};
+		BB168CB51E4B50F900C48CCC /* toast */ = {
+			isa = PBXGroup;
+			children = (
+				BB168CB61E4B513300C48CCC /* toastView.h */,
+				BB168CB71E4B513300C48CCC /* toastView.m */,
+			);
+			name = toast;
+			sourceTree = "<group>";
+		};
 		BB9EB46A1E3F2A5800911C8F = {
 			isa = PBXGroup;
 			children = (
@@ -178,9 +224,12 @@
 		BB9EB4751E3F2A5800911C8F /* forestman */ = {
 			isa = PBXGroup;
 			children = (
+				BB168CB51E4B50F900C48CCC /* toast */,
 				BB9EB4C51E3F330100911C8F /* pics */,
 				BB9EB4E31E4009C900911C8F /* url manager */,
 				BB9EB4C11E3F314000911C8F /* color manager */,
+				BB168CA11E4B4B1F00C48CCC /* user Default */,
+				BB168CA51E4B4E2A00C48CCC /* login */,
 				BB9EB4D21E3F398500911C8F /* cells */,
 				BB9EB4E71E400F0400911C8F /* search person */,
 				BB9EB4DA1E3F5F0200911C8F /* person */,
@@ -535,18 +584,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB168CB41E4B508100C48CCC /* FTMThirdLoginVC.m in Sources */,
 				BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */,
 				BB9EB4E61E400A6200911C8F /* urlManager.m in Sources */,
 				BB9EB4ED1E40A2D100911C8F /* FTMAddFriendViewController.m in Sources */,
+				BB168CB81E4B513300C48CCC /* toastView.m in Sources */,
 				BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */,
 				BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */,
 				BB9EB4EA1E400F4F00911C8F /* FTMSearchViewController.m in Sources */,
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
+				BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */,
+				BB168CA81E4B4E5200C48CCC /* FTMWelcomeViewController.m in Sources */,
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
 				BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */,
 				BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */,
+				BB168CA41E4B4B5E00C48CCC /* FTMUserDefault.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,
 				BB9EB4D61E3F3A4300911C8F /* FTMFriendsCell.m in Sources */,
 				BB9EB4C01E3F2EA400911C8F /* FTMMineViewController.m in Sources */,

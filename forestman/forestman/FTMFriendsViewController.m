@@ -11,6 +11,7 @@
 #import "FTMFriendsCell.h"
 #import "FTMPersonViewController.h"
 #import "FTMSearchViewController.h"
+#import "FTMWelcomeViewController.h"
 
 @interface FTMFriendsViewController ()
 
@@ -185,6 +186,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
+    
+    //临时...
+    if (row == 0) {
+        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
+        [self presentViewController:welcomePage animated:YES completion:nil];
+        return;
+    }
+    
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
     personPage.nickname = @"张惠妹";
