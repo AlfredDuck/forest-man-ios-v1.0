@@ -17,4 +17,6 @@
 /* 用户头像 */
 @property (nonatomic, strong) NSString *portraitURL;
 @property (nonatomic, strong) UIImageView *portraitImageView;
+/* uid */
+@property (nonatomic, strong) NSString *uid;
 @end

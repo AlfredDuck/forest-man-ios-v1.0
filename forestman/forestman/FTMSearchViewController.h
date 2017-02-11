@@ -13,4 +13,8 @@
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
 /* uitableview */
 @property (nonatomic, strong) UITableView *oneTableView;
+/* tableview data */
+@property (nonatomic, strong) NSMutableArray *searchResultData;
+/* 搜索词 */
+@property (nonatomic, strong) NSString *keyword;
 @end

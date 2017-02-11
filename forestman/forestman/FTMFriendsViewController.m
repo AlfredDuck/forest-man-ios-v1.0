@@ -8,6 +8,9 @@
 
 #import "FTMFriendsViewController.h"
 #import "colorManager.h"
+#import "urlManager.h"
+#import "AFNetworking.h"
+#import "toastView.h"
 #import "FTMUserDefault.h"
 #import "FTMFriendsCell.h"
 #import "FTMPersonViewController.h"
@@ -52,6 +55,9 @@
     // 判断是否登录
     if ([FTMUserDefault isLogin]) {
         NSLog(@"已登录");
+        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+        NSString *uid = loginInfo[@"uid"];
+        [self connectForFriendsListWith:uid];
     } else {
         NSLog(@"未登录");
         // 调起欢迎页面
@@ -106,8 +112,6 @@
     [addButton addTarget:self action:@selector(clickAddButton) forControlEvents:UIControlEventTouchUpInside];
     [titleBarBackground addSubview:addButton];
     
-    /* 创建tableview */
-    [self createTableView];
 }
 
 
@@ -166,7 +170,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [_friendsData count];
 }
 
 
@@ -180,6 +184,8 @@
     if (oneCell == nil) {
         oneCell = [[FTMFriendsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
     }
+    [oneCell rewriteNickname:_friendsData[row][@"nickname"]];
+    [oneCell rewritePortrait:_friendsData[row][@"portrait"]];
     oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
     return oneCell;
 }
@@ -199,16 +205,17 @@
     NSUInteger row = [indexPath row];
     
     //临时...
-    if (row == 0) {
-        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
-        [self presentViewController:welcomePage animated:YES completion:nil];
-        return;
-    }
+//    if (row == 0) {
+//        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
+//        [self presentViewController:welcomePage animated:YES completion:nil];
+//        return;
+//    }
     
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
-    personPage.nickname = @"张惠妹";
-    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/photo/public/p2416818851.jpg";
+    personPage.nickname = _friendsData[row][@"nickname"];
+    personPage.portraitURL = _friendsData[row][@"portrait"];
+    personPage.uid = _friendsData[row][@"uid"];
     [self.navigationController pushViewController:personPage animated:YES];
     
     // 开启iOS7的滑动返回效果
@@ -242,7 +249,6 @@
     UITextField *tf=[alertView textFieldAtIndex:0];
     NSString *str = tf.text;
     
-    
     if (buttonIndex == 1) {
         NSLog(@"%@", str);
         
@@ -252,12 +258,57 @@
         }
         
         FTMSearchViewController *searchPage = [[FTMSearchViewController alloc] init];
+        searchPage.keyword = str;
         [self.navigationController pushViewController:searchPage animated:YES];
         // 开启iOS7的滑动返回效果
         if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
             self.navigationController.interactivePopGestureRecognizer.delegate = nil;
         }
     }
+}
+
+
+
+
+
+#pragma mark - 网络请求
+- (void)connectForFriendsListWith:(NSString *)uid
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/friends_list"];
+    
+    NSDictionary *parameters = @{@"uid": uid};
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在轻闻server注册成功的data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            
+            return;
+        }
+        if (errcode == 1002) {  // 已经是好友，无需重复添加
+            
+            return;
+        }
+        
+        /**/
+        _friendsData = [data mutableCopy];
+        /**/
+        [self createTableView];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
 }
 
 

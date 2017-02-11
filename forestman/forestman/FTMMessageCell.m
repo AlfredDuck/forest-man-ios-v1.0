@@ -108,4 +108,17 @@
 }
 
 
+- (void)rewriteOwner:(NSString *)newOwner
+{
+    _owner = newOwner;
+    _ownerLabel.text = _owner;
+}
+
+
+- (void)rewriteSendTime:(NSString *)newSendTime
+{
+    _sendTime = newSendTime;
+    _sendTimeLabel.text = _sendTime;
+}
+
 @end

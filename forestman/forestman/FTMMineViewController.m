@@ -42,6 +42,7 @@
     [self createUIParts];
     [super createTabBarWith:2];  // 调用父类方法，构建tabbar
     [self createScrollView];
+    [self createScrollUI];  // 创建内容部分的ui
 }
 
 
@@ -113,13 +114,14 @@
     _basedScrollView.bounces = YES;
     // 是否响应点击状态栏的事件
     _basedScrollView.scrollsToTop = YES;
-    
-    [self createScrollUI];
 }
 
 /** 创建滚动部分 */
 - (void)createScrollUI
 {
+    // 获取登录信息
+    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+    
     UIView *portraitBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15, _screenWidth, 168)];
     portraitBackground.backgroundColor = [UIColor whiteColor];
     [_basedScrollView addSubview: portraitBackground];
@@ -134,12 +136,12 @@
     [_portraitImageView.layer setBorderWidth:0.5];   //边框宽度
     [_portraitImageView.layer setBorderColor:[colorManager lightline].CGColor];
     // 普通加载网络图片 yy库
-    _portraitImageView.yy_imageURL = [NSURL URLWithString:_portraitURL];
+    _portraitImageView.yy_imageURL = [NSURL URLWithString: loginInfo[@"portrait"]];
     [portraitBackground addSubview:_portraitImageView];
     
     /* 微博id or 邮箱账号 */
     UILabel *idLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 122, _screenWidth-60, 17)];
-    idLabel.text = @"微博id：134829204";
+    idLabel.text = loginInfo[@"uid"];
     idLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     idLabel.textAlignment = NSTextAlignmentCenter;
     idLabel.textColor = [colorManager lightTextColor];
@@ -167,7 +169,7 @@
     
     UILabel *nicknameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-120-26, 12, 120, 20)];
     nicknameLabel.textAlignment = NSTextAlignmentRight;
-    nicknameLabel.text = @"莉莉周";
+    nicknameLabel.text = loginInfo[@"nickname"];
     nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
     nicknameLabel.textColor = [colorManager lightTextColor];
     [nicknameBackground addSubview:nicknameLabel];

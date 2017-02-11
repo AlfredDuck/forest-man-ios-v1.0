@@ -12,6 +12,7 @@
 #import "toastView.h"
 #import "AFNetworking.h"
 #import "YYWebImage.h"
+#import "FTMUserDefault.h"
 #import "FTMMyOwnScrollView.h"
 #import "FTMExtraMessageViewController.h"
 
@@ -162,21 +163,21 @@
     [_basedScrollView addSubview:holdView];
     
     _audioArr = @[@{@"audio_id":@"FS-001",
-                       @"text":@"打雷啦下雨啦☔️"},
+                       @"audio_text":@"打雷啦下雨啦☔️"},
                      @{@"audio_id":@"FS-002",
-                       @"text":@"懒得理你"},
+                       @"audio_text":@"懒得理你"},
                      @{@"audio_id":@"FS-003",
-                       @"text":@"安红，俺想你"},
+                       @"audio_text":@"安红，俺想你"},
                      @{@"audio_id":@"FS-004",
-                       @"text":@"安娜玛德莲娜"},
+                       @"audio_text":@"安娜玛德莲娜"},
                      @{@"audio_id":@"FS-005",
-                       @"text":@"你瞅啥"}];
+                       @"audio_text":@"你瞅啥"}];
     // 循环
     unsigned long basedX = 15;
     unsigned long basedY = 18;
     for (int i=0; i<[_audioArr count]; i++) {
         // 创建一个自适应宽度的button
-        NSString *str = _audioArr[i][@"text"];
+        NSString *str = _audioArr[i][@"audio_text"];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         //对按钮的外形做了设定，不喜可删~
@@ -233,7 +234,7 @@
 {
     _selectedAudioIndex = sender.tag - 1;
     NSLog(@"%lu", _selectedAudioIndex);
-    NSString *str = _audioArr[_selectedAudioIndex][@"text"];
+    NSString *str = _audioArr[_selectedAudioIndex][@"audio_text"];
     str = [@"确认发送？\n" stringByAppendingString:str];
     
     UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:str delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"试听", @"添加附带信息", @"确认发送", nil];
@@ -248,12 +249,22 @@
 {
     if (buttonIndex == 0) {
         NSLog(@"试听");
-    }else if (buttonIndex == 1) {
+        
+    } else if (buttonIndex == 1) {
         NSLog(@"添加附加信息");
         FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
+        extraPage.uid = _uid;
+        extraPage.audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
+        extraPage.audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
         [self.navigationController presentViewController:extraPage animated:YES completion:nil];
-    }else if(buttonIndex == 2) {
+        
+    } else if(buttonIndex == 2) {
         NSLog(@"确认发送");
+        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+        NSString *myUid = loginInfo[@"uid"];
+        NSString *audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
+        NSString *audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
+        [self connectForSendMessageFrom:myUid to:_uid text:@"" audioID:audio_id audioText:audio_text];
     }
 }
 
@@ -262,17 +273,20 @@
 
 #pragma mark - 网络请求
 /** 请求发送消息接口 */
-- (void)connectForLoginWithMail:(NSString *)mail andPassword:(NSString *)password
+- (void)connectForSendMessageFrom:(NSString *)from to:(NSString *)to text:(NSString *)text audioID:(NSString *)audio_id audioText:(NSString *)audio_text
 {
     NSLog(@"发消息请求");
     
     // prepare request parameters
     NSString *host = [urlManager urlHost];
-    NSString *urlString = [host stringByAppendingString:@"/user/mail_login"];
+    NSString *urlString = [host stringByAppendingString:@"/send_message"];
     
     NSDictionary *parameters = @{
-                                 @"mail": mail,
-                                 @"password": password
+                                 @"from": from,
+                                 @"to": to,
+                                 @"text": text,
+                                 @"audio_id": audio_id,
+                                 @"audio_text": audio_text
                                  };
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
@@ -280,10 +294,17 @@
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         // GET请求成功
-        NSDictionary *data = [responseObject objectForKey:@"data"];
-        NSString *errcode = [responseObject objectForKey:@"errcode"];
-        NSLog(@"errcode：%@", errcode);
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"data:%@", data);
+        if (errcode == 1001) {  // 数据库出错
+            //
+            return;
+        }
         
+        [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:2.0 superView:self.view];
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];

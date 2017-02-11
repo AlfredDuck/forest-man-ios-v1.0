@@ -73,7 +73,17 @@
 
 
 #pragma mark - 重写 cell 中各个元素的数据
+- (void)rewriteNickname:(NSString *)newNickname
+{
+    _nickname = newNickname;
+    _nicknameLabel.text = _nickname;
+}
 
+- (void)rewritePortrait:(NSString *)newPortrait
+{
+    _portraitURL = newPortrait;
+    _portraitImageView.yy_imageURL = [NSURL URLWithString:_portraitURL];
+}
 
 
 

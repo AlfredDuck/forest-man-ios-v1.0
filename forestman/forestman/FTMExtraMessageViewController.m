@@ -10,6 +10,8 @@
 #import "colorManager.h"
 #import "urlManager.h"
 #import "AFNetworking.h"
+#import "FTMUserDefault.h"
+#import "toastView.h"
 
 @interface FTMExtraMessageViewController ()
 
@@ -127,7 +129,7 @@
     
     // 自定义 UITextView 的 placeholder
     _placeholder = [[UILabel alloc] initWithFrame:CGRectMake(13,1,_screenWidth-20,40)];
-    _placeholder.text = @"希望添加哪些话题？或有什么建议？";
+    _placeholder.text = @"写下你要附加的信息";
     _placeholder.textColor = [UIColor lightGrayColor];
     _placeholder.font = [UIFont fontWithName:@"Helvetica" size: 14];
     [commentBackground addSubview:_placeholder];
@@ -211,7 +213,11 @@
     _sendButton.frame = CGRectMake(_screenWidth - 60, 20, 60, 43);
     
     // 发起网络请求
-    [self connectForWriteComment:_contentTextView.text];
+    NSLog(@"确认发送");
+    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+    NSString *myUid = loginInfo[@"uid"];
+    NSString *text = _contentTextView.text;
+    [self connectForSendMessageFrom:myUid to:_uid text:text audioID:_audio_id audioText:_audio_text];
 }
 
 
@@ -220,57 +226,35 @@
 
 
 #pragma mark - 网络请求
-- (void)connectForWriteComment:(NSString *)comment
+/** 请求发送消息接口 */
+- (void)connectForSendMessageFrom:(NSString *)from to:(NSString *)to text:(NSString *)text audioID:(NSString *)audio_id audioText:(NSString *)audio_text
 {
-    NSLog(@"start write comment request !");
+    NSLog(@"发消息请求");
     
-    // 准备请求参数
+    // prepare request parameters
     NSString *host = [urlManager urlHost];
-    NSString *urlString = [host stringByAppendingString:@"/user/customer_feedback"];
+    NSString *urlString = [host stringByAppendingString:@"/send_message"];
     
-    // 读取设备的uuid
-    NSString *uuid = @"";
-    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    if ([userDefault objectForKey:@"uuid"]) {
-        uuid = [userDefault objectForKey:@"uuid"];
-    }
-    // 读取本地的uid
-    NSString *uid = @"";
-    NSString *userType = @"";
-    if ([[userDefault dictionaryForKey:@"loginInfo"] objectForKey:@"uid"]) {
-        uid = [[userDefault dictionaryForKey:@"loginInfo"] objectForKey:@"uid"];
-        userType = [[userDefault dictionaryForKey:@"loginInfo"] objectForKey:@"userType"];
-    }
-    
-    
-    //NSDictionary *parameters = @{
-    //                                 @"content": comment,
-    //                                 @"uid": uid,
-    //                                 @"user_type": userType,
-    //                                 @"device_type": @"ios",
-    //                                 @"device_id": uuid
-    //                                 };
-    NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                comment,@"content",
-                                uid,@"uid",
-                                userType,@"user_type",
-                                @"ios",@"device_type",
-                                uuid,@"device_id",
-                                nil];
-    NSLog(@"会不会执行到这里");
+    NSDictionary *parameters = @{
+                                 @"from": from,
+                                 @"to": to,
+                                 @"text": text,
+                                 @"audio_id": audio_id,
+                                 @"audio_text": audio_text
+                                 };
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
     connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // NSLog(@"JSON: %@", responseObject); // AF 已将json转为字典
-        
         // 请求成功
-        NSString *errcode = [responseObject objectForKey:@"errcode"];
-        if ([errcode isEqualToString:@"err"]) {
-            NSLog(@"写入评论出错");
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"data:%@", data);
+        if (errcode == 1001) {  // 数据库出错
+            //
             return;
         }
-        NSLog(@"请求状态：%@", errcode);
         
         // 返回上一页
         [self dismissViewControllerAnimated:YES completion:^{
@@ -280,8 +264,8 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        [self readyToSend];
-        //[toastView showToastWith:@"发送失败，请重试" isErr:NO duration:3.0 superView:self.view];
+        [self readyToSend];  // 恢复“发送”按钮可点
+        [toastView showToastWith:@"发送失败，请重试" isErr:NO duration:3.0 superView:self.view];
     }];
 }
 

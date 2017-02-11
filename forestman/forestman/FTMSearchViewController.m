@@ -8,6 +8,9 @@
 
 #import "FTMSearchViewController.h"
 #import "colorManager.h"
+#import "urlManager.h"
+#import "AFNetworking.h"
+#import "toastView.h"
 #import "FTMFriendsCell.h"
 #import "FTMAddFriendViewController.h"
 
@@ -23,7 +26,7 @@
     if (self) {
         // Custom initialization
         self.title = @"test";
-        self.view.backgroundColor = [UIColor yellowColor];
+        self.view.backgroundColor = [colorManager lightGrayBackground];
         self.navigationController.navigationBar.hidden = YES;
     }
     return self;
@@ -37,17 +40,16 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     /* 构建页面元素 */
     [self createUIParts];
+    [self connectForSearchResult];
 }
 
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     NSLog(@"内存报警...");
 }
@@ -89,9 +91,6 @@
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
-    
-    /* 创建tableview */
-    [self createTableView];
 }
 
 
@@ -125,7 +124,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [_searchResultData count];
 }
 
 
@@ -139,6 +138,8 @@
     if (oneCell == nil) {
         oneCell = [[FTMFriendsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
     }
+    [oneCell rewriteNickname:_searchResultData[row][@"nickname"]];
+    [oneCell rewritePortrait:_searchResultData[row][@"portrait"]];
     oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
     return oneCell;
 }
@@ -159,8 +160,9 @@
     
     // 打开新页面
     FTMAddFriendViewController *addFriendPage = [[FTMAddFriendViewController alloc] init];
-    addFriendPage.portraitURL = @"https://img5.doubanio.com/view/photo/photo/public/p2411938386.jpg";
-    addFriendPage.nickname = @"莉莉周";
+    addFriendPage.portraitURL = _searchResultData[row][@"portrait"];
+    addFriendPage.nickname = _searchResultData[row][@"nickname"];
+    addFriendPage.uid = _searchResultData[row][@"uid"];
     [self.navigationController pushViewController:addFriendPage animated:YES];
     
     // 开启iOS7的滑动返回效果
@@ -178,6 +180,50 @@
 - (void)clickBackButton
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
+
+#pragma mark - 网络请求
+- (void)connectForSearchResult
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/search"];
+    
+    NSDictionary *parameters = @{
+                                 @"keyword": _keyword
+                                 };
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在轻闻server注册成功的data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            
+            return;
+        }
+        if (errcode == 1002) {  // 没有相关用户
+
+            return;
+        }
+        
+        /* 绑定数据 */
+        _searchResultData = [data mutableCopy];
+        /* 创建tableview */
+        [self createTableView];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
 }
 
 

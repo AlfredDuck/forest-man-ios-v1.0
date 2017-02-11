@@ -35,13 +35,20 @@
     [ud setObject:loginInfo[@"user_type"] forKey:@"user_type"];  // 用户类型，是微博还是邮箱
     [ud setObject:loginInfo[@"nickname"] forKey:@"nickname"];  // 用户昵称，微博用户默认是微博昵称
     [ud setObject:loginInfo[@"portrait"] forKey:@"portrait"];  // 用户头像，微博用户默认是微博头像，邮箱用户默认是默认头像
+    [ud setDouble:[loginInfo[@"login_token"] intValue] forKey:@"login_token"];  // 判断过期或其他设备登录
     return YES;
 }
 
 + (NSDictionary *)readLoginInfo
 {
     // 取登录信息
-    NSDictionary *loginInfo = [NSDictionary new];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSDictionary *loginInfo = @{
+                                @"uid": [ud stringForKey:@"uid"],
+                                @"user_type": [ud stringForKey:@"user_type"],
+                                @"nickname": [ud stringForKey:@"nickname"],
+                                @"portrait": [ud stringForKey:@"portrait"]
+                                };
     return loginInfo;
 }
 

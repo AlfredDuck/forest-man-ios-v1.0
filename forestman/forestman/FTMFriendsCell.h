@@ -20,4 +20,7 @@
 
 @property (nonatomic) NSInteger screenWidth;
 @property (nonatomic) NSInteger screenHeight;
+
+- (void)rewritePortrait:(NSString *)newPortrait;
+- (void)rewriteNickname:(NSString *)newNickname;
 @end

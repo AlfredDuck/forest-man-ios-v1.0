@@ -277,9 +277,7 @@
 #pragma mark - 网络请求
 /** 请求登录接口 */
 - (void)connectForLoginWithMail:(NSString *)mail andPassword:(NSString *)password
-{
-    NSLog(@"登录请求");
-    
+{    
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/user/mail_login"];
@@ -331,8 +329,6 @@
 /** 注册请求 */
 - (void)connectForSignupWithMail:(NSString *)mail andPassword:(NSString *)password andNickname:(NSString *)nickname
 {
-    NSLog(@"注册请求");
-    
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/user/mail_signup"];

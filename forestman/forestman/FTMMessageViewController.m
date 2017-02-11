@@ -8,6 +8,10 @@
 
 #import "FTMMessageViewController.h"
 #import "colorManager.h"
+#import "urlManager.h"
+#import "AFNetworking.h"
+#import "toastView.h"
+#import "FTMUserDefault.h"
 #import "FTMMessageCell.h"
 #import "FTMPersonViewController.h"
 
@@ -23,7 +27,7 @@
     if (self) {
         // Custom initialization
         self.title = @"test";
-        self.view.backgroundColor = [UIColor greenColor];
+        self.view.backgroundColor = [colorManager lightGrayBackground];
         self.navigationController.navigationBar.hidden = YES;
     }
     return self;
@@ -81,8 +85,6 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
-    /* 创建 uitableview */
-    [self createTableView];
 }
 
 
@@ -105,16 +107,16 @@
     [self.view addSubview:_oneTableView];
     
     // 下拉刷新 MJRefresh
-    //    _oneTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-    //        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
-    //        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    //        //            // 结束刷新动作
-    //        //            [_oneTableView.mj_header endRefreshing];
-    //        //            NSLog(@"下拉刷新成功，结束刷新");
-    //        //        });
-    //        [self connectForHot:_oneTableView];
-    //        [self connectForFollowedArticles:_oneTableView];
-    //    }];
+    _oneTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
+        //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //            // 结束刷新动作
+        //            [_oneTableView.mj_header endRefreshing];
+        //            NSLog(@"下拉刷新成功，结束刷新");
+        //        });
+        [self connectForHot:_oneTableView];
+        [self connectForFollowedArticles:_oneTableView];
+    }];
     
     // 上拉刷新 MJRefresh (等到页面有数据后再使用)
     //    _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
@@ -140,7 +142,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [_messageData count];
 }
 
 
@@ -154,7 +156,9 @@
     if (oneCell == nil) {
         oneCell = [[FTMMessageCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
     }
-    [oneCell rewriteMessage:@"★打雷了下雨了，收拾衣服啦★"];
+    [oneCell rewriteMessage:_messageData[row][@"audio_text"]];
+    [oneCell rewriteOwner:_messageData[row][@"from"]];
+    [oneCell rewriteSendTime:_messageData[row][@"createTime"]];
     oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
     return oneCell;
 }
@@ -189,6 +193,49 @@
     // [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+
+
+
+
+#pragma mark - 网络请求
+- (void)connectForMessageList:(NSString *)uid
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/message_list"];
+    
+    NSDictionary *parameters = @{@"uid": uid};
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在轻闻server注册成功的data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            
+            return;
+        }
+        if (errcode == 1002) {  // 已经是好友，无需重复添加
+            
+            return;
+        }
+        
+        /* 绑定数据 */
+        _messageData = [data mutableCopy];
+        /**/
+        [self createTableView];
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
+}
 
 
 

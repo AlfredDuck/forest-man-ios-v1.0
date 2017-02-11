@@ -11,6 +11,8 @@
 #import "YYWebImage.h"
 #import "AFNetworking.h"
 #import "urlManager.h"
+#import "FTMUserDefault.h"
+#import "toastView.h"
 
 @interface FTMAddFriendViewController ()
 
@@ -133,7 +135,71 @@
 /** 点击加为好友按钮 */
 - (void)clickAddButton
 {
-    NSLog(@"");
+    NSLog(@"加好友");
+    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+    
+    NSString *uid1 = loginInfo[@"uid"];
+    NSString *nickname1 = loginInfo[@"nickname"];
+    NSString *portrait1 = loginInfo[@"portrait"];
+    NSString *uid2 = _uid;
+    NSString *nickname2 = _nickname;
+    NSString *portrait2 = _portraitURL;
+    
+    NSDictionary *friend1 = @{@"uid": uid1,
+                              @"nickname": nickname1,
+                              @"portrait": portrait1};
+    NSDictionary *friend2 = @{@"uid": uid2,
+                              @"nickname": nickname2,
+                              @"portrait": portrait2};
+    
+    NSArray *friendArr = @[friend1, friend2];
+    [self connectForAddFriendWith: friendArr];
+}
+
+
+
+
+
+#pragma mark - 网络请求
+- (void)connectForAddFriendWith:(NSArray *)friendArr
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/add_friend"];
+    
+    NSDictionary *parameters = @{
+                                 @"friend1": friendArr[0][@"uid"],
+                                 @"friend2": friendArr[1][@"uid"],
+                                 @"friend1_nickname": friendArr[0][@"nickname"],
+                                 @"friend1_portrait": friendArr[0][@"portrait"],
+                                 @"friend2_nickname": friendArr[1][@"nickname"],
+                                 @"friend2_portrait": friendArr[1][@"portrait"]
+                                 };
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在轻闻server注册成功的data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            
+            return;
+        }
+        if (errcode == 1002) {  // 已经是好友，无需重复添加
+            
+            return;
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
 }
 
 
