@@ -14,4 +14,6 @@
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
 /* uitableview */
 @property (nonatomic, strong) UITableView *oneTableView;
+/* tableview data */
+@property (nonatomic, strong) NSMutableArray *friendsData;
 @end

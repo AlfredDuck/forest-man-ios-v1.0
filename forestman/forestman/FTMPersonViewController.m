@@ -8,12 +8,17 @@
 
 #import "FTMPersonViewController.h"
 #import "colorManager.h"
+#import "urlManager.h"
+#import "toastView.h"
+#import "AFNetworking.h"
 #import "YYWebImage.h"
 #import "FTMMyOwnScrollView.h"
 #import "FTMExtraMessageViewController.h"
 
 @interface FTMPersonViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
+@property (nonatomic, strong) NSArray *audioArr;
+@property (nonatomic) unsigned long selectedAudioIndex;
 @end
 
 @implementation FTMPersonViewController
@@ -156,14 +161,22 @@
     UIView *holdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _basedScrollView.frame.size.height+1)];
     [_basedScrollView addSubview:holdView];
     
-//    NSArray *arr = @[@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！"];
-    NSArray *arr = @[@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddddddddddddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"dddddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~",@"这不是你dd",@"haieng",@"打雷了，下雨了☔️",@"睡吧~！",@"俺朋友再见",@"hi 嗨！",@"ddddddddddddd给个价格哥哥噶尔哈",@"煎蛋来书你是sb",@"吼吼~~"];
+    _audioArr = @[@{@"audio_id":@"FS-001",
+                       @"text":@"打雷啦下雨啦☔️"},
+                     @{@"audio_id":@"FS-002",
+                       @"text":@"懒得理你"},
+                     @{@"audio_id":@"FS-003",
+                       @"text":@"安红，俺想你"},
+                     @{@"audio_id":@"FS-004",
+                       @"text":@"安娜玛德莲娜"},
+                     @{@"audio_id":@"FS-005",
+                       @"text":@"你瞅啥"}];
     // 循环
     unsigned long basedX = 15;
     unsigned long basedY = 18;
-    for (int i=0; i<[arr count]; i++) {
+    for (int i=0; i<[_audioArr count]; i++) {
         // 创建一个自适应宽度的button
-        NSString *str = arr[i];
+        NSString *str = _audioArr[i][@"text"];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         //对按钮的外形做了设定，不喜可删~
@@ -175,8 +188,8 @@
         [btn setTitleColor:[colorManager commonBlue] forState:UIControlStateNormal];
         [btn setBackgroundColor:[UIColor colorWithRed:231/255.0 green:244/255.0 blue:253/255.0 alpha:1]];
         [btn setTitle:str forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(clickAudioButton) forControlEvents:UIControlEventTouchUpInside];
-
+        [btn addTarget:self action:@selector(clickAudioButton:) forControlEvents:UIControlEventTouchUpInside];
+        [btn setTag: i+1];
         
         //重要的是下面这部分哦！
         CGSize titleSize = [str sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:btn.titleLabel.font.fontName size:btn.titleLabel.font.pointSize]}];
@@ -216,9 +229,14 @@
 }
 
 /** 点击语音按钮 */
-- (void)clickAudioButton
+- (void)clickAudioButton:(UIButton *)sender
 {
-    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:@"确认发送？\n打雷了下雨了，收拾衣服啦" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"试听", @"添加附带信息", @"确认发送", nil];
+    _selectedAudioIndex = sender.tag - 1;
+    NSLog(@"%lu", _selectedAudioIndex);
+    NSString *str = _audioArr[_selectedAudioIndex][@"text"];
+    str = [@"确认发送？\n" stringByAppendingString:str];
+    
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:str delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"试听", @"添加附带信息", @"确认发送", nil];
     [shareSheet showInView:self.view];
 }
 
@@ -238,5 +256,39 @@
         NSLog(@"确认发送");
     }
 }
+
+
+
+
+#pragma mark - 网络请求
+/** 请求发送消息接口 */
+- (void)connectForLoginWithMail:(NSString *)mail andPassword:(NSString *)password
+{
+    NSLog(@"发消息请求");
+    
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/user/mail_login"];
+    
+    NSDictionary *parameters = @{
+                                 @"mail": mail,
+                                 @"password": password
+                                 };
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = [responseObject objectForKey:@"data"];
+        NSString *errcode = [responseObject objectForKey:@"errcode"];
+        NSLog(@"errcode：%@", errcode);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
+}
+
 
 @end

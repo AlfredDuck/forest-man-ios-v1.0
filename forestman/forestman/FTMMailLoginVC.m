@@ -234,8 +234,8 @@
 - (void)clickSignupButton
 {
     // 临时...
-    [self loginSuccessWith:nil];
-    return;
+//    [self loginSuccessWith:nil];
+//    return;
     
     if (![_signupLabel.text isEqualToString:@"注册"]) {
         return;
@@ -285,8 +285,9 @@
     NSString *urlString = [host stringByAppendingString:@"/user/mail_login"];
     
     NSDictionary *parameters = @{
-                                 @"mail": mail,
-                                 @"password": password
+                                 @"uid": mail,
+                                 @"password": password,
+                                 @"plantform": @"ios"
                                  };
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
@@ -294,19 +295,19 @@
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         // GET请求成功
-        NSDictionary *data = [responseObject objectForKey:@"data"];
-        NSString *errcode = [responseObject objectForKey:@"errcode"];
-        NSLog(@"errcode：%@", errcode);
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
         NSLog(@"在轻闻server登录成功的data:%@", data);
         
-        if ([errcode isEqualToString:@"err"]) {  // 请求出错
+        if (errcode == 1001) {  // 数据库出错
             NSLog(@"登录时出错");
             _loginLabel.text = @"登录";
             _loginButton.backgroundColor = [colorManager blueButtonColor];
             [toastView showToastWith:@"服务器出错，请重试" isErr:NO duration:2.0 superView:self.view];
             return;
         }
-        if ([[data objectForKey:@"status"] isEqualToString:@"fail"]) {  // 用户不存在，无法登陆
+        if (errcode == 1002) {  // 用户不存在，无法登陆
             NSLog(@"用户不存在，请先注册");
             _loginLabel.text = @"登录";
             _loginButton.backgroundColor = [colorManager blueButtonColor];
@@ -337,9 +338,11 @@
     NSString *urlString = [host stringByAppendingString:@"/user/mail_signup"];
     
     NSDictionary *parameters = @{
-                                 @"mail": mail,
+                                 @"uid": mail,
                                  @"password": password,
-                                 @"nickname": nickname
+                                 @"nickname": nickname,
+                                 @"user_type": @"mail",
+                                 @"plantform": @"ios"
                                  };
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
@@ -347,20 +350,18 @@
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         // GET请求成功
-        NSDictionary *data = [responseObject objectForKey:@"data"];
-        NSString *errcode = [responseObject objectForKey:@"errcode"];
-        NSLog(@"errcode：%@", errcode);
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
         NSLog(@"在轻闻server注册成功的data:%@", data);
         
-        if ([errcode isEqualToString:@"err"]) {  // 请求出错
-            NSLog(@"注册时出错");
+        if (errcode == 1001) {  // 数据库出错
             _signupLabel.text = @"注册";
             _signupButton.backgroundColor = [colorManager blueButtonColor];
             [toastView showToastWith:@"服务器出错，请重试" isErr:NO duration:2.0 superView:self.view];
             return;
         }
-        if ([[data objectForKey:@"status"] isEqualToString:@"fail"]) {  // 用户已注册，无法完成注册
-            NSLog(@"此用户已注册过");
+        if (errcode == 1002) {  // 用户已注册，无法完成注册
             _signupLabel.text = @"注册";
             _signupButton.backgroundColor = [colorManager blueButtonColor];
             [toastView showToastWith:@"此邮箱已注册过，请直接登录" isErr:NO duration:2.0 superView:self.view];
@@ -389,20 +390,15 @@
 {
     // 不论server下发的有什么内容，本地只按照某种标准格式储存
     NSDictionary *userData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              [data objectForKey:@"userType"], @"user_type",  // 账户类型：邮箱、微博、微信等
-                              [data objectForKey:@"nickname"] ,@"nickname",  // 昵称
-                              [data objectForKey:@"mail"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
-                              [data objectForKey:@"portraitURL"], @"portrait",  // 头像url
-                              nil];
-    NSDictionary *userData22 = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              @"weibo", @"user_type",  // 账户类型：邮箱、微博、微信等
-                              @"lang" ,@"nickname",  // 昵称
-                              @"14538375", @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
-                              @"http://pic", @"portrait",  // 头像url
+                              data[@"user_type"], @"user_type",  // 账户类型：邮箱、微博、微信等
+                              data[@"nickname"] ,@"nickname",  // 昵称
+                              data[@"uid"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
+                              data[@"portrait"], @"portrait",  // 头像url
+                              data[@"login_token"], @"login_token",  // 登录过期、或换设备登录所用
                               nil];
     // 账号信息记录到本地
-    [FTMUserDefault recordLoginInfo:userData22];
-    NSLog(@"登录成功：%@", userData22);
+    [FTMUserDefault recordLoginInfo:userData];
+    NSLog(@"登录成功：%@", userData);
 
     // 退出登录页面
     [self dismissViewControllerAnimated:YES completion:^{

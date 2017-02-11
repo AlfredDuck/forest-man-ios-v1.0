@@ -11,6 +11,8 @@
 @interface FTMPersonViewController : UIViewController <UIActionSheetDelegate>
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
+/* 用户id */
+@property (nonatomic, strong) NSString *uid;
 /* 用户昵称 */
 @property (nonatomic, strong) NSString *nickname;
 @property (nonatomic, strong) UILabel *nicknameLabel;
