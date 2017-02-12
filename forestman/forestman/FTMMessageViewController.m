@@ -9,6 +9,7 @@
 #import "FTMMessageViewController.h"
 #import "colorManager.h"
 #import "urlManager.h"
+#import "MJRefresh.h"
 #import "AFNetworking.h"
 #import "toastView.h"
 #import "FTMUserDefault.h"
@@ -41,8 +42,9 @@
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     
     /* 构建页面元素 */
-    [self createUIParts];
     [super createTabBarWith:1];  // 调用父类方法，构建tabbar
+    [self createUIParts];
+    [self createTableView];
 }
 
 
@@ -50,6 +52,8 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    /* 调用 MJRefresh 初始化数据 */
+    [_oneTableView.mj_header beginRefreshing];
 }
 
 
@@ -114,8 +118,9 @@
         //            [_oneTableView.mj_header endRefreshing];
         //            NSLog(@"下拉刷新成功，结束刷新");
         //        });
-        [self connectForHot:_oneTableView];
-        [self connectForFollowedArticles:_oneTableView];
+        NSDictionary *info = [FTMUserDefault readLoginInfo];
+        NSString *uid = info[@"uid"];
+        [self connectForMessageList:uid];
     }];
     
     // 上拉刷新 MJRefresh (等到页面有数据后再使用)
@@ -228,8 +233,7 @@
         /* 绑定数据 */
         _messageData = [data mutableCopy];
         /**/
-        [self createTableView];
-        
+        [_oneTableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

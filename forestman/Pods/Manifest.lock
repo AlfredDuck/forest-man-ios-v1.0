@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - MJRefresh (3.0.8)
   - YYCache (1.0.4)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
@@ -30,14 +31,16 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.1)
+  - MJRefresh (~> 3.0.7)
   - YYWebImage (~> 1.0.5)
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  MJRefresh: fafde8f18f4afd66b434331a9beb67a6c0264056
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
   YYWebImage: 5f7f36aee2ae293f016d418c7d6ba05c4863e928
 
-PODFILE CHECKSUM: a179219e3577a2eb7e73b206d4e1306213ecc9c6
+PODFILE CHECKSUM: d983c8a29a913885ff7ab7e24e41955a496c7c5c
 
 COCOAPODS: 1.1.1
