@@ -108,9 +108,13 @@
 }
 
 
-- (void)rewriteOwner:(NSString *)newOwner
+- (void)rewriteOwnerWithFrom:(NSString *)from to:(NSString *)to current:(NSString *)fromOrTo
 {
-    _owner = newOwner;
+    if ([fromOrTo isEqualToString:@"from"]) {
+        _owner = [@"to " stringByAppendingString:to];
+    } else {
+        _owner = [@"from " stringByAppendingString:from];
+    }
     _ownerLabel.text = _owner;
 }
 

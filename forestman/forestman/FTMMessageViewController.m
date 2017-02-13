@@ -129,7 +129,7 @@
     //    }];
     
     // 这个碉堡了，要珍藏！！
-    // _oneTableView.mj_header.ignoredScrollViewContentInsetTop = 100.0;
+    _oneTableView.mj_header.ignoredScrollViewContentInsetTop = 15.0;
     
     // 禁用 mjRefresh
     // contentTableView.mj_footer = nil;
@@ -161,8 +161,8 @@
     if (oneCell == nil) {
         oneCell = [[FTMMessageCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
     }
-    [oneCell rewriteMessage:_messageData[row][@"audio_text"]];
-    [oneCell rewriteOwner:_messageData[row][@"from"]];
+    [oneCell rewriteMessage:_messageData[row][@"text"]];
+    [oneCell rewriteOwnerWithFrom:_messageData[row][@"from"][@"nickname"] to:_messageData[row][@"to"][@"nickname"] current:_messageData[row][@"currentIsFromOrTo"]];
     [oneCell rewriteSendTime:_messageData[row][@"createTime"]];
     oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
     return oneCell;
@@ -185,8 +185,15 @@
     
     // 打开页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
-    personPage.nickname = @"张惠妹";
-    personPage.portraitURL = @"https://img3.doubanio.com/view/photo/photo/public/p2416818851.jpg";
+    if ([_messageData[row][@"currentIsFromOrTo"] isEqualToString:@"from"]) {
+        personPage.nickname = _messageData[row][@"to"][@"nickname"];
+        personPage.portraitURL = _messageData[row][@"to"][@"portrait"];
+        personPage.uid = _messageData[row][@"to"][@"uid"];
+    } else {
+        personPage.nickname = _messageData[row][@"from"][@"nickname"];
+        personPage.portraitURL = _messageData[row][@"from"][@"portrait"];
+        personPage.uid = _messageData[row][@"to"][@"from"];
+    }
     [self.navigationController pushViewController:personPage animated:YES];
     
     //开启iOS7的滑动返回效果
@@ -230,6 +237,7 @@
             return;
         }
         
+        [_oneTableView.mj_header endRefreshing];
         /* 绑定数据 */
         _messageData = [data mutableCopy];
         /**/
@@ -237,6 +245,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
+        [_oneTableView.mj_header endRefreshing];
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
 }

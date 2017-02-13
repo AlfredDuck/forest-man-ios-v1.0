@@ -27,6 +27,6 @@
 @property (nonatomic) NSInteger screenHeight;
 
 - (void)rewriteMessage:(NSString *)newMessage;
-- (void)rewriteOwner:(NSString *)newOwner;
+- (void)rewriteOwnerWithFrom:(NSString *)from to:(NSString *)to current:(NSString *)fromOrTo;
 - (void)rewriteSendTime:(NSString *)newSendTime;
 @end

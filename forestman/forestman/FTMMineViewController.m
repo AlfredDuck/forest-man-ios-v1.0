@@ -10,6 +10,7 @@
 #import "colorManager.h"
 #import "YYWebImage.h"
 #import "FTMUserDefault.h"
+#import "FTMNicknameVC.h"
 
 @interface FTMMineViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -243,6 +244,8 @@
 - (void)clickNickname
 {
     NSLog(@"click nickname");
+    FTMNicknameVC *nicknamePage = [[FTMNicknameVC alloc] init];
+    nicknamePage.nickname = 
 }
 
 /** 点击开关 */

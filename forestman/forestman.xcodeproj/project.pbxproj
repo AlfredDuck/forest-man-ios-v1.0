@@ -16,6 +16,7 @@
 		BB6A20D81E48B19800CC810C /* message_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D61E48B19800CC810C /* message_tab.png */; };
 		BB6A20DB1E48B57600CC810C /* friend_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D91E48B57600CC810C /* friend_tab_focus.png */; };
 		BB6A20DC1E48B57600CC810C /* friend_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20DA1E48B57600CC810C /* friend_tab.png */; };
+		BB8755B41E5206FC008B296D /* FTMNicknameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8755B31E5206FC008B296D /* FTMNicknameVC.m */; };
 		BB9EB4781E3F2A5800911C8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4771E3F2A5800911C8F /* main.m */; };
 		BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB47A1E3F2A5800911C8F /* AppDelegate.m */; };
 		BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4881E3F2A5800911C8F /* Assets.xcassets */; };
@@ -79,6 +80,8 @@
 		BB6A20D61E48B19800CC810C /* message_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_tab.png; path = "../../../coding/salt-App效果图/message_tab.png"; sourceTree = "<group>"; };
 		BB6A20D91E48B57600CC810C /* friend_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friend_tab_focus.png; path = "../../../coding/salt-App效果图/friend_tab_focus.png"; sourceTree = "<group>"; };
 		BB6A20DA1E48B57600CC810C /* friend_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friend_tab.png; path = "../../../coding/salt-App效果图/friend_tab.png"; sourceTree = "<group>"; };
+		BB8755B21E5206FC008B296D /* FTMNicknameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMNicknameVC.h; sourceTree = "<group>"; };
+		BB8755B31E5206FC008B296D /* FTMNicknameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMNicknameVC.m; sourceTree = "<group>"; };
 		BB9EB4731E3F2A5800911C8F /* forestman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = forestman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB9EB4771E3F2A5800911C8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BB9EB4791E3F2A5800911C8F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -199,6 +202,23 @@
 			name = toast;
 			sourceTree = "<group>";
 		};
+		BB8755B01E5206A0008B296D /* mine center */ = {
+			isa = PBXGroup;
+			children = (
+				BB8755B11E5206CA008B296D /* nickname */,
+			);
+			name = "mine center";
+			sourceTree = "<group>";
+		};
+		BB8755B11E5206CA008B296D /* nickname */ = {
+			isa = PBXGroup;
+			children = (
+				BB8755B21E5206FC008B296D /* FTMNicknameVC.h */,
+				BB8755B31E5206FC008B296D /* FTMNicknameVC.m */,
+			);
+			name = nickname;
+			sourceTree = "<group>";
+		};
 		BB9EB46A1E3F2A5800911C8F = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +253,7 @@
 				BB9EB4D21E3F398500911C8F /* cells */,
 				BB9EB4E71E400F0400911C8F /* search person */,
 				BB9EB4DA1E3F5F0200911C8F /* person */,
+				BB8755B01E5206A0008B296D /* mine center */,
 				BB9EB4B31E3F2D3700911C8F /* first layer */,
 				BB9EB4AF1E3F2C3B00911C8F /* root layer */,
 				BB9EB4791E3F2A5800911C8F /* AppDelegate.h */,
@@ -586,6 +607,7 @@
 			files = (
 				BB168CB41E4B508100C48CCC /* FTMThirdLoginVC.m in Sources */,
 				BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */,
+				BB8755B41E5206FC008B296D /* FTMNicknameVC.m in Sources */,
 				BB9EB4E61E400A6200911C8F /* urlManager.m in Sources */,
 				BB9EB4ED1E40A2D100911C8F /* FTMAddFriendViewController.m in Sources */,
 				BB168CB81E4B513300C48CCC /* toastView.m in Sources */,
