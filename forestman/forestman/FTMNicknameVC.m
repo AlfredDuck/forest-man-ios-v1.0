@@ -11,6 +11,7 @@
 #import "urlManager.h"
 #import "AFNetworking.h"
 #import "FTMUserDefault.h"
+#import "toastView.h"
 
 @interface FTMNicknameVC ()
 
@@ -41,6 +42,11 @@
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
+    // 获取登录信息
+    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+    _nickname = loginInfo[@"nickname"];
+    _uid = loginInfo[@"uid"];
+    
     // 创建 UI
     [self basedTitleBar];
     [self basedWriteText];
@@ -69,16 +75,16 @@
     
     // 标题
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, 20, 200, 44)];
-    titleLabel.text = @"添加附带消息";
+    titleLabel.text = @"修改昵称";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 16];
     titleLabel.textAlignment = UITextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
     // 返回按钮
-    UIImage *oneImage = [UIImage imageNamed:@"close.png"]; // 使用ImageView通过name找到图片
+    UIImage *oneImage = [UIImage imageNamed:@"back_black.png"]; // 使用ImageView通过name找到图片
     UIImageView *oneImageView = [[UIImageView alloc] initWithImage:oneImage]; // 把oneImage添加到oneImageView上
-    oneImageView.frame = CGRectMake(14.5, 14.5, 15, 15); // 设置图片位置和大小
+    oneImageView.frame = CGRectMake(11, 13.2, 22, 17.6); // 设置图片位置和大小
     // [oneImageView setContentMode:UIViewContentModeCenter];
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, 44, 44)];
@@ -92,7 +98,7 @@
     
     // “发送” 按钮
     _sendButton = [[UIButton alloc] initWithFrame:CGRectMake(_screenWidth - 48, 20, 48, 43)];
-    [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendButton setTitle:@"提交" forState:UIControlStateNormal];
     _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     UIColor *buttonColor = [UIColor colorWithRed:74/255.0 green:144/255.0 blue:226/255.0 alpha:1];
     [_sendButton setTitleColor:buttonColor forState:UIControlStateNormal];
@@ -107,7 +113,7 @@
 - (void)basedWriteText
 {
     // 昵称输入框
-    UIView *nickNameBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 64+10, _screenWidth, 44)];
+    UIView *nickNameBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 64+15, _screenWidth, 44)];
     nickNameBackground.backgroundColor = [UIColor whiteColor];
     UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, 0.5)];
     UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, _screenWidth, 0.5)];
@@ -121,6 +127,7 @@
     _nickNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(13, 2, _screenWidth-30, 40)];
     [_nickNameTextField setBorderStyle:UITextBorderStyleNone]; // 外框类型
     _nickNameTextField.text = _nickname;
+    [_nickNameTextField becomeFirstResponder];  // 获取焦点
     // _nickNameTextField.backgroundColor = [UIColor yellowColor];
     _nickNameTextField.textColor = [colorManager mainTextColor];
     _nickNameTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
@@ -132,7 +139,7 @@
 /* 发送按钮的两种状态 */
 - (void)readyToSend
 {
-    [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
+    [_sendButton setTitle:@"提交" forState:UIControlStateNormal];
     UIColor *buttonColor = [UIColor colorWithRed:74/255.0 green:144/255.0 blue:226/255.0 alpha:1];
     [_sendButton setTitleColor:buttonColor forState:UIControlStateNormal];
     _sendButton.frame = CGRectMake(_screenWidth - 48, 20, 48, 43);
@@ -140,7 +147,7 @@
 
 - (void)sending
 {
-    [_sendButton setTitle:@"发送中..." forState:UIControlStateNormal];
+    [_sendButton setTitle:@"提交中.." forState:UIControlStateNormal];
     UIColor *buttonColor = [colorManager lightTextColor];
     [_sendButton setTitleColor:buttonColor forState:UIControlStateNormal];
     _sendButton.frame = CGRectMake(_screenWidth - 60, 20, 60, 43);
@@ -171,40 +178,40 @@
 
 - (void)clickBackButton
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+/** 点击发送按钮 */
 - (void)clickSendButton
 {
-    NSLog(@"点击发送按钮");
+    NSLog(@"点击提交按钮");
     
     // 关闭键盘
     [_nickNameTextField resignFirstResponder];
     
     // 检查是否“发送中...”状态
-    if ([_sendButton.titleLabel.text isEqualToString:@"发送中..."]) {
+    if ([_sendButton.titleLabel.text isEqualToString:@"提交中.."]) {
         NSLog(@"正在发送，请勿重复点击");
         return;
     }
     
     // 检查输入是否为空
     if ([_nickNameTextField.text isEqualToString:@""]) {
-        NSLog(@"请输入评论内容");
+        NSLog(@"请输入内容");
         return;
     }
     
     // 显示“发送中...”状态
-    [_sendButton setTitle:@"发送中..." forState:UIControlStateNormal];
+    [_sendButton setTitle:@"提交中.." forState:UIControlStateNormal];
     UIColor *buttonColor = [colorManager lightTextColor];
     [_sendButton setTitleColor:buttonColor forState:UIControlStateNormal];
     _sendButton.frame = CGRectMake(_screenWidth - 60, 20, 60, 43);
     
     // 发起网络请求
-    NSLog(@"确认发送");
-    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
-    NSString *myUid = loginInfo[@"uid"];
-    NSString *text = _nickNameTextField.text;
-    [self connectForSendMessageFrom:myUid to:_uid text:text audioID:_audio_id audioText:_audio_text];
+    NSLog(@"确认提交");
+    _nickname = _nickNameTextField.text;
+    [self connectForChangeNickname];
 }
 
 
@@ -214,20 +221,17 @@
 
 #pragma mark - 网络请求
 /** 请求发送消息接口 */
-- (void)connectForSendMessageFrom:(NSString *)from to:(NSString *)to text:(NSString *)text audioID:(NSString *)audio_id audioText:(NSString *)audio_text
+- (void)connectForChangeNickname
 {
-    NSLog(@"发消息请求");
+    NSLog(@"修改昵称请求");
     
     // prepare request parameters
     NSString *host = [urlManager urlHost];
-    NSString *urlString = [host stringByAppendingString:@"/send_message"];
+    NSString *urlString = [host stringByAppendingString:@"/change_nickname"];
     
     NSDictionary *parameters = @{
-                                 @"from": from,
-                                 @"to": to,
-                                 @"text": text,
-                                 @"audio_id": audio_id,
-                                 @"audio_text": audio_text
+                                 @"nickname": _nickname,
+                                 @"uid": _uid
                                  };
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
@@ -239,14 +243,17 @@
         NSLog(@"errcode：%lu", errcode);
         NSLog(@"data:%@", data);
         if (errcode == 1001) {  // 数据库出错
-            //
+            [toastView showToastWith:@"服务器出错" isErr:YES duration:3.0 superView:self.view];
             return;
         }
         
+        NSLog(@"修改成功");
+        
         // 返回上一页
-        [self dismissViewControllerAnimated:YES completion:^{
-            //[self.delegate sendFeedbackSuccess];
-        }];
+        [self.navigationController popViewControllerAnimated:YES];
+        // 调用block
+        self.sendSuccess(@"修改昵称成功", _nickname);
+        
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -256,6 +256,9 @@
         extraPage.uid = _uid;
         extraPage.audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
         extraPage.audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
+        extraPage.extraMessageSendSuccess = ^(NSString *text){
+            [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:3.0 superView:self.view];
+        };
         [self.navigationController presentViewController:extraPage animated:YES completion:nil];
         
     } else if(buttonIndex == 2) {

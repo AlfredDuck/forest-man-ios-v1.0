@@ -261,6 +261,9 @@
             //[self.delegate sendFeedbackSuccess];
         }];
         
+        // block调用
+        self.extraMessageSendSuccess(data[@"text"]);
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

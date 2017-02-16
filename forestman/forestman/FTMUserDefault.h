@@ -20,4 +20,7 @@
 + (NSDictionary *)readLoginInfo;
 + (BOOL)cleanLoginInfo;  // 退出登录后清理登录信息
 + (BOOL)isLogin;  // 判断当前是否登录
+
+/* 修改昵称 */
++ (BOOL)changeNickname:(NSString *)newNickname;
 @end

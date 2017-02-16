@@ -75,4 +75,13 @@
     }
 }
 
+
+/* 修改昵称 */
++ (BOOL)changeNickname:(NSString *)newNickname
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:newNickname forKey:@"nickname"];
+    return YES;
+}
+
 @end

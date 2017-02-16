@@ -15,6 +15,8 @@
 /* 我的头像 */
 @property (nonatomic, strong) NSString *portraitURL;
 @property (nonatomic, strong) UIImageView *portraitImageView;
+/* 昵称 */
+@property (nonatomic, strong) UILabel *nicknameLabel;
 /* 通知开关 */
 @property (nonatomic, strong) UISwitch *pushSwitch;
 @end

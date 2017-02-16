@@ -9,6 +9,7 @@
 #import "FTMMineViewController.h"
 #import "colorManager.h"
 #import "YYWebImage.h"
+#import "toastView.h"
 #import "FTMUserDefault.h"
 #import "FTMNicknameVC.h"
 
@@ -168,12 +169,12 @@
     oneLabel.textColor = [colorManager mainTextColor];
     [nicknameBackground addSubview: oneLabel];
     
-    UILabel *nicknameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-120-26, 12, 120, 20)];
-    nicknameLabel.textAlignment = NSTextAlignmentRight;
-    nicknameLabel.text = loginInfo[@"nickname"];
-    nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
-    nicknameLabel.textColor = [colorManager lightTextColor];
-    [nicknameBackground addSubview:nicknameLabel];
+    _nicknameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-120-26, 12, 120, 20)];
+    _nicknameLabel.textAlignment = NSTextAlignmentRight;
+    _nicknameLabel.text = loginInfo[@"nickname"];
+    _nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    _nicknameLabel.textColor = [colorManager lightTextColor];
+    [nicknameBackground addSubview:_nicknameLabel];
     
     // 箭头图片
     UIImage *oneImage = [UIImage imageNamed:@"direct.png"]; // 使用ImageView通过name找到图片
@@ -245,7 +246,68 @@
 {
     NSLog(@"click nickname");
     FTMNicknameVC *nicknamePage = [[FTMNicknameVC alloc] init];
-    nicknamePage.nickname = 
+    // block回调
+    nicknamePage.sendSuccess = ^(NSString *text, NSString *newNickname){
+        // 显示toast
+        [toastView showToastWith:text isErr:YES duration:3.0 superView:self.view];
+        // 修改本地loginInfo
+        [FTMUserDefault changeNickname: newNickname];
+        // 更改UI
+        _nicknameLabel.text = newNickname;
+    };
+    [self.navigationController pushViewController:nicknamePage animated:YES];
+    
+    // 实验...
+//    //获取根目录
+//    NSString *homePath = NSHomeDirectory();
+//    NSLog(@"Home目录：%@",homePath);
+//    
+//    /* 获取Documents文件夹目录,
+//     @param NSDocumentDirectory  获取Document目录
+//     @param NSUserDomainMask     是在当前沙盒范围内查找
+//     @param YES                  展开路径，NO是不展开
+//     @return test.txt文件的路径
+//     */
+//    NSString *filePath =[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES)firstObject]stringByAppendingPathComponent:@"ho.png"];
+//    NSLog(@"%@", filePath);
+//    
+//    //向沙盒中写入文件
+//    NSString *documentsPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES)[0];
+//    //写入文件
+//    if (!documentsPath) {
+//        NSLog(@"目录未找到");
+//    }else {
+//        NSLog(@"???? ");
+////        NSString *filePaht = [documentsPath stringByAppendingPathComponent:@"test.txt"];
+////        NSArray *array = [NSArray arrayWithObjects:@"code",@"change", @"world", @"OK", @"", @"是的", nil];
+////        [array writeToFile:filePaht atomically:YES];
+//    }
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    //在这里获取应用程序Documents文件夹里的文件及文件夹列表
+//    NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentDir = [documentPaths objectAtIndex:0];
+//    NSError *error = nil;
+//    NSArray *fileList = [[NSArray alloc] init];
+//    //fileList便是包含有该文件夹下所有文件的文件名及文件夹名的数组
+//    fileList = [fileManager contentsOfDirectoryAtPath:documentDir error:&error];
+//    
+//    //以下这段代码则可以列出给定一个文件夹里的所有子文件夹名
+//    
+//    NSMutableArray *dirArray = [[NSMutableArray alloc] init];
+//    BOOL isDir = NO;
+//    //在上面那段程序中获得的fileList中列出文件夹名
+//    for (NSString *file in fileList) {
+//        NSString *path = [documentDir stringByAppendingPathComponent:file];
+//        [fileManager fileExistsAtPath:path isDirectory:(&isDir)];
+//        if (isDir) {
+//            [dirArray addObject:file];
+//        }
+//        isDir = NO;
+//    }
+//    NSLog(@"Every Thing in the dir:%@",fileList);
+//    NSLog(@"All folders:%@",dirArray);
+    
 }
 
 /** 点击开关 */
