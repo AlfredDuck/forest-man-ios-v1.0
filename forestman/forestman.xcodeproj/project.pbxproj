@@ -50,6 +50,7 @@
 		BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */; };
 		BB9EB4F31E422FE800911C8F /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F21E422FE800911C8F /* close.png */; };
 		BB9EB4F71E42C2F000911C8F /* direct.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F61E42C2F000911C8F /* direct.png */; };
+		BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +142,9 @@
 		BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMMyOwnScrollView.m; sourceTree = "<group>"; };
 		BB9EB4F21E422FE800911C8F /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = "../../../coding/salt-App效果图/close.png"; sourceTree = "<group>"; };
 		BB9EB4F61E42C2F000911C8F /* direct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = direct.png; path = "../../../coding/salt-App效果图/direct.png"; sourceTree = "<group>"; };
+		BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = forestman.entitlements; sourceTree = "<group>"; };
+		BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMDeviceTokenManager.h; sourceTree = "<group>"; };
+		BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMDeviceTokenManager.m; sourceTree = "<group>"; };
 		C1BFDA92F0485A65A167786A /* libPods-forestman.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-forestman.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3DEC9B0AC1F65FFF8A6D251 /* Pods-forestman.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.debug.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.debug.xcconfig"; sourceTree = "<group>"; };
 		DAF987D9F56972FCB6062542 /* Pods-forestman.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-forestman.release.xcconfig"; path = "Pods/Target Support Files/Pods-forestman/Pods-forestman.release.xcconfig"; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 		BB9EB4751E3F2A5800911C8F /* forestman */ = {
 			isa = PBXGroup;
 			children = (
+				BBDB1C8B1E5881A800BCE96B /* device token */,
 				BB7A0D481E5806EA00892AAB /* sound */,
 				BB9EB4C51E3F330100911C8F /* pics */,
 				BB168CB51E4B50F900C48CCC /* toast */,
@@ -279,6 +284,7 @@
 				BB9EB4791E3F2A5800911C8F /* AppDelegate.h */,
 				BB9EB47A1E3F2A5800911C8F /* AppDelegate.m */,
 				BB9EB4881E3F2A5800911C8F /* Assets.xcassets */,
+				BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */,
 				BB9EB48D1E3F2A5800911C8F /* Info.plist */,
 				BB9EB4761E3F2A5800911C8F /* Supporting Files */,
 			);
@@ -427,6 +433,15 @@
 			name = "my scrollview";
 			sourceTree = "<group>";
 		};
+		BBDB1C8B1E5881A800BCE96B /* device token */ = {
+			isa = PBXGroup;
+			children = (
+				BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */,
+				BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */,
+			);
+			name = "device token";
+			sourceTree = "<group>";
+		};
 		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +522,11 @@
 					BB9EB4721E3F2A5800911C8F = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 3HCQXUYMF8;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					BB9EB4911E3F2A5800911C8F = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -644,6 +664,7 @@
 				BB9EB4EA1E400F4F00911C8F /* FTMSearchViewController.m in Sources */,
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
 				BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */,
+				BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */,
 				BB168CA81E4B4E5200C48CCC /* FTMWelcomeViewController.m in Sources */,
 				BB9EB4C41E3F319200911C8F /* colorManager.m in Sources */,
 				BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */,
@@ -776,7 +797,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = forestman/forestman.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3HCQXUYMF8;
 				INFOPLIST_FILE = forestman/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -791,7 +814,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = forestman/forestman.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3HCQXUYMF8;
 				INFOPLIST_FILE = forestman/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

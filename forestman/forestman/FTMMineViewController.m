@@ -38,13 +38,13 @@
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     
-    _portraitURL = @"https://img3.doubanio.com/icon/ul46244960-10.jpg";
+    _portraitURL = @"";
     
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:2];  // 调用父类方法，构建tabbar
     [self createScrollView];
-    [self createScrollUI];  // 创建内容部分的ui
+    
 }
 
 
@@ -52,6 +52,10 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    if (!_portraitImageView) {
+        [self createScrollUI];  // 创建内容部分的ui
+    }
+    
 }
 
 

@@ -16,6 +16,7 @@
 #import "FTMPersonViewController.h"
 #import "FTMSearchViewController.h"
 #import "FTMWelcomeViewController.h"
+#import "FTMDeviceTokenManager.h"
 
 @interface FTMFriendsViewController ()
 
@@ -57,6 +58,8 @@
         NSLog(@"已登录");
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         NSString *uid = loginInfo[@"uid"];
+        
+        // 请求好友列表
         [self connectForFriendsListWith:uid];
     } else {
         NSLog(@"未登录");
@@ -234,10 +237,13 @@
 /** 点击‘添加’按钮 */
 - (void)clickAddButton
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
-    alert.delegate = self;
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alert show];
+    // 实验...
+    [FTMDeviceTokenManager requestDeviceToken];
+    
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
+//    alert.delegate = self;
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alert show];
 }
 
 

@@ -8,6 +8,7 @@
 
 #import "FTMWelcomeViewController.h"
 #import "colorManager.h"
+#import "FTMUserDefault.h"
 #import "FTMMailLoginVC.h"
 #import "FTMThirdLoginVC.h"
 
@@ -34,32 +35,34 @@
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth = [UIScreen mainScreen].bounds.size.width;
     
-    // 去登录
-    UIButton *loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [loginButton addTarget:self
+    /* 新浪微博登录 */
+    UIButton *weiboLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [weiboLoginButton addTarget:self
                     action:@selector(goToThirdLogin)
           forControlEvents:UIControlEventTouchUpInside];
-    [loginButton setTitle:@"[ weibo ]" forState:UIControlStateNormal];
-    [loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    loginButton.frame = CGRectMake(0, _screenHeight/2.0-98, _screenWidth, 98);
-    //button.frame = CGRectMake(0, 0, 40, 40);
-    loginButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
-    loginButton.tintColor = [UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1];
-    loginButton.backgroundColor = [colorManager lightGrayBackground];
+    [weiboLoginButton setTitle:@"新浪微博登录" forState:UIControlStateNormal];
+    [weiboLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    weiboLoginButton.frame = CGRectMake(15, _screenHeight-15-50*2-10, _screenWidth-30, 50);
+    weiboLoginButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+    weiboLoginButton.tintColor = [UIColor whiteColor];
+    weiboLoginButton.layer.masksToBounds = YES;
+    weiboLoginButton.layer.cornerRadius = 8;
+    weiboLoginButton.backgroundColor = [colorManager commonBlue];
+    [self.view addSubview:weiboLoginButton];
     
-    [self.view addSubview:loginButton];
-    
-    // 去注册
+    /* 邮箱登录或注册 */
     UIButton *signupButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [signupButton addTarget:self
                      action:@selector(goToMailLogin)
            forControlEvents:UIControlEventTouchUpInside];
-    [signupButton setTitle:@"[ mail ]" forState:UIControlStateNormal];
+    [signupButton setTitle:@"邮箱登录/注册" forState:UIControlStateNormal];
     [signupButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    signupButton.frame = CGRectMake(0, _screenHeight/2.0, _screenWidth, 98);
-    signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:30];
-    signupButton.tintColor = [UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1];
-    signupButton.backgroundColor = [colorManager lightGrayBackground];
+    signupButton.frame = CGRectMake(15, _screenHeight-15-50, _screenWidth-30, 50);
+    signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+    signupButton.tintColor = [UIColor whiteColor];
+    signupButton.layer.masksToBounds = YES;
+    signupButton.layer.cornerRadius = 8;
+    signupButton.backgroundColor = [colorManager commonBlue];
     
     [self.view addSubview:signupButton];
     
@@ -88,8 +91,11 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    // 检查是否登录,如果已经登录则自动退出此页面
+    if ([FTMUserDefault isLogin]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     
-    return;
     // 检查是否登录,如果已经登录则自动退出此页面
 //    WSUUserDefault *userd = [[WSUUserDefault alloc] init];
 //    if ([[userd inOrOutUserDefaults] isEqualToString:@"in"]) {
