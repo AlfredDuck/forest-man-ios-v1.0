@@ -15,6 +15,7 @@
 #import "FTMUserDefault.h"
 #import "FTMMyOwnScrollView.h"
 #import "FTMExtraMessageViewController.h"
+#import "FTMAddFriendViewController.h"
 
 @interface FTMPersonViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -77,6 +78,20 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBackButton)]; // 设置手势
     [backView addGestureRecognizer:singleTap]; // 给图片添加手势
     [self.view addSubview:backView];
+    
+    
+    /* 更多按钮 */
+    UIImage *moreImage = [UIImage imageNamed:@"more.png"]; // 使用ImageView通过name找到图片
+    UIImageView *moreImageView = [[UIImageView alloc] initWithImage:moreImage]; // 把oneImage添加到oneImageView上
+    moreImageView.frame = CGRectMake(11, 20, 22, 4); // 设置图片位置和大小
+    
+    UIView *moreView = [[UIView alloc] initWithFrame:CGRectMake(_screenWidth-47, 20, 44, 44)];
+    [moreView addSubview:moreImageView];
+    // 为UIView添加点击事件
+    moreView.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapMore = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickMoreButton)]; // 设置手势
+    [moreView addGestureRecognizer:singleTapMore]; // 给图片添加手势
+    [self.view addSubview:moreView];
     
     
     /* 头像 */
@@ -229,6 +244,15 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/** 点击更多按钮 */
+- (void)clickMoreButton
+{
+    NSLog(@"more");
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"解除朋友关系" otherButtonTitles: nil];
+    shareSheet.tag = 11;
+    [shareSheet showInView:self.view];
+}
+
 /** 点击语音按钮 */
 - (void)clickAudioButton:(UIButton *)sender
 {
@@ -238,6 +262,7 @@
     str = [@"确认发送？\n" stringByAppendingString:str];
     
     UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:str delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"试听", @"添加附带信息", @"确认发送", nil];
+    shareSheet.tag = 10;
     [shareSheet showInView:self.view];
 }
 
@@ -247,27 +272,36 @@
 #pragma mark - UIActionSheet 代理
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0) {
-        NSLog(@"试听");
+    if (actionSheet.tag == 10) {
+        if (buttonIndex == 0) {
+            NSLog(@"试听");
+            
+        } else if (buttonIndex == 1) {
+            NSLog(@"添加附加信息");
+            FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
+            extraPage.uid = _uid;
+            extraPage.audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
+            extraPage.audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
+            extraPage.extraMessageSendSuccess = ^(NSString *text){
+                [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:3.0 superView:self.view];
+            };
+            [self.navigationController presentViewController:extraPage animated:YES completion:nil];
+            
+        } else if(buttonIndex == 2) {
+            NSLog(@"确认发送");
+            NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+            NSString *myUid = loginInfo[@"uid"];
+            NSString *audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
+            NSString *audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
+            [self connectForSendMessageFrom:myUid to:_uid text:@"" audioID:audio_id audioText:audio_text];
+        }
         
-    } else if (buttonIndex == 1) {
-        NSLog(@"添加附加信息");
-        FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
-        extraPage.uid = _uid;
-        extraPage.audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
-        extraPage.audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
-        extraPage.extraMessageSendSuccess = ^(NSString *text){
-            [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:3.0 superView:self.view];
-        };
-        [self.navigationController presentViewController:extraPage animated:YES completion:nil];
-        
-    } else if(buttonIndex == 2) {
-        NSLog(@"确认发送");
-        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
-        NSString *myUid = loginInfo[@"uid"];
-        NSString *audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
-        NSString *audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
-        [self connectForSendMessageFrom:myUid to:_uid text:@"" audioID:audio_id audioText:audio_text];
+    } else if (actionSheet.tag == 11) {
+        //
+        if (buttonIndex == 0) {
+            NSLog(@"取消朋友关系");
+            [self connectForDeleteFriend];
+        }
     }
 }
 
@@ -312,6 +346,71 @@
         NSLog(@"Error: %@", error);
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
+}
+
+
+
+/** 请求 删除好友接口 */
+- (void)connectForDeleteFriend
+{
+    NSLog(@"删除好友请求");
+    
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/delete_friend"];
+    
+    NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+    NSDictionary *parameters = @{
+                                 @"friend1": loginInfo[@"uid"],
+                                 @"friend2": _uid
+                                 };
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"data:%@", data);
+        if (errcode == 1001) {  // 数据库出错
+            [toastView showToastWith:@"服务器出错，请稍后重试" isErr:NO duration:3.0 superView:self.view];
+            return;
+        } else if (errcode == 1002){
+            [toastView showToastWith:@"已经解除关系，无需重复操作" isErr:YES duration:3.0 superView:self.view];
+            return;
+        }
+        // 跳转到addFriend页面，并且把当前页面从页面栈中去除
+        FTMAddFriendViewController *addFriendPage = [[FTMAddFriendViewController alloc] init];
+        addFriendPage.uid = _uid;
+        addFriendPage.nickname = _nickname;
+        addFriendPage.portraitURL = _portraitURL;
+        [self.navigationController pushViewController:addFriendPage animated:NO];
+        [self deleteCurrentVC];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
+}
+
+
+
+
+
+#pragma mark - 删除viewController
+/** 把当前vc从navigation中删除，因为加好友后就不需要这个页面了 */
+- (void)deleteCurrentVC
+{
+    NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    for (UIViewController *tempVC in tempVCA) {
+        if ([tempVC isKindOfClass:[FTMPersonViewController class]]) {
+            [tempVCA removeObject:tempVC];
+            [self.navigationController setViewControllers:tempVCA animated:YES];
+            break;
+        }
+    }
 }
 
 

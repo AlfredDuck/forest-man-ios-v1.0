@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface FTMMessageCell : UITableViewCell
+/* 投递方向 */
+@property (nonatomic, copy) UIImageView *typeImageView;
 /* 消息内容 */
 @property (nonatomic, copy) NSString *message;
 @property (nonatomic, copy) UILabel *messageLabel;

@@ -13,6 +13,7 @@
 #import "urlManager.h"
 #import "FTMUserDefault.h"
 #import "toastView.h"
+#import "FTMPersonViewController.h"
 
 @interface FTMAddFriendViewController ()
 
@@ -187,20 +188,44 @@
         NSLog(@"在轻闻server注册成功的data:%@", data);
         
         if (errcode == 1001) {  // 数据库出错
-            
+            [toastView showToastWith:@"服务器出错，请稍后再试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
         if (errcode == 1002) {  // 已经是好友，无需重复添加
-            
+            [toastView showToastWith:@"已经是好友了，不要重复添加" isErr:YES duration:2.0 superView:self.view];
             return;
         }
-        
+        // 跳转到person页面，并且把当前页面从页面栈中去除
+        FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
+        personPage.uid = _uid;
+        personPage.nickname = _nickname;
+        personPage.portraitURL = _portraitURL;
+        [self.navigationController pushViewController:personPage animated:YES];
+        [self deleteCurrentVC];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
 }
+
+
+
+
+#pragma mark - 删除viewController
+/** 把当前vc从navigation中删除，因为加好友后就不需要这个页面了 */
+- (void)deleteCurrentVC
+{
+    NSMutableArray *tempVCA = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    for (UIViewController *tempVC in tempVCA) {
+        if ([tempVC isKindOfClass:[FTMAddFriendViewController class]]) {
+            [tempVCA removeObject:tempVC];
+            [self.navigationController setViewControllers:tempVCA animated:YES];
+            break;
+        }
+    }
+}
+
 
 
 @end
