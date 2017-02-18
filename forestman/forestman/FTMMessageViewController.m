@@ -192,7 +192,7 @@
     } else {
         personPage.nickname = _messageData[row][@"from"][@"nickname"];
         personPage.portraitURL = _messageData[row][@"from"][@"portrait"];
-        personPage.uid = _messageData[row][@"to"][@"from"];
+        personPage.uid = _messageData[row][@"from"][@"uid"];
     }
     [self.navigationController pushViewController:personPage animated:YES];
     

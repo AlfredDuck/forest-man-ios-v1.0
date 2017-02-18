@@ -19,6 +19,8 @@
 		BB7A0D431E573C9500892AAB /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = BB7A0D421E573C9400892AAB /* more.png */; };
 		BB7A0D451E57DE4900892AAB /* from_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB7A0D441E57DE4900892AAB /* from_icon.png */; };
 		BB7A0D471E57DE5800892AAB /* to_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BB7A0D461E57DE5800892AAB /* to_icon.png */; };
+		BB7A0D4B1E5808B800892AAB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7A0D4A1E5808B800892AAB /* AudioToolbox.framework */; };
+		BB7A0D4D1E580B5800892AAB /* sleep_tom.wav in Resources */ = {isa = PBXBuildFile; fileRef = BB7A0D4C1E580B5800892AAB /* sleep_tom.wav */; };
 		BB8755B41E5206FC008B296D /* FTMNicknameVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB8755B31E5206FC008B296D /* FTMNicknameVC.m */; };
 		BB9EB4781E3F2A5800911C8F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4771E3F2A5800911C8F /* main.m */; };
 		BB9EB47B1E3F2A5800911C8F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB47A1E3F2A5800911C8F /* AppDelegate.m */; };
@@ -86,6 +88,8 @@
 		BB7A0D421E573C9400892AAB /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = more.png; path = "../../../coding/salt-App效果图/more.png"; sourceTree = "<group>"; };
 		BB7A0D441E57DE4900892AAB /* from_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = from_icon.png; path = "../../../coding/salt-App效果图/from_icon.png"; sourceTree = "<group>"; };
 		BB7A0D461E57DE5800892AAB /* to_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = to_icon.png; path = "../../../coding/salt-App效果图/to_icon.png"; sourceTree = "<group>"; };
+		BB7A0D4A1E5808B800892AAB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		BB7A0D4C1E580B5800892AAB /* sleep_tom.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sleep_tom.wav; path = ../../../../Downloads/sleep_tom.wav; sourceTree = "<group>"; };
 		BB8755B21E5206FC008B296D /* FTMNicknameVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMNicknameVC.h; sourceTree = "<group>"; };
 		BB8755B31E5206FC008B296D /* FTMNicknameVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMNicknameVC.m; sourceTree = "<group>"; };
 		BB9EB4731E3F2A5800911C8F /* forestman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = forestman.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB7A0D4B1E5808B800892AAB /* AudioToolbox.framework in Frameworks */,
 				CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +213,14 @@
 			name = toast;
 			sourceTree = "<group>";
 		};
+		BB7A0D481E5806EA00892AAB /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				BB7A0D4C1E580B5800892AAB /* sleep_tom.wav */,
+			);
+			name = sound;
+			sourceTree = "<group>";
+		};
 		BB8755B01E5206A0008B296D /* mine center */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +263,7 @@
 		BB9EB4751E3F2A5800911C8F /* forestman */ = {
 			isa = PBXGroup;
 			children = (
+				BB7A0D481E5806EA00892AAB /* sound */,
 				BB9EB4C51E3F330100911C8F /* pics */,
 				BB168CB51E4B50F900C48CCC /* toast */,
 				BB9EB4E31E4009C900911C8F /* url manager */,
@@ -416,6 +430,7 @@
 		E8CA3B2DFB9567425855E2D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB7A0D4A1E5808B800892AAB /* AudioToolbox.framework */,
 				C1BFDA92F0485A65A167786A /* libPods-forestman.a */,
 			);
 			name = Frameworks;
@@ -531,6 +546,7 @@
 				BB9EB4F31E422FE800911C8F /* close.png in Resources */,
 				BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */,
 				BB7A0D471E57DE5800892AAB /* to_icon.png in Resources */,
+				BB7A0D4D1E580B5800892AAB /* sleep_tom.wav in Resources */,
 				BB9EB4F71E42C2F000911C8F /* direct.png in Resources */,
 				BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */,
 				BB9EB4C81E3F337700911C8F /* home_tab_focus.png in Resources */,

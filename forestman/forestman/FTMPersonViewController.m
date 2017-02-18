@@ -5,7 +5,7 @@
 //  Created by alfred on 17/1/30.
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
-
+#import <AudioToolbox/AudioToolbox.h>
 #import "FTMPersonViewController.h"
 #import "colorManager.h"
 #import "urlManager.h"
@@ -275,7 +275,7 @@
     if (actionSheet.tag == 10) {
         if (buttonIndex == 0) {
             NSLog(@"试听");
-            
+            [self noteAudio];
         } else if (buttonIndex == 1) {
             NSLog(@"添加附加信息");
             FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
@@ -317,6 +317,12 @@
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/send_message"];
+    
+    NSLog(@"%@", from);
+    NSLog(@"%@", to);
+    NSLog(@"%@", text);
+    NSLog(@"%@", audio_id);
+    NSLog(@"%@", audio_text);
     
     NSDictionary *parameters = @{
                                  @"from": from,
@@ -411,6 +417,26 @@
             break;
         }
     }
+}
+
+
+
+
+
+
+#pragma mark - 播放提示音（自定义声音）
+/** 播放提示音 */
+- (void)noteAudio
+{
+    // 播放test.wav文件
+    // 必须是.caf  .aif .wav文件
+    static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"sleep_tom" ofType:@"wav"];
+    if (path) {
+        AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
+    }
+    AudioServicesPlaySystemSound( soundIDTest );
+    
 }
 
 
