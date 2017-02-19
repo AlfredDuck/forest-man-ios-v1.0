@@ -41,14 +41,14 @@
         /* 消息投递方向 */
         UIImage *oneImage = [UIImage imageNamed:@"from_icon.png"]; // 使用ImageView通过name找到图片
         _typeImageView = [[UIImageView alloc] initWithImage:oneImage]; // 把oneImage添加到oneImageView上
-        _typeImageView.frame = CGRectMake(9, 15, 22, 12); // 设置图片位置和大小
+        _typeImageView.frame = CGRectMake(9, 15, 24, 14); // 设置图片位置和大小
         [self.contentView addSubview:_typeImageView];
         
         
         /* 发送人 */
         _ownerLabel = [[UILabel alloc] initWithFrame:CGRectMake(42, 13, 200, 17)];
         _ownerLabel.text = _owner;
-        _ownerLabel.font = [UIFont fontWithName:@"Helvetica Bold" size: 12.0];
+        _ownerLabel.font = [UIFont fontWithName:@"Helvetica Bold" size: 14];
         _ownerLabel.textColor = [colorManager mainTextColor];
         [self.contentView addSubview:_ownerLabel];
         
@@ -56,7 +56,7 @@
         /* 发送时间 */
         _sendTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-150-15, 13, 150, 17)];
         _sendTimeLabel.text = _sendTime;
-        _sendTimeLabel.font = [UIFont fontWithName:@"Helvetica" size: 12.0];
+        _sendTimeLabel.font = [UIFont fontWithName:@"Helvetica" size: 14];
         _sendTimeLabel.textAlignment = NSTextAlignmentRight;
         _sendTimeLabel.textColor = [colorManager lightTextColor];
         [self.contentView addSubview:_sendTimeLabel];
@@ -65,12 +65,10 @@
         /* 消息内容 */
         _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(42, 35, 200, 20)];
         _messageLabel.text = _message;
-        _messageLabel.font = [UIFont fontWithName:@"Helvetica" size: 15.0];
+        _messageLabel.font = [UIFont fontWithName:@"Helvetica" size: 16.0];
         _messageLabel.textColor = [colorManager mainTextColor];
 //        _messageLabel.backgroundColor = [UIColor yellowColor];
         [self.contentView addSubview:_messageLabel];
-        
-
         
         
         /* 背景、分割线 */

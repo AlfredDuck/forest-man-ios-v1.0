@@ -7,6 +7,9 @@
 //
 
 #import "FTMDeviceTokenManager.h"
+#import "FTMUserDefault.h"
+#import "urlManager.h"
+#import "AFNetworking.h"
 
 @implementation FTMDeviceTokenManager
 
@@ -37,31 +40,59 @@
 + (void)uploadAndStoreToken:(NSString *)token
 {
     // 获取本地token记录
+    NSString *localToken = [FTMUserDefault readDeviceToken];
     
-    
-    //    WSUUserDefault *userDef = [[WSUUserDefault alloc] init];
-    //    NSLog(@"本地记录的device token:%@",[userDef readDeviceToken]);
-    //    if (![userDef readDeviceToken]) {
-    //        NSLog(@"无本地记录的device token");
-    //        // 上传实际token到服务器，根据服务器返回值修改本地token
-    //        // 检查是否登录着，如果登录着则更新服务器的用户设备token
-    //        if ([[userDef inOrOutUserDefaults] isEqualToString:@"in"]) {
-    //            NSLog(@"打印登录信息： %@", [userDef readUserDefaults]);
-    //            UpdateDeviceTokenConnect *updateTokenConnect = [[UpdateDeviceTokenConnect alloc] init];
-    //            [updateTokenConnect startConnectWithNickName:[userDef readUserDefaults] deviceToken:tokenStrWithoutBlankChar];
-    //            updateTokenConnect = nil;
-    //        }
-    //    }
-    //    else if (![[userDef readDeviceToken] isEqualToString:tokenStrWithoutBlankChar]) {
-    //        NSLog(@"本地记录的token与实际token不符");
-    //        // 上传实际token到服务器，根据服务器返回值修改本地token
-    //        // 检查是否登录着，如果登录着则更新服务器的用户设备token
-    //        if ([[userDef inOrOutUserDefaults] isEqualToString:@"in"]) {
-    //            NSLog(@"打印登录信息： %@", [userDef readUserDefaults]);
-    //            UpdateDeviceTokenConnect *updateTokenConnect = [[UpdateDeviceTokenConnect alloc] init];
-    //            [updateTokenConnect startConnectWithNickName:[userDef readUserDefaults] deviceToken:tokenStrWithoutBlankChar];
-    //            updateTokenConnect = nil;
-    //        }
-    //    }
+    if (!localToken || ![localToken isEqualToString:token]) {
+        // 本地没有token记录，则上传实际token到服务器，根据服务器返回值修改本地token
+        // 本地有token记录，但与获取的token不同，则说明token有变化，需要重新上传
+        if ([FTMUserDefault isLogin]) {  // 检查是否已登录
+            NSLog(@"上传token");
+            NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+            [self connectForUploadDeviceToken:token withUid:loginInfo[@"uid"]];
+        }
+    } else {
+        NSLog(@"本地已有的token：%@", localToken);
+    }
 }
+
+
+
+#pragma mark - 网络请求
+/** 更新token请求 */
++ (void)connectForUploadDeviceToken:(NSString *)token withUid:(NSString *)uid
+{
+    NSLog(@"请求上传token");
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/user/upload_token"];
+    
+    NSDictionary *parameters = @{@"uid": uid,
+                                 @"device_token": token};
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 30.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"上传token的返回值data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            return;
+        }
+        if (errcode == 1002) {  // 添加token没有成功
+            return;
+        }
+        // 服务器储存成功后，把token也存在本地
+        [FTMUserDefault recordDeviceToken:token];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
+
+
+
 @end

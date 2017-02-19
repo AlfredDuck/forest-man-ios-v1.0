@@ -58,7 +58,8 @@
         NSLog(@"已登录");
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         NSString *uid = loginInfo[@"uid"];
-        
+        // 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多（后期可以针对是否第一次安装需要用户授权，来优化）
+        [FTMDeviceTokenManager requestDeviceToken];
         // 请求好友列表
         [self connectForFriendsListWith:uid];
     } else {
@@ -205,6 +206,9 @@
 // tableView 点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 判断是否已开启推送
+    
+    
     NSUInteger row = [indexPath row];
     
     //临时...

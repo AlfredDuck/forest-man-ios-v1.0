@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface FTMDeviceTokenManager : NSObject
+@interface FTMDeviceTokenManager : UIViewController
 /** 获取device token */
 + (void)requestDeviceToken;
 /** 上传及修改本地token */
 + (void)uploadAndStoreToken:(NSString *)token;
+/** 是否开启推送 */
+
 @end

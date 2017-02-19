@@ -110,6 +110,9 @@
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
     
+    NSDictionary *info = [FTMUserDefault readLoginInfo];
+    NSString *uid = info[@"uid"];
+    
     // 下拉刷新 MJRefresh
     _oneTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
@@ -118,15 +121,13 @@
         //            [_oneTableView.mj_header endRefreshing];
         //            NSLog(@"下拉刷新成功，结束刷新");
         //        });
-        NSDictionary *info = [FTMUserDefault readLoginInfo];
-        NSString *uid = info[@"uid"];
         [self connectForMessageList:uid];
     }];
     
     // 上拉刷新 MJRefresh (等到页面有数据后再使用)
-    //    _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-    //        [self connectForMoreFollowedArticles:_oneTableView];
-    //    }];
+    _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self connectForMoreMessage:uid];
+    }];
     
     // 这个碉堡了，要珍藏！！
     _oneTableView.mj_header.ignoredScrollViewContentInsetTop = 15.0;
@@ -210,6 +211,7 @@
 
 
 #pragma mark - 网络请求
+/** 第一次请求或下拉刷新 */
 - (void)connectForMessageList:(NSString *)uid
 {
     // prepare request parameters
@@ -223,7 +225,7 @@
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         // GET请求成功
-        NSDictionary *data = responseObject[@"data"];
+        NSArray *data = responseObject[@"data"];
         unsigned long errcode = [responseObject[@"errcode"] intValue];
         NSLog(@"errcode：%lu", errcode);
         NSLog(@"在轻闻server注册成功的data:%@", data);
@@ -240,12 +242,60 @@
         [_oneTableView.mj_header endRefreshing];
         /* 绑定数据 */
         _messageData = [data mutableCopy];
-        /**/
+        /* 刷新tableview */
         [_oneTableView reloadData];
+        // footer重置回可用状态
+        [_oneTableView.mj_footer setState:MJRefreshStateIdle];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [_oneTableView.mj_header endRefreshing];
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
+}
+
+
+/** 请求更多message */
+- (void)connectForMoreMessage:(NSString *)uid
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/message_list"];
+    NSString *messageID = [_messageData lastObject][@"_id"];
+    
+    NSDictionary *parameters = @{@"uid": uid,
+                                 @"type": @"loadmore",
+                                 @"last_id": messageID};
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSArray *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在轻闻server注册成功的data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            [_oneTableView.mj_footer endRefreshing];
+            return;
+        }
+        if (errcode == 1002) {  // 没有更多内容了
+            [_oneTableView.mj_footer endRefreshingWithNoMoreData];
+            return;
+        }
+        
+        /* 绑定数据 */
+        [_messageData addObjectsFromArray:data];
+        /* 刷新tableview */
+        [_oneTableView reloadData];
+        [_oneTableView.mj_footer endRefreshing];  // 结束上拉加载更多
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [_oneTableView.mj_footer endRefreshing];
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
 }
