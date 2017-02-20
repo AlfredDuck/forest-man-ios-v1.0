@@ -46,7 +46,7 @@
         _portraitImageView.clipsToBounds  = YES;
         _portraitImageView.layer.cornerRadius = 20;
         [_portraitImageView.layer setBorderWidth:0.5];   //边框宽度
-        [_portraitImageView.layer setBorderColor:[colorManager lightline].CGColor];
+        [_portraitImageView.layer setBorderColor:[colorManager lightPortraitline].CGColor];
         // 普通加载网络图片 yy库
         _portraitImageView.yy_imageURL = [NSURL URLWithString:_portraitURL];
         [self.contentView addSubview:_portraitImageView];

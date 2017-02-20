@@ -72,7 +72,7 @@
     
     /* 头像 */
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake((_screenWidth-88)/2.0, 42, 88, 88)];
-    bgView.backgroundColor = [colorManager lightline];
+    bgView.backgroundColor = [colorManager lightPortraitline];
     bgView.clipsToBounds = YES;
     bgView.layer.cornerRadius = 44;
     [self.view addSubview: bgView];

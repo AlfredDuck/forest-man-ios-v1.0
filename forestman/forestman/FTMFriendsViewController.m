@@ -349,6 +349,7 @@
         NSLog(@"在轻闻server注册成功的data:%@", data);
         
         if (errcode == 1001) {  // 数据库出错
+            [toastView showToastWith:@"服务器出错，请稍后再试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
         if (errcode == 1002) {  // 没有好友
@@ -365,7 +366,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
     }];
 }
 

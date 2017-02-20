@@ -17,7 +17,7 @@
 #import "FTMPersonViewController.h"
 
 @interface FTMMessageViewController ()
-
+@property (nonatomic) BOOL shoudAutoRefresh;
 @end
 
 @implementation FTMMessageViewController
@@ -44,6 +44,7 @@
     /* 构建页面元素 */
     [super createTabBarWith:1];  // 调用父类方法，构建tabbar
     [self createUIParts];
+    [self waitForNotification];
 }
 
 
@@ -53,7 +54,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [self createTableView];
     /* 调用 MJRefresh 初始化数据 */
-    if (!_messageData) {
+    if (!_messageData || _shoudAutoRefresh) {
         [_oneTableView.mj_header beginRefreshing];
     }
 }
@@ -91,6 +92,12 @@
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
+    /* 小红点 */
+    _redDotView = [[UIImageView alloc] initWithFrame:CGRectMake(_screenWidth/2+34, 30, 10, 10)];
+    _redDotView.image = [UIImage imageNamed:@"red_dot.png"];
+    _redDotView.hidden = YES;
+    [titleBarBackground addSubview:_redDotView];
+
 }
 
 
@@ -136,6 +143,15 @@
     
     // 禁用 mjRefresh
     // contentTableView.mj_footer = nil;
+    
+    /** 为空提示语 **/
+    _emptyLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, _screenHeight/2-50, 200, 30)];
+    _emptyLabel.text = @"- 还没有消息记录 -";
+    _emptyLabel.textColor = [colorManager secondTextColor];
+    _emptyLabel.font = [UIFont fontWithName:@"Helvetica" size: 12];
+    _emptyLabel.textAlignment = NSTextAlignmentCenter;
+    _emptyLabel.hidden = YES;
+    [self.view addSubview:_emptyLabel];
 }
 
 
@@ -213,7 +229,7 @@
 
 
 #pragma mark - 网络请求
-/** 第一次请求或下拉刷新 */
+/** 下拉刷新 */
 - (void)connectForMessageList:(NSString *)uid
 {
     // prepare request parameters
@@ -233,11 +249,12 @@
         NSLog(@"在轻闻server注册成功的data:%@", data);
         
         if (errcode == 1001) {  // 数据库出错
-            
+            [toastView showToastWith:@"服务器出错，请稍后尝试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
-        if (errcode == 1002) {  // 已经是好友，无需重复添加
-            
+        if (errcode == 1002) {  // 没有消息记录
+            _emptyLabel.hidden = NO;
+            [_oneTableView.mj_header endRefreshing];
             return;
         }
         
@@ -248,12 +265,15 @@
         [_oneTableView reloadData];
         // footer重置回可用状态
         [_oneTableView.mj_footer setState:MJRefreshStateIdle];
+        // 小红点消失
+        _redDotView.hidden = YES;
+        _shoudAutoRefresh = NO;
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [_oneTableView.mj_header endRefreshing];
-        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
     }];
 }
 
@@ -299,6 +319,29 @@
         NSLog(@"Error: %@", error);
         [_oneTableView.mj_footer endRefreshing];
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+    }];
+}
+
+
+
+
+#pragma mark - 接受广播
+/** 注册广播观察者 **/
+- (void)waitForNotification
+{
+    // 广播内容：发送了一条message
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"sendOneMessage" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        // 该刷新message list的标记
+        _shoudAutoRefresh = YES;
+    }];
+    
+    // 广播内容：接收到一条message（通过APNS）
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"recieveOneMessage" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        _redDotView.hidden = NO;  // 显示小红点
     }];
 }
 

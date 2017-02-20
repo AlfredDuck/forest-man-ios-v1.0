@@ -16,4 +16,9 @@
 @property (nonatomic, strong) UITableView *oneTableView;
 /* tableview data */
 @property (nonatomic, strong) NSMutableArray *messageData;
+/* 小红点 */
+@property (nonatomic, strong) UIImageView *redDotView;
+
+@property (nonatomic, strong) UILabel *emptyLabel;  // 页面为空的提示语
+
 @end

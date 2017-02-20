@@ -26,4 +26,5 @@
 //=============
 + (UIColor *)lightline;
 + (UIColor *)commonBlue;
++ (UIColor *)lightPortraitline;
 @end

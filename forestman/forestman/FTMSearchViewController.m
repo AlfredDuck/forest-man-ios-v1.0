@@ -95,6 +95,34 @@
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
+    
+    
+    /** 为空提示语 **/
+    _emptyLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, 84, 200, 30)];
+    _emptyLabel.text = @"- 没有搜索到任何用户 -";
+    _emptyLabel.textColor = [colorManager secondTextColor];
+    _emptyLabel.font = [UIFont fontWithName:@"Helvetica" size: 12];
+    _emptyLabel.textAlignment = NSTextAlignmentCenter;
+    _emptyLabel.hidden = YES;
+    [titleBarBackground addSubview:_emptyLabel];
+    
+    /** loadingView **/
+    _loadingView = [[UIView alloc] initWithFrame:CGRectMake((_screenWidth-200)/2.0, (_screenHeight-60)/2.0, 200, 44+16)];
+    // 菊花
+    _loadingFlower = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _loadingFlower.frame = CGRectMake((200-44)/2.0, 0, 44, 44);
+    [_loadingFlower startAnimating];
+    //[_loadingFlower stopAnimating];
+    // loading 文案
+    UILabel *loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 44, 200, 16)];
+    loadingLabel.text = @"正在加载...";
+    loadingLabel.textColor = [colorManager secondTextColor];
+    loadingLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+    loadingLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [_loadingView addSubview:loadingLabel];
+    [_loadingView addSubview:_loadingFlower];
+    [titleBarBackground addSubview:_loadingView];
 }
 
 
@@ -211,11 +239,12 @@
         NSLog(@"在轻闻server注册成功的data:%@", data);
         
         if (errcode == 1001) {  // 数据库出错
-            
+            [toastView showToastWith:@"服务器出错，请稍后再试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
-        if (errcode == 1002) {  // 没有相关用户
-
+        if (errcode == 1002) {  // 没有搜索结果
+            _loadingView.hidden = YES;
+            _emptyLabel.hidden = NO;
             return;
         }
         
@@ -226,7 +255,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
     }];
 }
 

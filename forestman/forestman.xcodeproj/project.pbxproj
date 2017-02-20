@@ -50,6 +50,7 @@
 		BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */; };
 		BB9EB4F31E422FE800911C8F /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F21E422FE800911C8F /* close.png */; };
 		BB9EB4F71E42C2F000911C8F /* direct.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F61E42C2F000911C8F /* direct.png */; };
+		BBAF10441E5B37D100E22677 /* red_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF10431E5B37D100E22677 /* red_dot.png */; };
 		BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
@@ -143,6 +144,7 @@
 		BB9EB4F21E422FE800911C8F /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = "../../../coding/salt-App效果图/close.png"; sourceTree = "<group>"; };
 		BB9EB4F61E42C2F000911C8F /* direct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = direct.png; path = "../../../coding/salt-App效果图/direct.png"; sourceTree = "<group>"; };
 		BBAF10421E59920600E22677 /* sleep_tom.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = sleep_tom.m4a; path = ../../../xcode_project/WhatsUp/WhatsUp/sleep_tom.m4a; sourceTree = "<group>"; };
+		BBAF10431E5B37D100E22677 /* red_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red_dot.png; path = "../../../coding/salt-App效果图/red_dot.png"; sourceTree = "<group>"; };
 		BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = forestman.entitlements; sourceTree = "<group>"; };
 		BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMDeviceTokenManager.h; sourceTree = "<group>"; };
 		BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMDeviceTokenManager.m; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 		BB9EB4C51E3F330100911C8F /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				BBAF10431E5B37D100E22677 /* red_dot.png */,
 				BB7A0D441E57DE4900892AAB /* from_icon.png */,
 				BB7A0D461E57DE5800892AAB /* to_icon.png */,
 				BB7A0D421E573C9400892AAB /* more.png */,
@@ -568,6 +571,7 @@
 				BB9EB4F31E422FE800911C8F /* close.png in Resources */,
 				BB9EB4CD1E3F338600911C8F /* discovery_tab.png in Resources */,
 				BB7A0D471E57DE5800892AAB /* to_icon.png in Resources */,
+				BBAF10441E5B37D100E22677 /* red_dot.png in Resources */,
 				BB7A0D4D1E580B5800892AAB /* sleep_tom.wav in Resources */,
 				BB9EB4F71E42C2F000911C8F /* direct.png in Resources */,
 				BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */,

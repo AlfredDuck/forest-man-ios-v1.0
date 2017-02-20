@@ -96,7 +96,7 @@
     
     /* 头像 */
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake((_screenWidth-88)/2.0, 42, 88, 88)];
-    bgView.backgroundColor = [colorManager lightline];
+    bgView.backgroundColor = [colorManager lightPortraitline];
     bgView.clipsToBounds = YES;
     bgView.layer.cornerRadius = 44;
     [self.view addSubview: bgView];
@@ -356,6 +356,10 @@
         }
         
         [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:2.0 superView:self.view];
+        
+        // 创建一个广播(发送了一个message)，广播接收方是message list)
+        NSDictionary *info = @{@"message": @"ok"};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"sendOneMessage" object:info];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

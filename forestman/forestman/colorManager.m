@@ -66,6 +66,9 @@
 + (UIColor *)commonBlue {
     return [UIColor colorWithRed:21/255.0 green:130/255.0 blue:243/255.0 alpha:1];
 }
++ (UIColor *)lightPortraitline {
+    return [UIColor colorWithRed:215/255.0 green:215/255.0 blue:215/255.0 alpha:1];
+}
 
 
 @end

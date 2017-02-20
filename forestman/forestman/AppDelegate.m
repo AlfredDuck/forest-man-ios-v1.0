@@ -172,6 +172,11 @@
         NSLog(@"%@", userInfo);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"???" message:@"??????" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles: nil];
         [alert show];
+        
+        // 创建一个广播(发送了一个message)，广播接收方是message list)
+        NSDictionary *info = @{@"message": @"ok"};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recieveOneMessage" object:info];
+        
     } else {
         // 程序未在运行状态受到推送通知
     }

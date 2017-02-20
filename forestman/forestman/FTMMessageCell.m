@@ -56,7 +56,7 @@
         /* 发送时间 */
         _sendTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_screenWidth-150-15, 13, 150, 17)];
         _sendTimeLabel.text = _sendTime;
-        _sendTimeLabel.font = [UIFont fontWithName:@"Helvetica" size: 14];
+        _sendTimeLabel.font = [UIFont fontWithName:@"Helvetica" size: 12];
         _sendTimeLabel.textAlignment = NSTextAlignmentRight;
         _sendTimeLabel.textColor = [colorManager lightTextColor];
         [self.contentView addSubview:_sendTimeLabel];
