@@ -16,4 +16,8 @@
 @property (nonatomic, strong) UITableView *oneTableView;
 /* tableview data */
 @property (nonatomic, strong) NSMutableArray *friendsData;
+
+@property (nonatomic, strong) UIView *loadingView;  // 页面第一次加载时显示的loading
+@property (nonatomic, strong) UIActivityIndicatorView *loadingFlower;  // 小菊花
+@property (nonatomic, strong) UILabel *emptyLabel;  // 页面为空的提示语
 @end

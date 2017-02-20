@@ -99,10 +99,10 @@
     // ===================设置uilabel文本折行====================
     NSString *str = _message;
     CGSize maxSize = {_screenWidth-15-42, 5000};  // 设置文本区域最大宽高(两边各留px)
-    CGSize labelSize = [str sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15]
+    CGSize labelSize = [str sizeWithFont:[UIFont fontWithName:@"Helvetica" size:16]
                        constrainedToSize:maxSize
                            lineBreakMode:_messageLabel.lineBreakMode];   // str是要显示的字符串
-    CGFloat newHeight = labelSize.height*17/15.0;
+    CGFloat newHeight = labelSize.height*18/16.0;
     _messageLabel.frame = CGRectMake(42, 35, _screenWidth-15-42, newHeight);  // 动态修改label高度,且需要根据行距作调整
     _messageLabel.numberOfLines = 0;  // 不可少Label属性之一
     //_postTextLabel.lineBreakMode = UILineBreakModeCharacterWrap;  // 不可少Label属性之二

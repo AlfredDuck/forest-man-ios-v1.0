@@ -48,6 +48,10 @@
     [self connectForSearchResult];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    // block 调用
+    self.backFromSearchPage(@"");
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -44,7 +44,6 @@
     /* 构建页面元素 */
     [super createTabBarWith:1];  // 调用父类方法，构建tabbar
     [self createUIParts];
-    [self createTableView];
 }
 
 
@@ -52,8 +51,11 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [self createTableView];
     /* 调用 MJRefresh 初始化数据 */
-    [_oneTableView.mj_header beginRefreshing];
+    if (!_messageData) {
+        [_oneTableView.mj_header beginRefreshing];
+    }
 }
 
 

@@ -186,7 +186,13 @@
                      @{@"audio_id":@"FS-004",
                        @"audio_text":@"安娜玛德莲娜"},
                      @{@"audio_id":@"FS-005",
-                       @"audio_text":@"你瞅啥"}];
+                       @"audio_text":@"你瞅啥"},
+                      @{@"audio_id":@"FS-003",
+                        @"audio_text":@"安红，俺想你"},
+                      @{@"audio_id":@"FS-004",
+                        @"audio_text":@"安娜玛德莲娜"},
+                      @{@"audio_id":@"FS-005",
+                        @"audio_text":@"你瞅啥"}];
     // 循环
     unsigned long basedX = 15;
     unsigned long basedY = 18;
@@ -194,7 +200,7 @@
         // 创建一个自适应宽度的button
         NSString *str = _audioArr[i][@"audio_text"];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        btn.titleLabel.font = [UIFont systemFontOfSize:16.0];
         //对按钮的外形做了设定，不喜可删~
         btn.layer.masksToBounds = YES;
         btn.layer.borderWidth = 1;
@@ -282,6 +288,7 @@
             extraPage.uid = _uid;
             extraPage.audio_id = _audioArr[_selectedAudioIndex][@"audio_id"];
             extraPage.audio_text = _audioArr[_selectedAudioIndex][@"audio_text"];
+            // block定义函数体
             extraPage.extraMessageSendSuccess = ^(NSString *text){
                 [toastView showToastWith:@"发送成功，嘿嘿嘿~" isErr:YES duration:3.0 superView:self.view];
             };
@@ -301,6 +308,8 @@
         if (buttonIndex == 0) {
             NSLog(@"取消朋友关系");
             [self connectForDeleteFriend];
+            // block调用
+            self.deleteFriendship(@"");
         }
     }
 }
