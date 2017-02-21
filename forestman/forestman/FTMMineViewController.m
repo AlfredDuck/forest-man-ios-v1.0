@@ -143,6 +143,10 @@
     [_portraitImageView.layer setBorderColor:[colorManager lightPortraitline].CGColor];
     // 普通加载网络图片 yy库
     _portraitImageView.yy_imageURL = [NSURL URLWithString: loginInfo[@"portrait"]];
+    // 为UIView添加点击事件
+    _portraitImageView.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapPortrait = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickPortrait)]; // 设置手势
+    [_portraitImageView addGestureRecognizer:singleTapPortrait]; // 给图片添加手势
     [portraitBackground addSubview:_portraitImageView];
     
     /* 微博id or 邮箱账号 */
@@ -156,6 +160,9 @@
     UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, 167.5, _screenWidth, 0.5)];
     line1.backgroundColor = [colorManager lightline];
     [portraitBackground addSubview:line1];
+    
+    
+    // ======================================================================
     
     
     /* 修改昵称 */
@@ -195,27 +202,79 @@
     
     
     /* 通知开关 */
-    UIView *noteBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44, _screenWidth, 44)];
-    noteBackground.backgroundColor = [UIColor whiteColor];
-    [_basedScrollView addSubview:noteBackground];
+//    UIView *noteBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44, _screenWidth, 44)];
+//    noteBackground.backgroundColor = [UIColor whiteColor];
+//    [_basedScrollView addSubview:noteBackground];
+//    
+//    UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 11, 200, 22)];
+//    noteLabel.text = @"接收消息通知";
+//    noteLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+//    noteLabel.textColor = [colorManager mainTextColor];
+//    [noteBackground addSubview: noteLabel];
+//
+//    _pushSwitch = [[UISwitch alloc]init];
+//    _pushSwitch.frame=CGRectMake(_screenWidth-64, 7, 0,0);   // switch大小固定，不用设置size
+//    //设置ON一边的背景颜色，默认是绿色
+//    _pushSwitch.onTintColor = [UIColor colorWithRed:(47/255.0) green:(175/255.0) blue:(239/255.0) alpha:1];
+//    [_pushSwitch setOn:NO animated:YES];
+//    [_pushSwitch addTarget:self action:@selector(clickSwitch) forControlEvents:UIControlEventAllTouchEvents];
+//    [noteBackground addSubview:_pushSwitch];
     
+    
+    /* 求好评 */
+    UIView *appStoreBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44, _screenWidth, 44)];
+    appStoreBackground.backgroundColor = [UIColor whiteColor];
+    // 为UIView添加点击事件
+    appStoreBackground.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapAppStore = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickAppStore)]; // 设置手势
+    [appStoreBackground addGestureRecognizer:singleTapAppStore]; // 给图片添加手势
+    [_basedScrollView addSubview:appStoreBackground];
+
     UILabel *noteLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 11, 200, 22)];
-    noteLabel.text = @"接收消息通知";
+    noteLabel.text = @"去AppStore给好评";
     noteLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
     noteLabel.textColor = [colorManager mainTextColor];
-    [noteBackground addSubview: noteLabel];
-
-    _pushSwitch = [[UISwitch alloc]init];
-    _pushSwitch.frame=CGRectMake(_screenWidth-64, 7, 0,0);   // switch大小固定，不用设置size
-    //设置ON一边的背景颜色，默认是绿色
-    _pushSwitch.onTintColor = [UIColor colorWithRed:(47/255.0) green:(175/255.0) blue:(239/255.0) alpha:1];
-    [_pushSwitch setOn:NO animated:YES];
-    [_pushSwitch addTarget:self action:@selector(clickSwitch) forControlEvents:UIControlEventAllTouchEvents];
-    [noteBackground addSubview:_pushSwitch];
+    [appStoreBackground addSubview: noteLabel];
+    // 箭头图片
+    UIImage *oneImage1 = [UIImage imageNamed:@"direct.png"]; // 使用ImageView通过name找到图片
+    UIImageView *oneImageView1 = [[UIImageView alloc] initWithImage:oneImage1]; // 把oneImage添加到oneImageView上
+    oneImageView1.frame = CGRectMake(18, 15.5, 8, 13); // 设置图片位置和大小
+    // [oneImageView setContentMode:UIViewContentModeCenter];
+    UIView *backView1 = [[UIView alloc] initWithFrame:CGRectMake(_screenWidth-38, 0, 44, 44)];
+    [backView1 addSubview:oneImageView1];
+    [appStoreBackground addSubview:backView1];
+    
+    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, _screenWidth, 0.5)];
+    line3.backgroundColor = [colorManager lightline];
+    [appStoreBackground addSubview:line3];
+    
+    
+    /* 邀请好友加入（分享） */
+    UIView *shareBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44+44, _screenWidth, 44)];
+    shareBackground.backgroundColor = [UIColor whiteColor];
+    // 为UIView添加点击事件
+    shareBackground.userInteractionEnabled = YES; // 设置图片可以交互
+    UITapGestureRecognizer *singleTapShare = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickShare)]; // 设置手势
+    [shareBackground addGestureRecognizer:singleTapShare]; // 给图片添加手势
+    [_basedScrollView addSubview:shareBackground];
+    
+    UILabel *shareLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 11, 200, 22)];
+    shareLabel.text = @"邀请好友加入";
+    shareLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+    shareLabel.textColor = [colorManager mainTextColor];
+    [shareBackground addSubview: shareLabel];
+    // 箭头图片
+    UIImage *oneImage2 = [UIImage imageNamed:@"direct.png"]; // 使用ImageView通过name找到图片
+    UIImageView *oneImageView2 = [[UIImageView alloc] initWithImage:oneImage2]; // 把oneImage添加到oneImageView上
+    oneImageView2.frame = CGRectMake(18, 15.5, 8, 13); // 设置图片位置和大小
+    // [oneImageView setContentMode:UIViewContentModeCenter];
+    UIView *backView2 = [[UIView alloc] initWithFrame:CGRectMake(_screenWidth-38, 0, 44, 44)];
+    [backView2 addSubview:oneImageView2];
+    [shareBackground addSubview:backView2];
     
     
     /* 退出登录 */
-    UIView *loginoutBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44+44+15, _screenWidth, 44)];
+    UIView *loginoutBackground = [[UIView alloc] initWithFrame:CGRectMake(0, 15+168+44+44+44+15, _screenWidth, 44)];
     loginoutBackground.backgroundColor = [UIColor whiteColor];
     // 为UIView添加点击事件
     loginoutBackground.userInteractionEnabled = YES; // 设置图片可以交互
@@ -318,6 +377,29 @@
 - (void)clickSwitch
 {
     NSLog(@"点击switch");
+}
+
+
+/** 点击AppStore */
+- (void)clickAppStore
+{
+    NSString *iTunesLink = @"https://itunes.apple.com/us/app/id1084092765";
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
+}
+
+
+/** 点击share */
+- (void)clickShare
+{
+    NSLog(@"click share");
+}
+
+
+/** 点击头像 */
+- (void)clickPortrait
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"暂不支持更换头像" message:@"将在最近的版本完善此功能，别急~" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+    [alert show];
 }
 
 
