@@ -157,7 +157,7 @@
     idLabel.textColor = [colorManager lightTextColor];
     [portraitBackground addSubview: idLabel];
     
-    UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(0, 167.5, _screenWidth, 0.5)];
+    UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(15, 167.5, _screenWidth-15, 0.5)];
     line1.backgroundColor = [colorManager lightline];
     [portraitBackground addSubview:line1];
     
@@ -196,7 +196,7 @@
     [backView addSubview:oneImageView];
     [nicknameBackground addSubview:backView];
     
-    UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, _screenWidth, 0.5)];
+    UIView *line2 = [[UIView alloc] initWithFrame:CGRectMake(15, 43.5, _screenWidth-15, 0.5)];
     line2.backgroundColor = [colorManager lightline];
     [nicknameBackground addSubview:line2];
     
@@ -244,7 +244,7 @@
     [backView1 addSubview:oneImageView1];
     [appStoreBackground addSubview:backView1];
     
-    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, _screenWidth, 0.5)];
+    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(15, 43.5, _screenWidth-15, 0.5)];
     line3.backgroundColor = [colorManager lightline];
     [appStoreBackground addSubview:line3];
     
@@ -299,9 +299,9 @@
 /** 点击退出登录 */
 - (void)clickLogout
 {
-    NSLog(@"click logout");
-    // 清理登录信息
-    [FTMUserDefault cleanLoginInfo];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退出登录后将收不到朋友的消息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"退出登录", nil];
+    alert.tag = 11;
+    [alert show];
 }
 
 /** 点击修改昵称 */
@@ -399,7 +399,24 @@
 - (void)clickPortrait
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"暂不支持更换头像" message:@"将在最近的版本完善此功能，别急~" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+    alert.tag = 10;
     [alert show];
+}
+
+
+
+
+
+#pragma mark - Alert代理
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 11) {
+        if (buttonIndex == 1) {
+            NSLog(@"退出登录");
+            // 清理登录信息
+            [FTMUserDefault cleanLoginInfo];
+        }
+    }
 }
 
 
