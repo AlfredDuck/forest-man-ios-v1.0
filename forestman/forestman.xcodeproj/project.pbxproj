@@ -51,6 +51,7 @@
 		BB9EB4F31E422FE800911C8F /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F21E422FE800911C8F /* close.png */; };
 		BB9EB4F71E42C2F000911C8F /* direct.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9EB4F61E42C2F000911C8F /* direct.png */; };
 		BBAF10441E5B37D100E22677 /* red_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF10431E5B37D100E22677 /* red_dot.png */; };
+		BBAF10481E5DEF6A00E22677 /* FTMShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */; };
 		BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
@@ -145,6 +146,8 @@
 		BB9EB4F61E42C2F000911C8F /* direct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = direct.png; path = "../../../coding/salt-App效果图/direct.png"; sourceTree = "<group>"; };
 		BBAF10421E59920600E22677 /* sleep_tom.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; name = sleep_tom.m4a; path = ../../../xcode_project/WhatsUp/WhatsUp/sleep_tom.m4a; sourceTree = "<group>"; };
 		BBAF10431E5B37D100E22677 /* red_dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = red_dot.png; path = "../../../coding/salt-App效果图/red_dot.png"; sourceTree = "<group>"; };
+		BBAF10461E5DEF6A00E22677 /* FTMShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMShareManager.h; sourceTree = "<group>"; };
+		BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMShareManager.m; sourceTree = "<group>"; };
 		BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = forestman.entitlements; sourceTree = "<group>"; };
 		BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMDeviceTokenManager.h; sourceTree = "<group>"; };
 		BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMDeviceTokenManager.m; sourceTree = "<group>"; };
@@ -277,6 +280,7 @@
 				BB9EB4C11E3F314000911C8F /* color manager */,
 				BBDB1C8B1E5881A800BCE96B /* device token */,
 				BB168CB51E4B50F900C48CCC /* toast */,
+				BBAF10451E5DEF4C00E22677 /* share */,
 				BB168CA11E4B4B1F00C48CCC /* user Default */,
 				BB168CA51E4B4E2A00C48CCC /* login */,
 				BB9EB4D21E3F398500911C8F /* cells */,
@@ -436,6 +440,15 @@
 				BB9EB4F01E421D5400911C8F /* FTMMyOwnScrollView.m */,
 			);
 			name = "my scrollview";
+			sourceTree = "<group>";
+		};
+		BBAF10451E5DEF4C00E22677 /* share */ = {
+			isa = PBXGroup;
+			children = (
+				BBAF10461E5DEF6A00E22677 /* FTMShareManager.h */,
+				BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */,
+			);
+			name = share;
 			sourceTree = "<group>";
 		};
 		BBDB1C8B1E5881A800BCE96B /* device token */ = {
@@ -676,6 +689,7 @@
 				BB9EB4E21E3F812C00911C8F /* FTMExtraMessageViewController.m in Sources */,
 				BB9EB4BA1E3F2E5900911C8F /* FTMFriendsViewController.m in Sources */,
 				BB9EB4F11E421D5400911C8F /* FTMMyOwnScrollView.m in Sources */,
+				BBAF10481E5DEF6A00E22677 /* FTMShareManager.m in Sources */,
 				BB9EB4D91E3F44D300911C8F /* FTMMessageCell.m in Sources */,
 				BB168CA41E4B4B5E00C48CCC /* FTMUserDefault.m in Sources */,
 				BB9EB4B71E3F2DB100911C8F /* FTMTabBarViewController.m in Sources */,

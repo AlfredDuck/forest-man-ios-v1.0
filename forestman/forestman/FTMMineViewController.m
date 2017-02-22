@@ -12,6 +12,7 @@
 #import "toastView.h"
 #import "FTMUserDefault.h"
 #import "FTMNicknameVC.h"
+#import "FTMShareManager.h"
 
 @interface FTMMineViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -373,12 +374,6 @@
     
 }
 
-/** 点击开关 */
-- (void)clickSwitch
-{
-    NSLog(@"点击switch");
-}
-
 
 /** 点击AppStore */
 - (void)clickAppStore
@@ -392,6 +387,8 @@
 - (void)clickShare
 {
     NSLog(@"click share");
+    UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:@"选择邀请朋友的方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博", @"微信好友", @"微信朋友圈", nil];
+    [shareSheet showInView:self.view];
 }
 
 
@@ -407,7 +404,7 @@
 
 
 
-#pragma mark - Alert代理
+#pragma mark - Alertview 代理
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 11) {
@@ -416,6 +413,26 @@
             // 清理登录信息
             [FTMUserDefault cleanLoginInfo];
         }
+    }
+}
+
+
+
+
+
+#pragma mark - UIActionSheet 代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    FTMShareManager *shareManager = [[FTMShareManager alloc] init];
+    if (buttonIndex == 0) {
+        NSLog(@"weibo");
+        [shareManager shareToWeibo];
+    } else if (buttonIndex == 1) {
+        NSLog(@"weixin");
+        [shareManager shareToWeixinWithTimeLine:NO];
+    } else if (buttonIndex == 2) {
+        NSLog(@"timeline");
+        [shareManager shareToWeixinWithTimeLine:YES];
     }
 }
 

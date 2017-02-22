@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FTMTabBarViewController.h"
 
-@interface FTMMineViewController : FTMTabBarViewController <UIAlertViewDelegate>
+@interface FTMMineViewController : FTMTabBarViewController <UIAlertViewDelegate,UIActionSheetDelegate>
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
 /* 我的头像 */

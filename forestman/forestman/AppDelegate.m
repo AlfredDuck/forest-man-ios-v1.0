@@ -7,8 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import "Growing.h"
 #import "FTMRootViewController.h"
 #import "FTMDeviceTokenManager.h"
+
+#define kAPPKey        @"1863932445"
+#define kRedirectURI   @"http://www.sina.com"
+#define WXKey          @"wxaa1270a7a8f903eb"
 
 @interface AppDelegate ()
 
@@ -26,17 +33,17 @@
 //    [NSThread sleepForTimeInterval:1.0];  //   启动等待时间
     // [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;  // 状态栏小菊花
     
-//    // weibo SDK
-//    [WeiboSDK enableDebugMode:YES];
-//    [WeiboSDK registerApp:kAPPKey];
-//    // weixin SDK 向微信注册
-//    [WXApi registerApp:WXKey];
+    // weibo SDK
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:kAPPKey];
+    // weixin SDK 向微信注册
+    [WXApi registerApp:WXKey];
+    // 启动GrowingIO
+    [Growing startWithAccountId:@"9491a71dbf459795"];
 //    // 设置YY图片缓存的最大内存上限
 //    YYImageCache *YYcache = [YYWebImageManager sharedManager].cache;
 //    YYcache.memoryCache.costLimit = 100 * 1024 * 1024;
 //    YYcache.diskCache.costLimit = 500 * 1024 * 1024;
-//    // 启动GrowingIO
-//    [Growing startWithAccountId:@"9491a71dbf459795"];
     
     
     // 设置 RootViewController
@@ -104,6 +111,7 @@
  *
  *
  */
+#pragma mark - token的代理
 /** 注册并获取token */
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -158,11 +166,115 @@
 
 
 
+/****************** weibo & weixin 相关 begin ********************/
+#pragma mark - weibo&weixin的回调处理
+// 重写AppDelegate 的handleOpenURL和openURL方法
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    // 通过判断url的前缀，决定用哪个
+    NSString *string =[url absoluteString];
+    NSLog(@"回调url的前缀：%@", string);
+    
+    if ([string hasPrefix:@"wb"]) {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }else if ([string hasPrefix:@"wx"]){
+        return [WXApi handleOpenURL:url delegate:self];
+    }else {
+        return NO;
+    }
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    // 调用growingio
+    [Growing handleUrl:url];
+    
+    // 通过判断url的前缀，决定用哪个
+    NSString *string =[url absoluteString];
+    NSLog(@"回调url的前缀：%@", string);
+    
+    if ([string hasPrefix:@"wb"]) {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }else if ([string hasPrefix:@"wx"]){
+        return [WXApi handleOpenURL:url delegate:self];
+    }else {
+        return NO;
+    }
+}
 
 
 
+#pragma mark - 微博响应信息
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    // 微博分享的回应
+    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+    {
+        // 分享到微信的返回值
+        if(response.statusCode == 0){
+            NSLog(@"新浪微博分享成功！");
+            // 告知server端
+            // shareSuccessNote *note = [[shareSuccessNote alloc] init];
+            // [note shareSuccessWhichIs:@"weibo"];
+        } else if (response.statusCode == -1) {
+            NSLog(@"用户取消分享");
+        } else if (response.statusCode == -2) {
+            NSLog(@"分享失败");
+        }
+    }
+    // 微博授权的回应
+    else if ([response isKindOfClass:WBAuthorizeResponse.class]){
+        WBAuthorizeResponse *res = (WBAuthorizeResponse *)response;
+        NSLog(@"新浪微博授权结果的响应！");
+        NSLog(@"userID:%@", res.userID);
+        NSLog(@"accessToken:%@", res.accessToken);
+        NSLog(@"expirationDate:%@", res.expirationDate);
+        NSLog(@"refreshToken%@", res.refreshToken);
+        
+        // 如果userinfo不为空，则授权成功
+        if (res.userID) {
+            NSLog(@"授权成功");
+            // 创建一个广播：微博授权成功的广播
+            NSDictionary *info = @{
+                                   @"uid": res.userID,
+                                   @"token": res.accessToken
+                                   };
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"weiboAuthorizeSuccess" object:info];  // 广播出去
+        }
+        else {
+            NSLog(@"授权失败");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"weiboAuthorizeFalse" object:nil];  // 广播出去
+        }
+    }
+}
+
+
+#pragma mark - 微信的响应信息
+- (void)onResp:(BaseResp*)resp
+{
+    //
+    NSLog(@"从微信返回app");
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+        NSLog(@"%@", strMsg);
+        // 分享成功 errcode：0
+        // 取消分享 errcode: -2
+        if (resp.errCode == 0) {
+            // 告知server端
+            // shareSuccessNote *note = [[shareSuccessNote alloc] init];
+            // [note shareSuccessWhichIs:@"weixin"];
+        }
+        
+    }
+}
+/****************** weibo & weixin 相关 end ********************/
+
+
+
+
+#pragma mark - 客户端状态
 /** 以下暂时用不到 */
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
