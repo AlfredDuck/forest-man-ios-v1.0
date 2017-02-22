@@ -343,6 +343,9 @@
         NSLog(@"%@", note.object);
         _redDotView.hidden = NO;  // 显示小红点
     }];
+    
+    // 广播内容：app从后台切换到前台
+    
 }
 
 
