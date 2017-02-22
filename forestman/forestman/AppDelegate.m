@@ -201,6 +201,9 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    // 产生一条广播，通知message list页面
+    NSDictionary *info = @{@"message": @"ok"};
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"fromBackgroundToForeground" object:info];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

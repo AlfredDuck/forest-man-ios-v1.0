@@ -345,7 +345,11 @@
     }];
     
     // 广播内容：app从后台切换到前台
-    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"fromBackgroundToForeground" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        [_oneTableView.mj_header beginRefreshing];
+    }];
 }
 
 
