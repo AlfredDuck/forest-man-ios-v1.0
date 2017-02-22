@@ -120,32 +120,6 @@
     
     // 上传token到服务器，及保存token到本地
     [FTMDeviceTokenManager uploadAndStoreToken:tokenStrWithoutBlankChar];
-    
-    // 检查本地记录的device token
-//    WSUUserDefault *userDef = [[WSUUserDefault alloc] init];
-//    NSLog(@"本地记录的device token:%@",[userDef readDeviceToken]);
-//    if (![userDef readDeviceToken]) {
-//        NSLog(@"无本地记录的device token");
-//        // 上传实际token到服务器，根据服务器返回值修改本地token
-//        // 检查是否登录着，如果登录着则更新服务器的用户设备token
-//        if ([[userDef inOrOutUserDefaults] isEqualToString:@"in"]) {
-//            NSLog(@"打印登录信息： %@", [userDef readUserDefaults]);
-//            UpdateDeviceTokenConnect *updateTokenConnect = [[UpdateDeviceTokenConnect alloc] init];
-//            [updateTokenConnect startConnectWithNickName:[userDef readUserDefaults] deviceToken:tokenStrWithoutBlankChar];
-//            updateTokenConnect = nil;
-//        }
-//    }
-//    else if (![[userDef readDeviceToken] isEqualToString:tokenStrWithoutBlankChar]) {
-//        NSLog(@"本地记录的token与实际token不符");
-//        // 上传实际token到服务器，根据服务器返回值修改本地token
-//        // 检查是否登录着，如果登录着则更新服务器的用户设备token
-//        if ([[userDef inOrOutUserDefaults] isEqualToString:@"in"]) {
-//            NSLog(@"打印登录信息： %@", [userDef readUserDefaults]);
-//            UpdateDeviceTokenConnect *updateTokenConnect = [[UpdateDeviceTokenConnect alloc] init];
-//            [updateTokenConnect startConnectWithNickName:[userDef readUserDefaults] deviceToken:tokenStrWithoutBlankChar];
-//            updateTokenConnect = nil;
-//        }
-//    }
 }
 
 /** 获取token出错的处理 */
