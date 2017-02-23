@@ -46,6 +46,8 @@
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:0];  // 调用父类方法，构建tabbar
+    /* 注册广播观察者 */
+    [self waitForNotification];
 }
 
 
@@ -367,6 +369,23 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
+    }];
+}
+
+
+
+
+#pragma mark - 接收广播
+/** 注册广播观察者 **/
+- (void)waitForNotification
+{
+    // 广播内容：退出登录
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"logout" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        // 清除message list
+        _friendsData = nil;
+        [_oneTableView removeFromSuperview];
     }];
 }
 

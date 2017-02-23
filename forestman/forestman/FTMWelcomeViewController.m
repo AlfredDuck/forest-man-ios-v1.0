@@ -66,27 +66,28 @@
     
     [self.view addSubview:signupButton];
     
-    // 退出页面
     
-     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-     [backButton addTarget:self
-     action:@selector(clickCancelButton)
-     forControlEvents:UIControlEventTouchUpInside];
-     [backButton setTitle:@"退出" forState:UIControlStateNormal];
-     [backButton setTitleColor:[UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1] forState:UIControlStateNormal];
-     backButton.frame = CGRectMake(20, 500, _screenWidth-40, 40);
-     //button.frame = CGRectMake(0, 0, 40, 40);
-     backButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
-     backButton.tintColor = [UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1];
-     backButton.backgroundColor = [UIColor colorWithRed:(207/255.0) green:(237/255.0) blue:(228/255.0) alpha:1];
-     
-     [backButton.layer setMasksToBounds:YES];
-     [backButton.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
-     [backButton.layer setBorderWidth:1.0];   //边框宽度
-     [backButton.layer setBorderColor:[UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1].CGColor];
-     
-     [self.view addSubview:backButton];
-     
+    
+    /* 退出页面 */
+//    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [backButton addTarget:self
+//    action:@selector(clickCancelButton)
+//    forControlEvents:UIControlEventTouchUpInside];
+//    [backButton setTitle:@"退出" forState:UIControlStateNormal];
+//    [backButton setTitleColor:[UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1] forState:UIControlStateNormal];
+//    backButton.frame = CGRectMake(20, 500, _screenWidth-40, 40);
+//    //button.frame = CGRectMake(0, 0, 40, 40);
+//    backButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:15];
+//    backButton.tintColor = [UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1];
+//    backButton.backgroundColor = [UIColor colorWithRed:(207/255.0) green:(237/255.0) blue:(228/255.0) alpha:1];
+//
+//    [backButton.layer setMasksToBounds:YES];
+//    [backButton.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+//    [backButton.layer setBorderWidth:1.0];   //边框宽度
+//    [backButton.layer setBorderColor:[UIColor colorWithRed:(44/255.0) green:(165/255.0) blue:(128/255.0) alpha:1].CGColor];
+//
+//    [self.view addSubview:backButton];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated

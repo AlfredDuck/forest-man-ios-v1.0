@@ -9,10 +9,13 @@
 #import "FTMMineViewController.h"
 #import "colorManager.h"
 #import "YYWebImage.h"
+#import "AFNetworking.h"
 #import "toastView.h"
+#import "urlManager.h"
 #import "FTMUserDefault.h"
 #import "FTMNicknameVC.h"
 #import "FTMShareManager.h"
+#import "FTMWelcomeViewController.h"
 
 @interface FTMMineViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -26,7 +29,7 @@
     if (self) {
         // Custom initialization
         self.title = @"test";
-        self.view.backgroundColor = [UIColor redColor];
+        self.view.backgroundColor = [colorManager lightGrayBackground];
         self.navigationController.navigationBar.hidden = YES;
     }
     return self;
@@ -44,8 +47,6 @@
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:2];  // 调用父类方法，构建tabbar
-    [self createScrollView];
-    
 }
 
 
@@ -53,10 +54,11 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    if (!_portraitImageView) {
+    
+    if (!_basedScrollView) {
+        [self createScrollView];  // 创建scrollview容器(内容ui都在容器内)
         [self createScrollUI];  // 创建内容部分的ui
     }
-    
 }
 
 
@@ -410,8 +412,8 @@
     if (alertView.tag == 11) {
         if (buttonIndex == 1) {
             NSLog(@"退出登录");
-            // 清理登录信息
-            [FTMUserDefault cleanLoginInfo];
+            NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+            [self connectForLogout: loginInfo[@"uid"]];  // 发起退登请求
         }
     }
 }
@@ -434,6 +436,58 @@
         NSLog(@"timeline");
         [shareManager shareToWeixinWithTimeLine:YES];
     }
+}
+
+
+
+
+
+
+#pragma mark - 网络请求
+- (void)connectForLogout:(NSString *)uid
+{
+    // prepare request parameters
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/user/logout"];
+    
+    NSDictionary *parameters = @{@"uid": uid};
+    // 创建 GET 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        // GET请求成功
+        NSArray *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"data:%@", data);
+        
+        if (errcode == 1001) {  // 数据库出错
+            [toastView showToastWith:@"服务器出错，请稍后尝试" isErr:NO duration:3.0 superView:self.view];
+            return;
+        }
+        if (errcode == 1002) {  // 退出登录不成功
+            [toastView showToastWith:@"未能成功退出，请稍后尝试" isErr:NO duration:3.0 superView:self.view];
+            return;
+        }
+        // 清理登录信息
+        [FTMUserDefault cleanLoginInfo];
+        // 吊起welcome页面
+        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
+        [self presentViewController:welcomePage animated:YES completion:^{
+            // 清理 mine 页面的所有元素
+            [_basedScrollView removeFromSuperview];
+            _basedScrollView = nil;
+            // 清理 friends list & message list
+            // 创建一个广播(退出登录的广播，广播接收方是friends list & message list)
+            NSDictionary *info = @{@"message": @"ok"};
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:info];
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
+    }];
 }
 
 

@@ -59,11 +59,15 @@
     }
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     NSLog(@"内存报警...");
+}
+
+- (void)dealloc {
+    // uiviewcontroller 释放前会调用
+    [[NSNotificationCenter defaultCenter] removeObserver:self];  // 注销观察者
 }
 
 
@@ -325,7 +329,7 @@
 
 
 
-#pragma mark - 接受广播
+#pragma mark - 接收广播
 /** 注册广播观察者 **/
 - (void)waitForNotification
 {
@@ -349,6 +353,15 @@
         NSLog(@"%@", note.name);
         NSLog(@"%@", note.object);
         [_oneTableView.mj_header beginRefreshing];
+    }];
+    
+    // 广播内容：退出登录
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"logout" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        // 清除message list
+        _messageData = nil;
+        [_oneTableView removeFromSuperview];
     }];
 }
 
