@@ -6,6 +6,7 @@
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
@@ -14,7 +15,7 @@
 #import "FTMDeviceTokenManager.h"
 
 #define kAPPKey        @"1863932445"
-#define kRedirectURI   @"http://www.sina.com"
+#define kRedirectURI   @"http://www.sina.com.cn"
 #define WXKey          @"wxaa1270a7a8f903eb"
 
 @interface AppDelegate ()
@@ -150,9 +151,13 @@
 {
     if(application.applicationState == UIApplicationStateActive){
         // 程序在运行过程中受到推送通知(前台或后台）
-        NSLog(@"%@", [[userInfo objectForKey: @"aps"] objectForKey: @"alert"]);
         NSLog(@"%@", userInfo);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"???" message:@"??????" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles: nil];
+        NSString *audio = userInfo[@"audio"];
+        NSString *ms = userInfo[@"aps"][@"alert"];
+        // 播放提示音
+        [self noteAudio];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息" message:ms delegate:self cancelButtonTitle:@"收到" otherButtonTitles: nil];
         [alert show];
         
         // 创建一个广播(发送了一个message)，广播接收方是message list)
@@ -162,6 +167,20 @@
     } else {
         // 程序未在运行状态受到推送通知
     }
+}
+
+#pragma mark - 播放提示音（自定义声音）
+/** 播放提示音 */
+- (void)noteAudio
+{
+    // 播放test.wav文件
+    // 必须是.caf  .aif .wav文件
+    static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"sleep_tom" ofType:@"wav"];
+    if (path) {
+        AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
+    }
+    AudioServicesPlaySystemSound( soundIDTest );
 }
 
 

@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "WeiboSDK.h"
 #import "urlManager.h"
+#import "FTMUserDefault.h"
 
 @interface FTMThirdLoginVC ()
 
@@ -122,8 +123,8 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"weiboAuthorizeSuccess" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"%@", note.name);
         NSLog(@"%@", note.object);
-        
-        [self requestForUserInfoWithToken:[note.object objectForKey:@"token"] uid:[note.object objectForKey:@"uid"]];
+        // 用token获取用户信息
+        [self requestForUserInfoWithToken:note.object[@"token"] uid:note.object[@"uid"]];
         // 打印授权信息
         [self printAuthWith:note.object];
     }];
@@ -149,20 +150,22 @@
         NSString *portrait = [result objectForKey:@"avatar_large"];
         NSLog(@"用户昵称：%@,%@", nickname, portrait);
         
-        NSDictionary *user = @{
-                               @"uid":uid,
-                               @"nickname":[result objectForKey:@"name"],
-                               @"portrait":[result objectForKey:@"avatar_large"]
-                               };
+        NSDictionary *user = @{@"uid":uid,
+                               @"nickname":result[@"name"],
+                               @"portrait":result[@"avatar_large"],
+                               @"user_type": @"weibo",
+                               @"plantform": @"ios",
+                               @"weibo_access_token": token};
         
-        // 登录注册
-        // [self connectForloginOrSignup:user];
+        // 请求weibo登录接口
+        [self connectForloginOrSignup:user];
         
     }];
 }
 
 
 #pragma mark - 到 轻闻server 登录或注册
+/** 请求weibo登录接口 */
 - (void)connectForloginOrSignup:(NSDictionary *)userInformation
 {
     NSLog(@"登录或注册请求");
@@ -171,11 +174,7 @@
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/user/weibo_login"];
     
-    NSDictionary *parameters = @{
-                                 @"uid":[userInformation objectForKey:@"uid"],
-                                 @"nickname": [userInformation objectForKey:@"nickname"],
-                                 @"portrait_url": [userInformation objectForKey:@"portrait"]
-                                 };
+    NSDictionary *parameters = userInformation;
     
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
@@ -183,17 +182,17 @@
     [connectManager GET:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         // GET请求成功
-        NSDictionary *data = [responseObject objectForKey:@"data"];
-        NSString *errcode = [responseObject objectForKey:@"errcode"];
-        NSLog(@"errcode：%@", errcode);
-        NSLog(@"在轻闻server登录成功的data:%@", data);
+        NSDictionary *data = responseObject[@"data"];
+        unsigned long errcode = [responseObject[@"errcode"] intValue];
+        NSLog(@"errcode：%lu", errcode);
+        NSLog(@"在COCO server登录的返回值data:%@", data);
         
-        if ([errcode isEqualToString:@"err"]) {  // 请求出错
-            NSLog(@"在轻闻server登录时出错");
+        if (errcode == 1001 || errcode == 1002) {  // 数据库出错
+            NSLog(@"在COCO server登录时出错");
+            return;
         }
         // 新浪微博登录成功后,账号储存在本地
         [self weiboLoginSuccess:data];
-        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -206,18 +205,18 @@
 {
     // 不论server下发的有什么内容，本地只按照某种标准格式储存
     NSDictionary *userData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                              [data objectForKey:@"userType"], @"userType",  // 账户类型：邮箱、微博、微信等
-                              [data objectForKey:@"nickname"] ,@"nickname",  // 昵称
-                              [data objectForKey:@"weiboID"], @"uid",  // 用户id（此处是微博）
-                              [data objectForKey:@"portraitURL"], @"portrait",  // 头像url
+                              data[@"user_type"], @"user_type",  // 账户类型：邮箱、微博、微信等
+                              data[@"nickname"] ,@"nickname",  // 昵称
+                              data[@"uid"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
+                              data[@"portrait"], @"portrait",  // 头像url
+                              data[@"login_token"], @"login_token",  // 登录过期、或换设备登录所用
                               nil];
-    
-    // 账号信息记录到本地
-    NSUserDefaults *sfUserDefault = [NSUserDefaults standardUserDefaults];
-    [sfUserDefault setObject:userData forKey:@"loginInfo"];
+    /// 账号信息记录到本地
+    [FTMUserDefault recordLoginInfo:userData];
+    NSLog(@"登录成功：%@", userData);
     // 检查所有 nsuserdefault
-    //    NSArray *allkey = [[sfUserDefault dictionaryRepresentation] allKeys];
-    //    NSLog(@"全部keys：%@", allkey);
+    // NSArray *allkey = [[sfUserDefault dictionaryRepresentation] allKeys];
+    // NSLog(@"全部keys：%@", allkey);
     
     // 调用代理方法，通知登录成功
     // [self.delegate weiboLoginSuccess];

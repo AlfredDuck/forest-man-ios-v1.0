@@ -90,22 +90,11 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
+-(void)viewDidAppear:(BOOL)animated {
     // 检查是否登录,如果已经登录则自动退出此页面
     if ([FTMUserDefault isLogin]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    // 检查是否登录,如果已经登录则自动退出此页面
-//    WSUUserDefault *userd = [[WSUUserDefault alloc] init];
-//    if ([[userd inOrOutUserDefaults] isEqualToString:@"in"]) {
-//        NSLog(@"打印登录信息： %@", [userd inOrOutUserDefaults]);
-//        //将自己退出modal视图
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//        // 向home页发送代理消息
-//        [self.delegate welcomeCallBack];
-//    }
 }
 
 - (void)didReceiveMemoryWarning {
