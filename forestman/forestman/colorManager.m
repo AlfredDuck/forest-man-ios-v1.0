@@ -69,6 +69,16 @@
 + (UIColor *)lightPortraitline {
     return [UIColor colorWithRed:215/255.0 green:215/255.0 blue:215/255.0 alpha:1];
 }
+//============
++ (UIColor *)yellowBackground {
+    return [UIColor colorWithRed:252/255.0 green:159/255.0 blue:41/255.0 alpha:1];
+}
++ (UIColor *)yellowText {
+    return [UIColor colorWithRed:249/255.0 green:148/255.0 blue:5/255.0 alpha:1];
+}
++ (UIColor *)lightYellowBackground {
+    return [UIColor colorWithRed:259/255.0 green:236/255.0 blue:215/255.0 alpha:1];
+}
 
 
 @end
