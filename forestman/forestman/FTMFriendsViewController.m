@@ -53,13 +53,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    // 设置状态栏颜色的强力方法
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     // 判断是否登录
     if ([FTMUserDefault isLogin]) {
         NSLog(@"已登录");
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         NSString *uid = loginInfo[@"uid"];
+        
+        // 启动时默认推送权限是关闭的
+        [FTMDeviceTokenManager pushAuthorityIsClose];
         
         if (!_friendsData) {
             // 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多（后期可以针对是否第一次安装需要用户授权，来优化）
@@ -239,17 +240,16 @@
 // tableView 点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 判断是否已开启推送
-    
+    // 判断是否已开启push权限
+    if (![FTMDeviceTokenManager readPushAuthority]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"去设置中开启" otherButtonTitles: nil];
+        alert.delegate = self;
+        alert.tag = 11;
+        [alert show];
+        return;
+    }
     
     NSUInteger row = [indexPath row];
-    
-    //临时...
-//    if (row == 0) {
-//        FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
-//        [self presentViewController:welcomePage animated:YES completion:nil];
-//        return;
-//    }
     
     // 打开新页面
     FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
@@ -282,12 +282,10 @@
 /** 点击‘添加’按钮 */
 - (void)clickAddButton
 {
-    // 实验...
-    // [FTMDeviceTokenManager requestDeviceToken];
-    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
     alert.delegate = self;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 10;
     [alert show];
 }
 
@@ -296,13 +294,13 @@
 #pragma mark - alertView代理
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //得到输入框
+    //得到输入框文本
     UITextField *tf=[alertView textFieldAtIndex:0];
     NSString *str = tf.text;
     
-    if (buttonIndex == 1) {
+    // tag=10是添加朋友
+    if (alertView.tag == 10 && buttonIndex == 1) {
         NSLog(@"%@", str);
-        
         // 如果无输入就不反应
         if (str == nil || [str isEqualToString:@""]) {
             return;
@@ -324,6 +322,14 @@
         if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
             self.navigationController.interactivePopGestureRecognizer.delegate = nil;
         }
+    }
+    // tag=11是push权限
+    else if (alertView.tag == 11 && buttonIndex == 0) {
+        NSLog(@"跳转设置");
+        // 跳转到设置-通知
+        // 教程 http://www.jianshu.com/p/8e354e684e8a
+        // http://www.jianshu.com/p/5b7571d7bb34
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     }
 }
 

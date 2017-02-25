@@ -9,11 +9,20 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+/* 定义类变量 */
+static BOOL pushAuthority;  // 推送权限
+
 @interface FTMDeviceTokenManager : UIViewController
 /** 获取device token */
 + (void)requestDeviceToken;
 /** 上传及修改本地token */
 + (void)uploadAndStoreToken:(NSString *)token;
-/** 是否开启推送 */
+
+/** push权限设为关闭 */
++ (void)pushAuthorityIsClose;
+/** push权限设为开启 */
++ (void)pushAuthorityIsOpen;
+/** 读取push权限值 */
++ (BOOL)readPushAuthority;
 
 @end

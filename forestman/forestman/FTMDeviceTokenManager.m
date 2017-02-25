@@ -13,6 +13,7 @@
 
 @implementation FTMDeviceTokenManager
 
+/** 获取device token */
 + (void)requestDeviceToken
 {
     // 允许推送，暂时不懂
@@ -37,11 +38,14 @@
 }
 
 
+/** 上传及修改本地token */
 + (void)uploadAndStoreToken:(NSString *)token
 {
+    // 调用此方法，代表push权限已开
+    pushAuthority = YES;
+    
     // 获取本地token记录
     NSString *localToken = [FTMUserDefault readDeviceToken];
-    
     if (!localToken || ![localToken isEqualToString:token]) {
         // 本地没有token记录，则上传实际token到服务器，根据服务器返回值修改本地token
         // 本地有token记录，但与获取的token不同，则说明token有变化，需要重新上传
@@ -53,6 +57,28 @@
     } else {
         NSLog(@"本地已有的token：%@", localToken);
     }
+}
+
+
+/** push权限设为关闭 */
++ (void)pushAuthorityIsClose {
+    pushAuthority = NO;
+    NSLog(@"close");
+}
+/** push权限设为开启 */
++ (void)pushAuthorityIsOpen {
+    pushAuthority = YES;
+    NSLog(@"open");
+}
+/** 读取push权限值 */
++ (BOOL)readPushAuthority {
+    if (pushAuthority) {
+        NSLog(@"push open");
+    } else {
+        NSLog(@"push close");
+    }
+    
+    return pushAuthority;
 }
 
 

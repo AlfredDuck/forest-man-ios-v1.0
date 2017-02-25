@@ -116,7 +116,6 @@
 /** 注册并获取token */
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    
     NSString *tokenStr = [NSString stringWithFormat:@"%@",deviceToken];
     NSLog(@"【device token】:");
     NSLog(@"%@",tokenStr);
