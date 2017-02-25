@@ -10,6 +10,7 @@
 #import "FTMUserDefault.h"
 #import "urlManager.h"
 #import "AFNetworking.h"
+#import "FTMUserDefault.h"
 
 @implementation FTMDeviceTokenManager
 
@@ -42,7 +43,7 @@
 + (void)uploadAndStoreToken:(NSString *)token
 {
     // 调用此方法，代表push权限已开
-    pushAuthority = YES;
+    [FTMUserDefault pushAuthorityIsOpen];
     
     // 获取本地token记录
     NSString *localToken = [FTMUserDefault readDeviceToken];

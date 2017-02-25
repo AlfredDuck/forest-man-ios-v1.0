@@ -15,6 +15,11 @@
 + (NSString *)readDeviceToken;
 + (BOOL)recordDeviceToken:(NSString *)deviceToken;
 
+/* push权限 */
++ (BOOL)readPushAuthority;
++ (void)pushAuthorityIsClose;
++ (void)pushAuthorityIsOpen;
+
 /* 登录注册or退出登录 */
 + (BOOL)recordLoginInfo:(NSDictionary *)loginInfo;
 + (NSDictionary *)readLoginInfo;

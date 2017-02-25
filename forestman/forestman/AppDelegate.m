@@ -206,6 +206,7 @@
 {
     // 调用growingio
     [Growing handleUrl:url];
+    [Growing setEnableLog:NO];  // 拒绝growing打日志
     
     // 通过判断url的前缀，决定用哪个
     NSString *string =[url absoluteString];

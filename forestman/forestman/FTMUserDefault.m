@@ -27,6 +27,30 @@
 }
 
 
+/* push权限 */
++ (BOOL)readPushAuthority {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *pa = [ud stringForKey:@"pushAuthority"];
+    if (pa) {
+        NSLog(@"push权限开启");
+        return YES;
+    } else {
+        NSLog(@"push权限关闭");
+        return NO;
+    }
+}
+
++ (void)pushAuthorityIsOpen {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:@"mmd" forKey:@"pushAuthority"];
+}
+
++ (void)pushAuthorityIsClose {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud removeObjectForKey:@"pushAuthority"];
+}
+
+
 /* 登录注册or退出登录 */
 + (BOOL)recordLoginInfo:(NSDictionary *)loginInfo
 {
@@ -60,6 +84,8 @@
     [ud removeObjectForKey:@"user_type"];
     [ud removeObjectForKey:@"nickname"];
     [ud removeObjectForKey:@"portrait"];
+    //
+    [ud removeObjectForKey:@"deviceToken"];  // token也需要清理
     return YES;
 }
 

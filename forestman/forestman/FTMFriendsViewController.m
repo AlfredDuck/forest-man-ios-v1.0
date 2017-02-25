@@ -59,10 +59,9 @@
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         NSString *uid = loginInfo[@"uid"];
         
-        // 启动时默认推送权限是关闭的
-        [FTMDeviceTokenManager pushAuthorityIsClose];
-        
         if (!_friendsData) {
+            // 启动时默认推送权限是关闭的
+            [FTMUserDefault pushAuthorityIsClose];
             // 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多（后期可以针对是否第一次安装需要用户授权，来优化）
             [FTMDeviceTokenManager requestDeviceToken];
             // 请求好友列表
@@ -74,16 +73,18 @@
         FTMWelcomeViewController *welcomePage = [[FTMWelcomeViewController alloc] init];
         [self presentViewController:welcomePage animated:YES completion:nil];
     }
-    
 }
 
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     NSLog(@"内存报警...");
 }
 
+- (void)dealloc {
+    // uiviewcontroller 释放前会调用
+    [[NSNotificationCenter defaultCenter] removeObserver:self];  // 注销观察者
+}
 
 
 
@@ -241,7 +242,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 判断是否已开启push权限
-    if (![FTMDeviceTokenManager readPushAuthority]) {
+    if (![FTMUserDefault readPushAuthority]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"去设置中开启" otherButtonTitles: nil];
         alert.delegate = self;
         alert.tag = 11;
@@ -392,6 +393,14 @@
         // 清除message list
         _friendsData = nil;
         [_oneTableView removeFromSuperview];
+    }];
+    
+    // 广播内容：从后台回到前台
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"fromBackgroundToForeground" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        // 重新尝试获取token
+        [FTMDeviceTokenManager requestDeviceToken];
     }];
 }
 
