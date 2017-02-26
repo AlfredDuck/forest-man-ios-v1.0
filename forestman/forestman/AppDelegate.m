@@ -40,7 +40,7 @@
     // weixin SDK 向微信注册
     [WXApi registerApp:WXKey];
     // 启动GrowingIO
-    [Growing startWithAccountId:@"9491a71dbf459795"];
+    [Growing startWithAccountId:@"bc1b144ace9e4e5c"];  // coco项目
 //    // 设置YY图片缓存的最大内存上限
 //    YYImageCache *YYcache = [YYWebImageManager sharedManager].cache;
 //    YYcache.memoryCache.costLimit = 100 * 1024 * 1024;

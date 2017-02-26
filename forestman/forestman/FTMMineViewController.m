@@ -154,7 +154,13 @@
     
     /* 微博id or 邮箱账号 */
     UILabel *idLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 122, _screenWidth-60, 17)];
-    idLabel.text = loginInfo[@"uid"];
+    NSString *oneID = @"";
+    if ([loginInfo[@"user_type"] isEqualToString:@"weibo"]) {
+        oneID = [@"微博id：" stringByAppendingString:loginInfo[@"uid"]];
+    } else {
+        oneID = loginInfo[@"uid"];
+    }
+    idLabel.text = oneID;
     idLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     idLabel.textAlignment = NSTextAlignmentCenter;
     idLabel.textColor = [colorManager lightTextColor];

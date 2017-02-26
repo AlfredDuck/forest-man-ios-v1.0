@@ -252,7 +252,7 @@
         NSLog(@"errcode：%lu", errcode);
         NSLog(@"data:%@", data);
         if (errcode == 1001) {  // 数据库出错
-            //
+            [toastView showToastWith:@"服务器出错，请稍后再试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
         
@@ -263,6 +263,10 @@
         
         // block调用
         self.extraMessageSendSuccess(data[@"text"]);
+        
+        // 创建一个广播(发送了一个message)，广播接收方是message list)
+        NSDictionary *info = @{@"message": @"ok"};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"sendOneMessage" object:info];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
