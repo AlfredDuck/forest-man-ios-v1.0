@@ -137,16 +137,13 @@
         [self connectForMessageList:uid];
     }];
     
-    // 上拉刷新 MJRefresh (等到页面有数据后再使用)
-    _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        [self connectForMoreMessage:uid];
-    }];
+    // 上拉加载更多 MJRefresh
+    // _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    //  [self connectForMoreMessage:uid];
+    // }];
     
     // 这个碉堡了，要珍藏！！
     _oneTableView.mj_header.ignoredScrollViewContentInsetTop = 15.0;
-    
-    // 禁用 mjRefresh
-    // contentTableView.mj_footer = nil;
     
     /** 为空提示语 **/
     _emptyLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, _screenHeight/2-50, 200, 30)];
@@ -267,8 +264,17 @@
         _messageData = [data mutableCopy];
         /* 刷新tableview */
         [_oneTableView reloadData];
+        
+        // 修改footer状态
+        if ([_messageData count] > 12 && _oneTableView.mj_footer == nil) {
+            // 当list数量超过12，启用上拉加载更多 MJRefresh
+            _oneTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+                [self connectForMoreMessage:uid];
+            }];
+        }
         // footer重置回可用状态
         [_oneTableView.mj_footer setState:MJRefreshStateIdle];
+        
         // 小红点消失
         _redDotView.hidden = YES;
         _shoudAutoRefresh = NO;

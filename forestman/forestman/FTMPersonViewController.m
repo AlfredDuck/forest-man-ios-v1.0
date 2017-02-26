@@ -309,7 +309,13 @@
             NSLog(@"取消朋友关系");
             [self connectForDeleteFriend];
             // block调用
-            self.deleteFriendship(@"");
+            // 已使用 notificationcenter代替，这里仅保留示例
+            // self.deleteFriendship(@"");
+            
+            // 产生一条广播，通知message list页面
+            NSDictionary *info = @{@"message": @"ok"};
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"deleteFriendShip" object:info];
+
         }
     }
 }

@@ -243,7 +243,7 @@
 {
     // 判断是否已开启push权限
     if (![FTMUserDefault readPushAuthority]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"去设置中开启" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"以后再说" otherButtonTitles:@"去设置中开启", nil];
         alert.delegate = self;
         alert.tag = 11;
         [alert show];
@@ -271,7 +271,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
-    
     // 返回时是非选中状态
     // [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -325,7 +324,7 @@
         }
     }
     // tag=11是push权限
-    else if (alertView.tag == 11 && buttonIndex == 0) {
+    else if (alertView.tag == 11 && buttonIndex == 1) {
         NSLog(@"跳转设置");
         // 跳转到设置-通知
         // 教程 http://www.jianshu.com/p/8e354e684e8a
@@ -401,6 +400,18 @@
         NSLog(@"%@", note.object);
         // 重新尝试获取token
         [FTMDeviceTokenManager requestDeviceToken];
+    }];
+    
+    // 广播内容：取消好友关系
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"deleteFriendShip" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        NSLog(@"%@", note.name);
+        NSLog(@"%@", note.object);
+        // 刷新friendlist
+        NSLog(@"刷新friendlist");
+        [_oneTableView removeFromSuperview];  // 卸载tableview
+        _friendsData = nil;
+        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+        [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
     }];
 }
 
