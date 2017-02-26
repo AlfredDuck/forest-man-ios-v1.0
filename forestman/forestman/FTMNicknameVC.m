@@ -78,7 +78,7 @@
     titleLabel.text = @"修改昵称";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 16];
-    titleLabel.textAlignment = UITextAlignmentCenter;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
     [titleBarBackground addSubview:titleLabel];
     
     // 返回按钮

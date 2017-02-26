@@ -53,6 +53,7 @@
 		BBAF10441E5B37D100E22677 /* red_dot.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF10431E5B37D100E22677 /* red_dot.png */; };
 		BBAF10481E5DEF6A00E22677 /* FTMShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */; };
 		BBB809CC1E61CDAD00074C1B /* coco_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB809CB1E61CDAD00074C1B /* coco_logo.png */; };
+		BBB809CE1E627FFA00074C1B /* XY_xdf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */; };
 		BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
@@ -150,6 +151,7 @@
 		BBAF10461E5DEF6A00E22677 /* FTMShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMShareManager.h; sourceTree = "<group>"; };
 		BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMShareManager.m; sourceTree = "<group>"; };
 		BBB809CB1E61CDAD00074C1B /* coco_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coco_logo.png; path = "../../../coding/salt-App效果图/coco_logo.png"; sourceTree = "<group>"; };
+		BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = XY_xdf.mp3; path = ../../../../Downloads/XY_xdf.mp3; sourceTree = "<group>"; };
 		BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = forestman.entitlements; sourceTree = "<group>"; };
 		BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMDeviceTokenManager.h; sourceTree = "<group>"; };
 		BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMDeviceTokenManager.m; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				BBAF10421E59920600E22677 /* sleep_tom.m4a */,
 				BB7A0D4C1E580B5800892AAB /* sleep_tom.wav */,
+				BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */,
 			);
 			name = sound;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				BB6A20D71E48B19800CC810C /* message_tab_focus.png in Resources */,
 				BB6A20D81E48B19800CC810C /* message_tab.png in Resources */,
 				BB9EB4DF1E3F617500911C8F /* back_black.png in Resources */,
+				BBB809CE1E627FFA00074C1B /* XY_xdf.mp3 in Resources */,
 				BB7A0D431E573C9500892AAB /* more.png in Resources */,
 				BB7A0D451E57DE4900892AAB /* from_icon.png in Resources */,
 				BB6A20DC1E48B57600CC810C /* friend_tab.png in Resources */,

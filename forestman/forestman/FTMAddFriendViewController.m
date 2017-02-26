@@ -94,7 +94,7 @@
     _nicknameLabel.text = _nickname;
     _nicknameLabel.textColor = [colorManager mainTextColor];
     _nicknameLabel.font = [UIFont fontWithName:@"Helvetica" size: 18];
-    _nicknameLabel.textAlignment = UITextAlignmentCenter;
+    _nicknameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_nicknameLabel];
     
     

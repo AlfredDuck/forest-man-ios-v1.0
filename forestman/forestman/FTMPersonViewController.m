@@ -351,7 +351,7 @@
         NSLog(@"errcode：%lu", errcode);
         NSLog(@"data:%@", data);
         if (errcode == 1001) {  // 数据库出错
-            //
+            [toastView showToastWith:@"服务器出错，请稍后再试" isErr:NO duration:3.0 superView:self.view];
             return;
         }
         
@@ -363,7 +363,7 @@
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
     }];
 }
 
@@ -444,7 +444,7 @@
     // 播放test.wav文件
     // 必须是.caf  .aif .wav文件
     static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"sleep_tom" ofType:@"wav"];
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"XY_xdf" ofType:@"mp3"];
     if (path) {
         AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
     }
