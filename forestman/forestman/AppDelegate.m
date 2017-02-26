@@ -6,13 +6,13 @@
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
 
-#import <AudioToolbox/AudioToolbox.h>
 #import "AppDelegate.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
 #import "Growing.h"
 #import "FTMRootViewController.h"
 #import "FTMDeviceTokenManager.h"
+#import "FTMAudioPlayManager.h"
 
 #define kAPPKey        @"1863932445"
 #define kRedirectURI   @"http://www.sina.com.cn"
@@ -154,7 +154,7 @@
         NSString *audio = userInfo[@"audio"];
         NSString *ms = userInfo[@"aps"][@"alert"];
         // 播放提示音
-        [self noteAudio];
+        [FTMAudioPlayManager playAudioWithID:@""];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息" message:ms delegate:self cancelButtonTitle:@"收到" otherButtonTitles: nil];
         [alert show];
@@ -168,19 +168,8 @@
     }
 }
 
-#pragma mark - 播放提示音（自定义声音）
-/** 播放提示音 */
-- (void)noteAudio
-{
-    // 播放test.wav文件
-    // 必须是.caf  .aif .wav文件
-    static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"XY_xdf" ofType:@"mp3"];
-    if (path) {
-        AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
-    }
-    AudioServicesPlaySystemSound( soundIDTest );
-}
+
+
 
 
 

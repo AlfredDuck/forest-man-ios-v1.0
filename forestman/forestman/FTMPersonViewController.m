@@ -5,7 +5,6 @@
 //  Created by alfred on 17/1/30.
 //  Copyright © 2017年 Alfred. All rights reserved.
 //
-#import <AudioToolbox/AudioToolbox.h>
 #import "FTMPersonViewController.h"
 #import "colorManager.h"
 #import "urlManager.h"
@@ -13,6 +12,7 @@
 #import "AFNetworking.h"
 #import "YYWebImage.h"
 #import "FTMUserDefault.h"
+#import "FTMAudioPlayManager.h"
 #import "FTMMyOwnScrollView.h"
 #import "FTMExtraMessageViewController.h"
 #import "FTMAddFriendViewController.h"
@@ -281,7 +281,7 @@
     if (actionSheet.tag == 10) {
         if (buttonIndex == 0) {
             NSLog(@"试听");
-            [self noteAudio];
+            [FTMAudioPlayManager playAudioWithID:@""];
         } else if (buttonIndex == 1) {
             NSLog(@"添加附加信息");
             FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];
@@ -438,24 +438,6 @@
     }
 }
 
-
-
-
-
-
-#pragma mark - 播放提示音（自定义声音）
-/** 播放提示音 */
-- (void)noteAudio
-{
-    // 播放test.wav文件
-    // 必须是.caf  .aif .wav文件
-    static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"XY_xdf" ofType:@"mp3"];
-    if (path) {
-        AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
-    }
-    AudioServicesPlaySystemSound( soundIDTest );
-}
 
 
 @end

@@ -54,6 +54,7 @@
 		BBAF10481E5DEF6A00E22677 /* FTMShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */; };
 		BBB809CC1E61CDAD00074C1B /* coco_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB809CB1E61CDAD00074C1B /* coco_logo.png */; };
 		BBB809CE1E627FFA00074C1B /* XY_xdf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */; };
+		BBB809D21E63104200074C1B /* FTMAudioPlayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB809D11E63104200074C1B /* FTMAudioPlayManager.m */; };
 		BBDB1C8E1E58821B00BCE96B /* FTMDeviceTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */; };
 		CB7F0A924289214285C81147 /* libPods-forestman.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1BFDA92F0485A65A167786A /* libPods-forestman.a */; };
 /* End PBXBuildFile section */
@@ -152,6 +153,8 @@
 		BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMShareManager.m; sourceTree = "<group>"; };
 		BBB809CB1E61CDAD00074C1B /* coco_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coco_logo.png; path = "../../../coding/salt-App效果图/coco_logo.png"; sourceTree = "<group>"; };
 		BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = XY_xdf.mp3; path = ../../../../Downloads/XY_xdf.mp3; sourceTree = "<group>"; };
+		BBB809D01E63104200074C1B /* FTMAudioPlayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMAudioPlayManager.h; sourceTree = "<group>"; };
+		BBB809D11E63104200074C1B /* FTMAudioPlayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMAudioPlayManager.m; sourceTree = "<group>"; };
 		BBDB1C8A1E587A8200BCE96B /* forestman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = forestman.entitlements; sourceTree = "<group>"; };
 		BBDB1C8C1E58821B00BCE96B /* FTMDeviceTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMDeviceTokenManager.h; sourceTree = "<group>"; };
 		BBDB1C8D1E58821B00BCE96B /* FTMDeviceTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMDeviceTokenManager.m; sourceTree = "<group>"; };
@@ -286,6 +289,7 @@
 				BBDB1C8B1E5881A800BCE96B /* device token */,
 				BB168CB51E4B50F900C48CCC /* toast */,
 				BBAF10451E5DEF4C00E22677 /* share */,
+				BBB809CF1E63100400074C1B /* audio play */,
 				BB168CA11E4B4B1F00C48CCC /* user Default */,
 				BB168CA51E4B4E2A00C48CCC /* login */,
 				BB9EB4D21E3F398500911C8F /* cells */,
@@ -455,6 +459,15 @@
 				BBAF10471E5DEF6A00E22677 /* FTMShareManager.m */,
 			);
 			name = share;
+			sourceTree = "<group>";
+		};
+		BBB809CF1E63100400074C1B /* audio play */ = {
+			isa = PBXGroup;
+			children = (
+				BBB809D01E63104200074C1B /* FTMAudioPlayManager.h */,
+				BBB809D11E63104200074C1B /* FTMAudioPlayManager.m */,
+			);
+			name = "audio play";
 			sourceTree = "<group>";
 		};
 		BBDB1C8B1E5881A800BCE96B /* device token */ = {
@@ -688,6 +701,7 @@
 				BB168CB81E4B513300C48CCC /* toastView.m in Sources */,
 				BB9EB4B21E3F2C7200911C8F /* FTMRootViewController.m in Sources */,
 				BB9EB4DD1E3F5F5C00911C8F /* FTMPersonViewController.m in Sources */,
+				BBB809D21E63104200074C1B /* FTMAudioPlayManager.m in Sources */,
 				BB9EB4EA1E400F4F00911C8F /* FTMSearchViewController.m in Sources */,
 				BB9EB4BD1E3F2E7800911C8F /* FTMMessageViewController.m in Sources */,
 				BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */,
