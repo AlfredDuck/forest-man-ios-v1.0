@@ -35,11 +35,11 @@
     
     // 构建消息体
     WXMediaMessage *message = [[WXMediaMessage alloc] init];
-    message.title = @"我是COCO";
-    message.description = @"我是COCO，快来下我";
+    message.title = @"我在用COCO聊天，快来跟我一起玩吧";
+    message.description = @"我在用COCO聊天，快来跟我一起玩吧";
     // [message setThumbImage:[UIImage imageNamed:@"share_button.png"]];  // 微信原方法
     // 微信要求分享的图片不超过32k，否则会出现未知错误。目前后台不能压缩图片，那么就从后台传默认图片吧
-    [message setThumbImage:[UIImage imageNamed:@"to_icon.png"]];
+    [message setThumbImage:[UIImage imageNamed:@"coco180.png"]];
     
     WXWebpageObject *webPageObject = [WXWebpageObject object];
     webPageObject.webpageUrl = @"http://cocochat.online:2000/download/";
@@ -99,13 +99,13 @@
 - (WBMessageObject *)messageToShare
 {
     WBMessageObject *message = [WBMessageObject message];
-    message.text = @"我是COCO，快来下我";
+    message.text = @"我在用COCO聊天，快来跟我一起玩吧~ http://cocochat.online:2000/download/";
     
     // 设置配图
     WBImageObject *image = [WBImageObject object];
     // image.imageData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image_1" ofType:@"jpg"]]; // 微博的原方法
     
-    _shareImageForWeibo = [UIImage imageNamed:@"from_icon.png"];
+    _shareImageForWeibo = [UIImage imageNamed:@"coco180.png"];
     NSData *imageData;
     if (UIImagePNGRepresentation(_shareImageForWeibo)) {
         imageData = UIImagePNGRepresentation(_shareImageForWeibo);

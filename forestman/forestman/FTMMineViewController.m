@@ -386,7 +386,7 @@
 /** 点击AppStore */
 - (void)clickAppStore
 {
-    NSString *iTunesLink = @"https://itunes.apple.com/us/app/id1084092765";
+    NSString *iTunesLink = @"https://itunes.apple.com/us/app/id1208037554";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:iTunesLink]];
 }
 

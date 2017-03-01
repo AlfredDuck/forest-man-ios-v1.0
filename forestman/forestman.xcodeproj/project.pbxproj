@@ -71,6 +71,7 @@
 		BB0ACE611E67101500C4CDE5 /* base_061.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACE231E67101500C4CDE5 /* base_061.mp3 */; };
 		BB0ACE621E67101500C4CDE5 /* base_062.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACE241E67101500C4CDE5 /* base_062.mp3 */; };
 		BB0ACE651E67113A00C4CDE5 /* FTMAudioSourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0ACE641E67113A00C4CDE5 /* FTMAudioSourceManager.m */; };
+		BB0ACE671E672BB900C4CDE5 /* coco180.png in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACE661E672BB900C4CDE5 /* coco180.png */; };
 		BB168CA41E4B4B5E00C48CCC /* FTMUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CA31E4B4B5E00C48CCC /* FTMUserDefault.m */; };
 		BB168CA81E4B4E5200C48CCC /* FTMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CA71E4B4E5200C48CCC /* FTMWelcomeViewController.m */; };
 		BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB01E4B506400C48CCC /* FTMMailLoginVC.m */; };
@@ -206,6 +207,7 @@
 		BB0ACE241E67101500C4CDE5 /* base_062.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = base_062.mp3; path = "../../../mp3音频/base_062.mp3"; sourceTree = "<group>"; };
 		BB0ACE631E67113A00C4CDE5 /* FTMAudioSourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMAudioSourceManager.h; sourceTree = "<group>"; };
 		BB0ACE641E67113A00C4CDE5 /* FTMAudioSourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMAudioSourceManager.m; sourceTree = "<group>"; };
+		BB0ACE661E672BB900C4CDE5 /* coco180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coco180.png; path = "../../../coding/salt-App效果图/coco180.png"; sourceTree = "<group>"; };
 		BB168CA21E4B4B5E00C48CCC /* FTMUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMUserDefault.h; sourceTree = "<group>"; };
 		BB168CA31E4B4B5E00C48CCC /* FTMUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMUserDefault.m; sourceTree = "<group>"; };
 		BB168CA61E4B4E5200C48CCC /* FTMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTMWelcomeViewController.h; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 		BB9EB4C51E3F330100911C8F /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				BB0ACE661E672BB900C4CDE5 /* coco180.png */,
 				BBB809CB1E61CDAD00074C1B /* coco_logo.png */,
 				BBAF10431E5B37D100E22677 /* red_dot.png */,
 				BB7A0D441E57DE4900892AAB /* from_icon.png */,
@@ -833,6 +836,7 @@
 				BB0ACE341E67101500C4CDE5 /* base_016.mp3 in Resources */,
 				BB0ACE3F1E67101500C4CDE5 /* base_027.mp3 in Resources */,
 				BB0ACE541E67101500C4CDE5 /* base_048.mp3 in Resources */,
+				BB0ACE671E672BB900C4CDE5 /* coco180.png in Resources */,
 				BB9EB4891E3F2A5800911C8F /* Assets.xcassets in Resources */,
 				BB0ACE4C1E67101500C4CDE5 /* base_040.mp3 in Resources */,
 				BB9EB4C81E3F337700911C8F /* home_tab_focus.png in Resources */,
