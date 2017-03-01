@@ -154,7 +154,7 @@
         NSString *audio = userInfo[@"audio"];
         NSString *ms = userInfo[@"aps"][@"alert"];
         // 播放提示音
-        [FTMAudioPlayManager playAudioWithID:@""];
+        [FTMAudioPlayManager playAudioWithID:audio];
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息" message:ms delegate:self cancelButtonTitle:@"收到" otherButtonTitles: nil];
         [alert show];

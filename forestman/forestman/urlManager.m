@@ -11,15 +11,15 @@
 @implementation urlManager
 + (NSString *)urlHost
 {
-    return @"http://127.0.0.1:2000";  // 本地测试
-//    return @"http://lightnews.online:2000";  // 阿里云测试
+//    return @"http://127.0.0.1:2000";  // 本地测试
+    return @"http://lightnews.online:2000";  // 阿里云测试
 //    return @"http://lightnews.online:8080";  // 阿里云正式
 }
 
 + (BOOL)adFeedback  // 广告反馈开关，不在市场包里开启
 {
-    return YES;  // 开启广告反馈
-//    return NO;  // 关闭广告反馈
+//    return YES;  // 开启广告反馈
+    return NO;  // 关闭广告反馈
 }
 
 + (BOOL)printToken

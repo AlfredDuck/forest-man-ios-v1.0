@@ -16,7 +16,7 @@
     // 播放test.wav文件
     // 必须是.caf  .aif .wav文件
     static SystemSoundID soundIDTest = 0;//当soundIDTest == kSystemSoundID_Vibrate的时候为震动
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"XY_xdf" ofType:@"mp3"];
+    NSString * path = [[NSBundle mainBundle] pathForResource:audio_id ofType:@"mp3"];
     if (path) {
         AudioServicesCreateSystemSoundID( (__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundIDTest );
     }

@@ -10,5 +10,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface FTMAudioPlayManager : NSObject
+/** 根据id 播放提示音 */
 + (void)playAudioWithID:(NSString *)audio_id;
 @end

@@ -16,6 +16,7 @@
 #import "FTMMyOwnScrollView.h"
 #import "FTMExtraMessageViewController.h"
 #import "FTMAddFriendViewController.h"
+#import "FTMAudioSourceManager.h"
 
 @interface FTMPersonViewController ()
 @property (nonatomic, strong) UIScrollView *basedScrollView;
@@ -177,22 +178,7 @@
     UIView *holdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _basedScrollView.frame.size.height+1)];
     [_basedScrollView addSubview:holdView];
     
-    _audioArr = @[@{@"audio_id":@"FS-001",
-                       @"audio_text":@"打雷啦下雨啦☔️"},
-                     @{@"audio_id":@"FS-002",
-                       @"audio_text":@"懒得理你"},
-                     @{@"audio_id":@"FS-003",
-                       @"audio_text":@"安红，俺想你"},
-                     @{@"audio_id":@"FS-004",
-                       @"audio_text":@"安娜玛德莲娜"},
-                     @{@"audio_id":@"FS-005",
-                       @"audio_text":@"你瞅啥"},
-                      @{@"audio_id":@"FS-003",
-                        @"audio_text":@"安红，俺想你"},
-                      @{@"audio_id":@"FS-004",
-                        @"audio_text":@"安娜玛德莲娜"},
-                      @{@"audio_id":@"FS-005",
-                        @"audio_text":@"你瞅啥"}];
+    _audioArr = [FTMAudioSourceManager readAudioSource];
     // 循环
     unsigned long basedX = 15;
     unsigned long basedY = 18;
@@ -281,7 +267,8 @@
     if (actionSheet.tag == 10) {
         if (buttonIndex == 0) {
             NSLog(@"试听");
-            [FTMAudioPlayManager playAudioWithID:@""];
+            // 播放提示音
+            [FTMAudioPlayManager playAudioWithID:_audioArr[_selectedAudioIndex][@"audio_id"]];
         } else if (buttonIndex == 1) {
             NSLog(@"添加附加信息");
             FTMExtraMessageViewController *extraPage = [[FTMExtraMessageViewController alloc] init];

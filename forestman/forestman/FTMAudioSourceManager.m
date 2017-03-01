@@ -52,7 +52,7 @@
                         @{@"audio_id":@"base_038",@"audio_text":@"奴才该死奴才知错了"},
                         @{@"audio_id":@"base_039",@"audio_text":@"小主请息怒"},
                         @{@"audio_id":@"base_040",@"audio_text":@"小主你要三思啊"},
-                        @{@"audio_id":@"base_041",@"audio_text":@"长夜漫漫无心睡眠"},
+                        @{@"audio_id":@"base_041",@"audio_text":@"长夜漫漫无心入睡"},
                         @{@"audio_id":@"base_042",@"audio_text":@"今晚约吗"},
                         @{@"audio_id":@"base_043",@"audio_text":@"叔叔我们不约"},
                         @{@"audio_id":@"base_044",@"audio_text":@"长这么丑还出来约"},
