@@ -43,7 +43,9 @@
     
     /* 构建页面元素 */
     [super createTabBarWith:1];  // 调用父类方法，构建tabbar
+    // 创建ui元素
     [self createUIParts];
+    // 注册通知观察者
     [self waitForNotification];
 }
 
@@ -52,8 +54,12 @@
 {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    [self createTableView];
-    /* 调用 MJRefresh 初始化数据 */
+    
+    // 创建tableview
+    if (!_oneTableView) {
+        [self createTableView];
+    }
+    // 调用 MJRefresh 初始化数据
     if (!_messageData || _shoudAutoRefresh) {
         [_oneTableView.mj_header beginRefreshing];
     }
@@ -123,9 +129,6 @@
     _oneTableView.scrollsToTop = YES;
     [self.view addSubview:_oneTableView];
     
-    NSDictionary *info = [FTMUserDefault readLoginInfo];
-    NSString *uid = info[@"uid"];
-    
     // 下拉刷新 MJRefresh
     _oneTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
@@ -134,7 +137,7 @@
         //            [_oneTableView.mj_header endRefreshing];
         //            NSLog(@"下拉刷新成功，结束刷新");
         //        });
-        [self connectForMessageList:uid];
+        [self connectForMessageList];
     }];
     
     // 上拉加载更多 MJRefresh
@@ -231,13 +234,16 @@
 
 #pragma mark - 网络请求
 /** 下拉刷新 */
-- (void)connectForMessageList:(NSString *)uid
+- (void)connectForMessageList
 {
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/message_list"];
     
+    NSDictionary *info = [FTMUserDefault readLoginInfo];
+    NSString *uid = info[@"uid"];
     NSDictionary *parameters = @{@"uid": uid};
+    
     // 创建 GET 请求
     AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
     connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
@@ -365,9 +371,10 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"logout" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@"%@", note.name);
         NSLog(@"%@", note.object);
-        // 清除message list
-        _messageData = nil;
+        // 清空整个 message list
         [_oneTableView removeFromSuperview];
+        _oneTableView = nil;
+        _messageData = nil;
     }];
 }
 

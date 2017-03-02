@@ -409,6 +409,7 @@
         // 刷新friendlist
         NSLog(@"刷新friendlist");
         [_oneTableView removeFromSuperview];  // 卸载tableview
+        _oneTableView = nil;
         _friendsData = nil;
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist

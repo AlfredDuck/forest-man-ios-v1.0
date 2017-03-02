@@ -42,7 +42,9 @@
     [message setThumbImage:[UIImage imageNamed:@"coco180.png"]];
     
     WXWebpageObject *webPageObject = [WXWebpageObject object];
-    webPageObject.webpageUrl = @"http://cocochat.online:2000/download/";
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/download?from=weixin"];
+    webPageObject.webpageUrl = urlString;
     message.mediaObject = webPageObject;
     
     // 发送消息
@@ -99,7 +101,9 @@
 - (WBMessageObject *)messageToShare
 {
     WBMessageObject *message = [WBMessageObject message];
-    message.text = @"我在用COCO聊天，快来跟我一起玩吧~ http://cocochat.online:2000/download/";
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/download?from=weibo"];
+    message.text = [@"我在用COCO聊天，快来跟我一起玩吧~ " stringByAppendingString:urlString];
     
     // 设置配图
     WBImageObject *image = [WBImageObject object];

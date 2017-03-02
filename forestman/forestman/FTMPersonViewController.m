@@ -302,7 +302,6 @@
             // 产生一条广播，通知message list页面
             NSDictionary *info = @{@"message": @"ok"};
             [[NSNotificationCenter defaultCenter] postNotificationName:@"deleteFriendShip" object:info];
-
         }
     }
 }
@@ -393,6 +392,7 @@
             [toastView showToastWith:@"已经解除关系，无需重复操作" isErr:YES duration:3.0 superView:self.view];
             return;
         }
+        
         // 跳转到addFriend页面，并且把当前页面从页面栈中去除
         FTMAddFriendViewController *addFriendPage = [[FTMAddFriendViewController alloc] init];
         addFriendPage.uid = _uid;
