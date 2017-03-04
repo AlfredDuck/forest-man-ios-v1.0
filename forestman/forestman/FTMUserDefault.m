@@ -11,6 +11,24 @@
 
 @implementation FTMUserDefault
 
+/* 记录是否展示过push授权说明页面 */
++ (void)recordPushAuthorityIntroduction {
+    // 记录
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:@"done" forKey:@"pushAuthorityIntroduction"];
+}
+
++ (BOOL)hasShowPushAuthorityIntroduction {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *install = [ud stringForKey:@"pushAuthorityIntroduction"];
+    if (install) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+
 /* 读写本地token */
 + (NSString *)readDeviceToken
 {

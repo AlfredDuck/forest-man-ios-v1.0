@@ -11,6 +11,11 @@
 #import <Foundation/Foundation.h>
 
 @interface FTMUserDefault : NSObject
+
+/* 记录是否展示过push授权说明页面 */
++ (void)recordPushAuthorityIntroduction;
++ (BOOL)hasShowPushAuthorityIntroduction;
+
 /* 读写本机token */
 + (NSString *)readDeviceToken;
 + (BOOL)recordDeviceToken:(NSString *)deviceToken;
@@ -28,4 +33,5 @@
 
 /* 修改昵称 */
 + (BOOL)changeNickname:(NSString *)newNickname;
+
 @end

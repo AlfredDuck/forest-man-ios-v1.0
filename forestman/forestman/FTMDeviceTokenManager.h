@@ -13,16 +13,14 @@
 static BOOL pushAuthority;  // 推送权限
 
 @interface FTMDeviceTokenManager : UIViewController
+
+@property (nonatomic) NSInteger screenWidth;
+@property (nonatomic) NSInteger screenHeight;
+
 /** 获取device token */
 + (void)requestDeviceToken;
 /** 上传及修改本地token */
 + (void)uploadAndStoreToken:(NSString *)token;
 
-/** push权限设为关闭 */
-+ (void)pushAuthorityIsClose;
-/** push权限设为开启 */
-+ (void)pushAuthorityIsOpen;
-/** 读取push权限值 */
-+ (BOOL)readPushAuthority;
 
 @end

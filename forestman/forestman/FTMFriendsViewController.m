@@ -46,6 +46,7 @@
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:0];  // 调用父类方法，构建tabbar
+    
     /* 注册广播观察者 */
     [self waitForNotification];
 }
@@ -62,8 +63,20 @@
         if (!_friendsData) {
             // 启动时默认推送权限是关闭的
             [FTMUserDefault pushAuthorityIsClose];
-            // 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多（后期可以针对是否第一次安装需要用户授权，来优化）
-            [FTMDeviceTokenManager requestDeviceToken];
+            
+            /* 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多
+             * 若未展示过push授权说明，则打开push权限说明页面，从说明页面获取push权限
+             * 若已展示过push授权说明，则直接获取push权限
+             */
+            if (![FTMUserDefault hasShowPushAuthorityIntroduction]) {
+                NSLog(@"未展示过push授权说明");
+                FTMDeviceTokenManager *tokenPage = [[FTMDeviceTokenManager alloc] init];
+                [self.navigationController presentViewController:tokenPage animated:YES completion:nil];
+            } else {
+                NSLog(@"已展示过push授权说明");
+                [FTMDeviceTokenManager requestDeviceToken];
+            }
+            
             // 请求好友列表
             [self connectForFriendsListWith:uid];
         }

@@ -11,9 +11,87 @@
 #import "urlManager.h"
 #import "AFNetworking.h"
 #import "FTMUserDefault.h"
+#import "colorManager.h"
 
 @implementation FTMDeviceTokenManager
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.title = @"device token";
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // 获取屏幕长宽（pt）
+    _screenHeight = [UIScreen mainScreen].bounds.size.height;
+    _screenWidth = [UIScreen mainScreen].bounds.size.width;
+    [self createUIPart];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+#pragma mark - 创建ui
+- (void)createUIPart
+{
+    /* 说明文字 */
+    UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 107+25+20+3, 200, 20)];
+    label2.text = @"COCO需要你允许通知";
+    label2.font = [UIFont fontWithName:@"Helvetica" size:14];
+    label2.textColor = [colorManager lightTextColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:label2];
+    
+    /* 授权按钮 */
+    UIButton *weiboLoginButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [weiboLoginButton addTarget:self
+                         action:@selector(clickAuthButton)
+               forControlEvents:UIControlEventTouchUpInside];
+    [weiboLoginButton setTitle:@"好的" forState:UIControlStateNormal];
+    [weiboLoginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    weiboLoginButton.frame = CGRectMake(15, _screenHeight-15-50*2-10, _screenWidth-30, 50);
+    weiboLoginButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+    weiboLoginButton.tintColor = [UIColor whiteColor];
+    weiboLoginButton.layer.masksToBounds = YES;
+    weiboLoginButton.layer.cornerRadius = 8;
+    weiboLoginButton.backgroundColor = [colorManager yellowBackground];
+    [self.view addSubview:weiboLoginButton];
+}
+
+
+
+
+#pragma mark - IBAction
+- (void)clickAuthButton
+{
+    NSLog(@"已向用户说明push授权要求");
+    // 记录下此次说明，以后将不再出现此说明
+    [FTMUserDefault recordPushAuthorityIntroduction];
+    // 获取授权
+    [FTMDeviceTokenManager requestDeviceToken];
+    // 退出页面
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+
+
+#pragma mark - 单例方法 获取device token
 /** 获取device token */
 + (void)requestDeviceToken
 {
@@ -61,26 +139,6 @@
 }
 
 
-/** push权限设为关闭 */
-+ (void)pushAuthorityIsClose {
-    pushAuthority = NO;
-    NSLog(@"close");
-}
-/** push权限设为开启 */
-+ (void)pushAuthorityIsOpen {
-    pushAuthority = YES;
-    NSLog(@"open");
-}
-/** 读取push权限值 */
-+ (BOOL)readPushAuthority {
-    if (pushAuthority) {
-        NSLog(@"push open");
-    } else {
-        NSLog(@"push close");
-    }
-    
-    return pushAuthority;
-}
 
 
 
