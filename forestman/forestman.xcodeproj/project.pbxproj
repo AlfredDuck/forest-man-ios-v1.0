@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB0ACDE61E65D32500C4CDE5 /* daleile.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACDE51E65D32500C4CDE5 /* daleile.mp3 */; };
 		BB0ACE251E67101500C4CDE5 /* base_001.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACDE71E67101500C4CDE5 /* base_001.mp3 */; };
 		BB0ACE261E67101500C4CDE5 /* base_002.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACDE81E67101500C4CDE5 /* base_002.mp3 */; };
 		BB0ACE271E67101500C4CDE5 /* base_003.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BB0ACDE91E67101500C4CDE5 /* base_003.mp3 */; };
@@ -142,7 +141,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BB0ACDE51E65D32500C4CDE5 /* daleile.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = daleile.mp3; path = ../../../../Downloads/daleile.mp3; sourceTree = "<group>"; };
 		BB0ACDE71E67101500C4CDE5 /* base_001.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = base_001.mp3; path = "../../../mp3音频/base_001.mp3"; sourceTree = "<group>"; };
 		BB0ACDE81E67101500C4CDE5 /* base_002.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = base_002.mp3; path = "../../../mp3音频/base_002.mp3"; sourceTree = "<group>"; };
 		BB0ACDE91E67101500C4CDE5 /* base_003.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = base_003.mp3; path = "../../../mp3音频/base_003.mp3"; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 				BB0ACE231E67101500C4CDE5 /* base_061.mp3 */,
 				BB0ACE241E67101500C4CDE5 /* base_062.mp3 */,
 				BBAF10421E59920600E22677 /* sleep_tom.m4a */,
-				BB0ACDE51E65D32500C4CDE5 /* daleile.mp3 */,
 				BB7A0D4C1E580B5800892AAB /* sleep_tom.wav */,
 				BBB809CD1E627FFA00074C1B /* XY_xdf.mp3 */,
 			);
@@ -815,7 +812,6 @@
 				BB0ACE521E67101500C4CDE5 /* base_046.mp3 in Resources */,
 				BB0ACE621E67101500C4CDE5 /* base_062.mp3 in Resources */,
 				BB0ACE481E67101500C4CDE5 /* base_036.mp3 in Resources */,
-				BB0ACDE61E65D32500C4CDE5 /* daleile.mp3 in Resources */,
 				BB0ACE5E1E67101500C4CDE5 /* base_058.mp3 in Resources */,
 				BB0ACE2D1E67101500C4CDE5 /* base_009.mp3 in Resources */,
 				BB0ACE431E67101500C4CDE5 /* base_031.mp3 in Resources */,
@@ -1109,6 +1105,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Alfred.com.forestman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1126,6 +1123,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Alfred.com.forestman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
 #import "FTMTabBarViewController.h"
 
 @interface FTMFriendsViewController : FTMTabBarViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>

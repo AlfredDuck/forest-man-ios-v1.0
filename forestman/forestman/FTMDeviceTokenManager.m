@@ -95,17 +95,13 @@
 /** 获取device token */
 + (void)requestDeviceToken
 {
-    // 允许推送，暂时不懂
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    
     // app开启后清除badge(图标上的小红点)
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     
     //根据系统版本不同，调用不同方法获取 device token
     if ([[UIDevice currentDevice].systemVersion floatValue]>=8.0) {
 #ifdef __IPHONE_8_0
-        //Right, that is the point
+        // iOS 8 Notification
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert) categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 #else

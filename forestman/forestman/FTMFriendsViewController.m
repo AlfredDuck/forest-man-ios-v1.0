@@ -19,7 +19,6 @@
 #import "FTMDeviceTokenManager.h"
 
 @interface FTMFriendsViewController ()
-
 @end
 
 @implementation FTMFriendsViewController
@@ -54,6 +53,24 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // 试验---------------
+    // UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+    // NSLog(@"推送设置：%lu", (unsigned long)type);
+    
+    BOOL pushON = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+    NSLog(@"推送开关：%lu", (unsigned long)pushON);
+    // 仅iOS10上可用
+    [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        NSLog(@"-- ios 10 --");
+        NSLog(@"%ld", (long)settings.authorizationStatus);
+        NSLog(@"%ld", (long)settings.soundSetting);
+    }];
+    // -------------------
+    
+    // test
+    [self createDir:@"Sounds"];  // 创建sounds目录
+    [self download];  // 下载音频到sounds目录
+    
     // 判断是否登录
     if ([FTMUserDefault isLogin]) {
         NSLog(@"已登录");
@@ -429,6 +446,55 @@
     }];
 }
 
+
+
+#pragma mark - 下载音频
+/** 下载音频到 library/Sounds 目录 */
+- (void)download
+{
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    /* 下载地址 */
+    NSString *host = [urlManager urlHost];
+    NSString *url = [host stringByAppendingString:@"/files/daleile.mp3"];
+    NSURL *URL = [NSURL URLWithString:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    // 执行下载
+    NSURLSessionDownloadTask *downloadTask = [manager downloadTaskWithRequest:request progress:nil destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+         NSURL *documentsDirectoryURL = [[NSFileManager defaultManager] URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
+        NSLog(@"%@",documentsDirectoryURL);
+        NSLog(@"%@",[response suggestedFilename]);
+        NSString *p = @"Sounds/";
+        p = [p stringByAppendingString:[response suggestedFilename]];
+        return [documentsDirectoryURL URLByAppendingPathComponent:p];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        NSLog(@"File downloaded to: %@", filePath);
+    }];
+    [downloadTask resume];
+}
+
+
+
+/** 创建Sounds目录 */
+-(BOOL)createDir:(NSString *)fileName
+{
+    // 在Library的目录路径下创建新目录
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString * path = [NSString stringWithFormat:@"%@/%@",documentsDirectory,fileName];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSLog(@"路径：%@", path);
+    
+    BOOL isDir;
+    if (![fileManager fileExistsAtPath:path isDirectory:&isDir]) {//先判断目录是否存在，不存在才创建
+        BOOL res=[fileManager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+        return res;
+    } else{
+        return NO;
+    }
+}
 
 
 
