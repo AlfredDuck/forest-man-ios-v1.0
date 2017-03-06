@@ -17,6 +17,7 @@
 #import "FTMSearchViewController.h"
 #import "FTMWelcomeViewController.h"
 #import "FTMDeviceTokenManager.h"
+#import "FTMSuggestFriendsVC.h"
 
 @interface FTMFriendsViewController ()
 @end
@@ -312,6 +313,12 @@
 /** 点击‘添加’按钮 */
 - (void)clickAddButton
 {
+    // 试验...
+    FTMSuggestFriendsVC *suggestFriendsPage = [[FTMSuggestFriendsVC alloc] init];
+    [self.navigationController pushViewController:suggestFriendsPage animated:YES];
+    return;
+    
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
     alert.delegate = self;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;

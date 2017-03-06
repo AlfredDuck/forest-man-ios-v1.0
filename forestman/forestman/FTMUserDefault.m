@@ -78,6 +78,12 @@
     [ud setObject:loginInfo[@"nickname"] forKey:@"nickname"];  // 用户昵称，微博用户默认是微博昵称
     [ud setObject:loginInfo[@"portrait"] forKey:@"portrait"];  // 用户头像，微博用户默认是微博头像，邮箱用户默认是默认头像
     [ud setDouble:[loginInfo[@"login_token"] intValue] forKey:@"login_token"];  // 判断过期或其他设备登录
+    
+    if (loginInfo[@"weibo_access_token"] && [loginInfo[@"user_type"] isEqualToString:@"weibo"]) {
+        // 若是微博用户，且access_token有值
+        [ud setObject:loginInfo[@"weibo_access_token"] forKey:@"weibo_access_token"];
+    }
+
     return YES;
 }
 
@@ -127,5 +133,24 @@
     [ud setObject:newNickname forKey:@"nickname"];
     return YES;
 }
+
+
+
+
+/* 微博互粉 */
++ (BOOL)recordWeiboFriends:(NSArray *)weiboFriendsArr
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:weiboFriendsArr forKey:@"weiboFriends"];
+    return YES;
+}
+
++ (NSArray *)readWeiboFriends
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSArray *a = [ud arrayForKey:@"weiboFriends"];
+    return a;
+}
+
 
 @end

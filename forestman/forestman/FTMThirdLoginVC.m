@@ -14,7 +14,7 @@
 #import "FTMUserDefault.h"
 
 @interface FTMThirdLoginVC ()
-
+@property (nonatomic) BOOL hasConnectForLogin;  // 为了避免微博多次回调，导致多次注册登录的问题
 @end
 
 @implementation FTMThirdLoginVC
@@ -200,6 +200,7 @@
 }
 
 
+
 #pragma mark - 新浪微博登录成功后,账号储存在本地
 - (void)weiboLoginSuccess:(NSDictionary *)data
 {
@@ -210,6 +211,7 @@
                               data[@"uid"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
                               data[@"portrait"], @"portrait",  // 头像url
                               data[@"login_token"], @"login_token",  // 登录过期、或换设备登录所用
+                              data[@"weibo_access_token"], @"weibo_access_token",  // weibo授权token
                               nil];
     /// 账号信息记录到本地
     [FTMUserDefault recordLoginInfo:userData];

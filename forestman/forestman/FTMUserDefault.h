@@ -28,10 +28,14 @@
 /* 登录注册or退出登录 */
 + (BOOL)recordLoginInfo:(NSDictionary *)loginInfo;
 + (NSDictionary *)readLoginInfo;
-+ (BOOL)cleanLoginInfo;  // 退出登录后清理登录信息
++ (BOOL)cleanLoginInfo;  // 退出登录后清理所有用户信息
 + (BOOL)isLogin;  // 判断当前是否登录
 
 /* 修改昵称 */
 + (BOOL)changeNickname:(NSString *)newNickname;
+
+/* 微博互粉 */
++ (BOOL)recordWeiboFriends:(NSArray *)weiboFriendsArr;
++ (NSArray *)readWeiboFriends;
 
 @end
