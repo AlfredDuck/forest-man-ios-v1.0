@@ -43,7 +43,7 @@
     
     WXWebpageObject *webPageObject = [WXWebpageObject object];
     NSString *host = [urlManager urlHost];
-    NSString *urlString = [host stringByAppendingString:@"/download?from=weixin"];
+    NSString *urlString = @"https://itunes.apple.com/us/app/id1208037554";
     webPageObject.webpageUrl = urlString;
     message.mediaObject = webPageObject;
     
@@ -102,8 +102,8 @@
 {
     WBMessageObject *message = [WBMessageObject message];
     NSString *host = [urlManager urlHost];
-    NSString *urlString = [host stringByAppendingString:@"/download?from=weibo"];
-    message.text = [@"我在用COCO聊天，快来跟我一起玩吧~ " stringByAppendingString:urlString];
+    NSString *urlString = @"https://itunes.apple.com/us/app/id1208037554";
+    message.text = [@"我在用COCO聊天，快来跟我一起玩吧~ 点击并选择用Safari打开☞" stringByAppendingString:urlString];
     
     // 设置配图
     WBImageObject *image = [WBImageObject object];

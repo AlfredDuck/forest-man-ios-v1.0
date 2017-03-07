@@ -12,7 +12,9 @@
 #import "AFNetworking.h"
 #import "toastView.h"
 #import "FTMUserDefault.h"
+#import "FTMShareManager.h"
 #import "FTMFriendsCell.h"
+#import "FTMInviteFriendCell.h"
 #import "FTMPersonViewController.h"
 #import "FTMSearchViewController.h"
 #import "FTMWelcomeViewController.h"
@@ -46,6 +48,8 @@
     /* 构建页面元素 */
     [self createUIParts];
     [super createTabBarWith:0];  // 调用父类方法，构建tabbar
+    // 创建tableview
+    [self createTableView];
     
     /* 注册广播观察者 */
     [self waitForNotification];
@@ -58,19 +62,19 @@
     // UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
     // NSLog(@"推送设置：%lu", (unsigned long)type);
     
-    BOOL pushON = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
-    NSLog(@"推送开关：%lu", (unsigned long)pushON);
-    // 仅iOS10上可用
-    [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-        NSLog(@"-- ios 10 --");
-        NSLog(@"%ld", (long)settings.authorizationStatus);
-        NSLog(@"%ld", (long)settings.soundSetting);
-    }];
+//    BOOL pushON = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+//    NSLog(@"推送开关：%lu", (unsigned long)pushON);
+//    // 仅iOS10上可用
+//    [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+//        NSLog(@"-- ios 10 --");
+//        NSLog(@"%ld", (long)settings.authorizationStatus);
+//        NSLog(@"%ld", (long)settings.soundSetting);
+//    }];
     // -------------------
     
     // test
-    [self createDir:@"Sounds"];  // 创建sounds目录
-    [self download];  // 下载音频到sounds目录
+//    [self createDir:@"Sounds"];  // 创建sounds目录
+//    [self download];  // 下载音频到sounds目录
     
     // 判断是否登录
     if ([FTMUserDefault isLogin]) {
@@ -81,19 +85,21 @@
         if (!_friendsData) {
             // 启动时默认推送权限是关闭的
             [FTMUserDefault pushAuthorityIsClose];
+            // 获取token，记住要在登陆后，这样体验好些
+            [FTMDeviceTokenManager requestDeviceToken];
             
             /* 获取token !!! 时机很重要，在登录后索要token比在登录前索要要好得多
              * 若未展示过push授权说明，则打开push权限说明页面，从说明页面获取push权限
              * 若已展示过push授权说明，则直接获取push权限
              */
-            if (![FTMUserDefault hasShowPushAuthorityIntroduction]) {
-                NSLog(@"未展示过push授权说明");
-                FTMDeviceTokenManager *tokenPage = [[FTMDeviceTokenManager alloc] init];
-                [self.navigationController presentViewController:tokenPage animated:YES completion:nil];
-            } else {
-                NSLog(@"已展示过push授权说明");
-                [FTMDeviceTokenManager requestDeviceToken];
-            }
+//            if (![FTMUserDefault hasShowPushAuthorityIntroduction]) {
+//                NSLog(@"未展示过push授权说明");
+//                FTMDeviceTokenManager *tokenPage = [[FTMDeviceTokenManager alloc] init];
+//                [self.navigationController presentViewController:tokenPage animated:YES completion:nil];
+//            } else {
+//                NSLog(@"已展示过push授权说明");
+//                [FTMDeviceTokenManager requestDeviceToken];
+//            }
             
             // 请求好友列表
             [self connectForFriendsListWith:uid];
@@ -235,12 +241,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_friendsData count];
+    if (section == 0) {
+        return 1;
+    } else {
+        return [_friendsData count];
+    }
 }
 
 
@@ -249,15 +259,27 @@
 {
     static NSString *cellWithIdentifier = @"Cell+";
     FTMFriendsCell *oneCell = [tableView dequeueReusableCellWithIdentifier:cellWithIdentifier];
+    static NSString *fCellWithIdentifier = @"Cell++";
+    FTMInviteFriendCell *inviteCell = [tableView dequeueReusableCellWithIdentifier:fCellWithIdentifier];
     
     NSUInteger row = [indexPath row];
-    if (oneCell == nil) {
-        oneCell = [[FTMFriendsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
+    NSUInteger section = [indexPath section];
+    
+    if (section == 0) {
+        if (inviteCell == nil) {
+            inviteCell = [[FTMInviteFriendCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:fCellWithIdentifier];
+        }
+        inviteCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
+        return inviteCell;
+    } else {
+        if (oneCell == nil) {
+            oneCell = [[FTMFriendsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellWithIdentifier];
+        }
+        [oneCell rewriteNickname:_friendsData[row][@"nickname"]];
+        [oneCell rewritePortrait:_friendsData[row][@"portrait"]];
+        oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
+        return oneCell;
     }
-    [oneCell rewriteNickname:_friendsData[row][@"nickname"]];
-    [oneCell rewritePortrait:_friendsData[row][@"portrait"]];
-    oneCell.selectionStyle = UITableViewCellSelectionStyleNone;  // 取消选中的背景色
-    return oneCell;
 }
 
 
@@ -265,45 +287,59 @@
 // 改变 cell 高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 83;
+    NSUInteger section = [indexPath section];
+    if (section == 0) {
+        return 83+15;
+    } else {
+        return 83;
+    }
 }
 
 
 // tableView 点击事件
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 判断是否已开启push权限
-    if (![FTMUserDefault readPushAuthority]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"以后再说" otherButtonTitles:@"去设置中开启", nil];
-        alert.delegate = self;
-        alert.tag = 11;
-        [alert show];
-        return;
-    }
-    
     NSUInteger row = [indexPath row];
+    NSUInteger section = [indexPath section];
     
-    // 打开新页面
-    FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
-    personPage.nickname = _friendsData[row][@"nickname"];
-    personPage.portraitURL = _friendsData[row][@"portrait"];
-    personPage.uid = _friendsData[row][@"uid"];
-    // block函数定义
-    personPage.deleteFriendship = ^(NSString *text){
-        NSLog(@"刷新friendlist");
-        [_oneTableView removeFromSuperview];  // 卸载tableview
-        _friendsData = nil;
-        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
-        [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
-    };
-    [self.navigationController pushViewController:personPage animated:YES];
-    
-    // 开启iOS7的滑动返回效果
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    if (section == 0) {
+        //
+        NSLog(@"click share");
+        UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:@"选择邀请朋友的方式" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博", @"微信好友", @"微信朋友圈", nil];
+        [shareSheet showInView:self.view];
+        
+    } else {
+        // 判断是否已开启push权限
+        if (![FTMUserDefault readPushAuthority]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"(◕ܫ◕)" message:@"COCO需要你开启通知,这是游戏规则哦~" delegate:nil cancelButtonTitle:@"以后再说" otherButtonTitles:@"去设置中开启", nil];
+            alert.delegate = self;
+            alert.tag = 11;
+            [alert show];
+            return;
+        }
+        
+        // 打开新页面
+        FTMPersonViewController *personPage = [[FTMPersonViewController alloc] init];
+        personPage.nickname = _friendsData[row][@"nickname"];
+        personPage.portraitURL = _friendsData[row][@"portrait"];
+        personPage.uid = _friendsData[row][@"uid"];
+        // block函数定义
+        personPage.deleteFriendship = ^(NSString *text){
+            NSLog(@"刷新friendlist");
+            _friendsData = nil;
+            [_oneTableView reloadData];
+            NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+            [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
+        };
+        [self.navigationController pushViewController:personPage animated:YES];
+        
+        // 开启iOS7的滑动返回效果
+        if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+            self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+        }
+        // 返回时是非选中状态
+        // [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
-    // 返回时是非选中状态
-    // [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -314,9 +350,9 @@
 - (void)clickAddButton
 {
     // 试验...
-    FTMSuggestFriendsVC *suggestFriendsPage = [[FTMSuggestFriendsVC alloc] init];
-    [self.navigationController pushViewController:suggestFriendsPage animated:YES];
-    return;
+//    FTMSuggestFriendsVC *suggestFriendsPage = [[FTMSuggestFriendsVC alloc] init];
+//    [self.navigationController pushViewController:suggestFriendsPage animated:YES];
+//    return;
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"添加朋友" message:@"请输入朋友的昵称" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"继续", nil];
@@ -348,8 +384,6 @@
         // block函数定义
         searchPage.backFromSearchPage = ^(NSString *text){
             NSLog(@"刷新friendlist");
-            [_oneTableView removeFromSuperview];  // 卸载tableview
-            _friendsData = nil;
             NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
             [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
         };
@@ -374,7 +408,28 @@
 
 
 
+#pragma mark - UIActionSheet 代理
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    FTMShareManager *shareManager = [[FTMShareManager alloc] init];
+    if (buttonIndex == 0) {
+        NSLog(@"weibo");
+        [shareManager shareToWeibo];
+    } else if (buttonIndex == 1) {
+        NSLog(@"weixin");
+        [shareManager shareToWeixinWithTimeLine:NO];
+    } else if (buttonIndex == 2) {
+        NSLog(@"timeline");
+        [shareManager shareToWeixinWithTimeLine:YES];
+    }
+}
+
+
+
+
+
 #pragma mark - 网络请求
+/** 请求好友列表 */
 - (void)connectForFriendsListWith:(NSString *)uid
 {
     // prepare request parameters
@@ -405,8 +460,8 @@
         
         // 绑定数据
         _friendsData = [data mutableCopy];
-        // 创建tableview
-        [self createTableView];
+        // 刷新tableview
+        [_oneTableView reloadData];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -428,7 +483,7 @@
         NSLog(@"%@", note.object);
         // 清除message list
         _friendsData = nil;
-        [_oneTableView removeFromSuperview];
+        [_oneTableView reloadData];
     }];
     
     // 广播内容：从后台回到前台
@@ -445,9 +500,8 @@
         NSLog(@"%@", note.object);
         // 刷新friendlist
         NSLog(@"刷新friendlist");
-        [_oneTableView removeFromSuperview];  // 卸载tableview
-        _oneTableView = nil;
         _friendsData = nil;
+        [_oneTableView reloadData];
         NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
         [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
     }];

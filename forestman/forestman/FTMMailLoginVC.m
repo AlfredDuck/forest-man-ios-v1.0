@@ -301,14 +301,14 @@
         if (errcode == 1001) {  // 数据库出错
             NSLog(@"登录时出错");
             _loginLabel.text = @"登录";
-            _loginButton.backgroundColor = [colorManager blueButtonColor];
+            _loginButton.backgroundColor = [colorManager yellowBackground];
             [toastView showToastWith:@"服务器出错，请重试" isErr:NO duration:2.0 superView:self.view];
             return;
         }
         if (errcode == 1002) {  // 用户不存在，无法登陆
             NSLog(@"用户不存在，请先注册");
             _loginLabel.text = @"登录";
-            _loginButton.backgroundColor = [colorManager blueButtonColor];
+            _loginButton.backgroundColor = [colorManager yellowBackground];
             [toastView showToastWith:@"邮箱或密码错误" isErr:NO duration:2.0 superView:self.view];
             return;
         }
@@ -319,7 +319,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         _loginLabel.text = @"登录";
-        _loginButton.backgroundColor = [colorManager blueButtonColor];
+        _loginButton.backgroundColor = [colorManager yellowBackground];
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
 }
@@ -353,13 +353,13 @@
         
         if (errcode == 1001) {  // 数据库出错
             _signupLabel.text = @"注册";
-            _signupButton.backgroundColor = [colorManager blueButtonColor];
+            _signupButton.backgroundColor = [colorManager yellowBackground];
             [toastView showToastWith:@"服务器出错，请重试" isErr:NO duration:2.0 superView:self.view];
             return;
         }
         if (errcode == 1002) {  // 用户已注册，无法完成注册
             _signupLabel.text = @"注册";
-            _signupButton.backgroundColor = [colorManager blueButtonColor];
+            _signupButton.backgroundColor = [colorManager yellowBackground];
             [toastView showToastWith:@"此邮箱已注册过，请直接登录" isErr:NO duration:2.0 superView:self.view];
             return;
         }
@@ -370,7 +370,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         _signupLabel.text = @"注册";
-        _signupButton.backgroundColor = [colorManager blueButtonColor];
+        _signupButton.backgroundColor = [colorManager yellowBackground];
         [toastView showToastWith:@"网络有点问题" isErr:NO duration:2.0 superView:self.view];
     }];
 }

@@ -11,8 +11,8 @@
 @implementation urlManager
 + (NSString *)urlHost
 {
-    return @"http://127.0.0.1:2000";  // 本地测试
-//    return @"http://lightnews.online:2000";  // 阿里云测试
+//    return @"http://127.0.0.1:2000";  // 本地测试
+    return @"http://lightnews.online:2000";  // 阿里云测试
 //    return @"http://lightnews.online:2020";  // 阿里云正式
 }
 

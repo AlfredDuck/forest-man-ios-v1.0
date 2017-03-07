@@ -10,7 +10,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import "FTMTabBarViewController.h"
 
-@interface FTMFriendsViewController : FTMTabBarViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface FTMFriendsViewController : FTMTabBarViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 @property (nonatomic) NSInteger screenWidth;  // 全局变量 屏幕长宽
 @property (nonatomic) NSInteger screenHeight;  // 全局变量 屏幕长宽
 /* uitableview */
