@@ -22,17 +22,4 @@
 @property (nonatomic, strong) UIActivityIndicatorView *loadingFlower;  // 小菊花
 @property (nonatomic, strong) UILabel *emptyLabel;  // 页面为空的提示语
 
-// block用法
-/**
- *  定义了一个changeColor的Block。这个changeColor必须带一个参数，这个参数的类型必须为id类型的
- *  无返回值
- *  @param id
- */
-typedef void(^searchCallback)(id);
-/**
- *  用上面定义的changeColor声明一个Block,声明的这个Block必须遵守声明的要求。
- */
-@property (nonatomic, copy) searchCallback backFromSearchPage;
-// 参考文档：http://www.jianshu.com/p/17872da184fb
-
 @end

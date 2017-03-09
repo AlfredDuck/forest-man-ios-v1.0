@@ -13,6 +13,7 @@
 #import "toastView.h"
 #import "FTMUserDefault.h"
 #import "FTMShareManager.h"
+#import "FTMAddressBookManager.h"
 #import "FTMFriendsCell.h"
 #import "FTMInviteFriendCell.h"
 #import "FTMPersonViewController.h"
@@ -350,8 +351,18 @@
 - (void)clickAddButton
 {
     // 试验...
-//    FTMSuggestFriendsVC *suggestFriendsPage = [[FTMSuggestFriendsVC alloc] init];
-//    [self.navigationController pushViewController:suggestFriendsPage animated:YES];
+    FTMSuggestFriendsVC *suggestFriendsPage = [[FTMSuggestFriendsVC alloc] init];
+    suggestFriendsPage.backFromSuggestPage = ^(NSString *txt){
+        NSLog(@"刷新friendlist");
+        NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
+        [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
+    };
+    [self.navigationController pushViewController:suggestFriendsPage animated:YES];
+    return;
+    
+    // 试验...
+//    FTMAddressBookManager *ab = [[FTMAddressBookManager alloc] init];
+//    [ab readAddressBook];
 //    return;
     
     
@@ -381,12 +392,6 @@
         
         FTMSearchViewController *searchPage = [[FTMSearchViewController alloc] init];
         searchPage.keyword = str;
-        // block函数定义
-        searchPage.backFromSearchPage = ^(NSString *text){
-            NSLog(@"刷新friendlist");
-            NSDictionary *loginInfo = [FTMUserDefault readLoginInfo];
-            [self connectForFriendsListWith: loginInfo[@"uid"]];  // 重新请求friendlist
-        };
         [self.navigationController pushViewController:searchPage animated:YES];
         
         // 开启iOS7的滑动返回效果

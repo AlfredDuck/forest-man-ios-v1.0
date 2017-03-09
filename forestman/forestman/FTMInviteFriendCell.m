@@ -58,7 +58,6 @@
         partLine.backgroundColor = [colorManager lightGrayBackground];
         [self.contentView addSubview:partLine];
         self.contentView.backgroundColor = [UIColor whiteColor];
-        
     }
     return self;
 }

@@ -126,5 +126,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>NSContactsUsageDescription</key>
+	<string>需要用通讯录来帮你匹配好友哦~</string>
 </dict>
 </plist>
