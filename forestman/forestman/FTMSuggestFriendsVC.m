@@ -266,7 +266,9 @@
 
 
 #pragma mark - IBAction
-- (void)clickBackButton {
+/** 点击返回按钮 */
+- (void)clickBackButton
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 

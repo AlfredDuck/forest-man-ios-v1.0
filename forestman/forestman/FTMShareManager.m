@@ -12,6 +12,7 @@
 #import "WeiboSDK.h"
 #import "WeiboUser.h"
 #import "WXApi.h"
+#import "FTMUserDefault.h"
 
 @implementation FTMShareManager
 
@@ -21,6 +22,12 @@
 /** 分享到微信/朋友圈 */
 - (void)shareToWeixinWithTimeLine:(BOOL)isTimeLine
 {
+    // 获取用户昵称
+    NSString *nickname = @"";
+    if ([FTMUserDefault isLogin]) {
+        nickname = [FTMUserDefault readLoginInfo][@"nickname"];
+    }
+    
     // 判断是否安装微信
     if (![WXApi isWXAppInstalled]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"还没有安装微信哦" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
@@ -35,14 +42,14 @@
     
     // 构建消息体
     WXMediaMessage *message = [[WXMediaMessage alloc] init];
-    message.title = @"我在用COCO聊天，快来跟我一起玩吧";
-    message.description = @"我在用COCO聊天，快来跟我一起玩吧";
+    NSString *ms = [NSString stringWithFormat:@"我的COCO昵称是：%@，快来跟我一起玩吧", nickname];
+    message.title = ms;
+    message.description = @"COCO-你的百变通知音";
     // [message setThumbImage:[UIImage imageNamed:@"share_button.png"]];  // 微信原方法
     // 微信要求分享的图片不超过32k，否则会出现未知错误。目前后台不能压缩图片，那么就从后台传默认图片吧
     [message setThumbImage:[UIImage imageNamed:@"coco180.png"]];
     
     WXWebpageObject *webPageObject = [WXWebpageObject object];
-    NSString *host = [urlManager urlHost];
     NSString *urlString = @"https://itunes.apple.com/us/app/id1208037554";
     webPageObject.webpageUrl = urlString;
     message.mediaObject = webPageObject;
@@ -57,6 +64,8 @@
     }
     [WXApi sendReq:req];
 }
+
+
 
 
 
@@ -100,10 +109,16 @@
 #pragma mark - weibo消息的封装
 - (WBMessageObject *)messageToShare
 {
+    // 获取用户昵称
+    NSString *nickname = @"";
+    if ([FTMUserDefault isLogin]) {
+        nickname = [FTMUserDefault readLoginInfo][@"nickname"];
+    }
+    
     WBMessageObject *message = [WBMessageObject message];
-    NSString *host = [urlManager urlHost];
     NSString *urlString = @"https://itunes.apple.com/us/app/id1208037554";
-    message.text = [@"我在用COCO聊天，快来跟我一起玩吧~ 点击并选择用Safari打开☞" stringByAppendingString:urlString];
+    NSString *ms = [NSString stringWithFormat:@"我的COCO昵称是：%@，快来跟我一起玩吧~ 点击并选择用Safari打开☞", nickname];
+    message.text = [ms stringByAppendingString:urlString];
     
     // 设置配图
     WBImageObject *image = [WBImageObject object];
@@ -140,6 +155,7 @@
     
     return message;
 }
+
 
 
 @end
