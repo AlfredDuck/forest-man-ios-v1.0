@@ -91,7 +91,7 @@
     
     /* ------ 登录/注册组件 ------ */
     unsigned long hh = 103;
-    /* 邮箱输入框 */
+    /* 手机号输入框 */
     UIView *mailView = [[UIView alloc] initWithFrame:CGRectMake(45, hh, _screenWidth-90, 40)];
     mailView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     mailView.layer.masksToBounds = YES;  // 没这句话它圆不起来
@@ -99,7 +99,7 @@
     [self.view addSubview: mailView];
     
     _mailTextField = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, _screenWidth-120, 40)];
-    _mailTextField.placeholder = @"邮箱";
+    _mailTextField.placeholder = @"手机号";
     _mailTextField.textColor = [colorManager mainTextColor];
     _mailTextField.font = [UIFont fontWithName:@"Helvetica" size:14];
     [_mailTextField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"]; // 改placeholder颜色
@@ -197,13 +197,18 @@
 {
     unsigned index = (unsigned)((UISegmentedControl *)sender).selectedSegmentIndex;
     if (index == 1) {
+        // 切到登录
         _loginButton.hidden = NO;
         _signupButton.hidden = YES;
         _nicknameView.hidden = YES;
+        _mailTextField.placeholder = @"手机号或邮箱";
+        // 从0.0.3开始不再支持邮箱注册，但以往邮箱用户还可以登录
     } else if (index == 0) {
+        // 切到注册
         _loginButton.hidden = YES;
         _signupButton.hidden = NO;
         _nicknameView.hidden = NO;
+        _mailTextField.placeholder = @"手机号";
     }
 }
 
@@ -215,45 +220,49 @@
         return;
     }
     
-    NSString *mail = _mailTextField.text;
+    NSString *phone = _mailTextField.text;
     NSString *password = _passwordTextField.text;
     
-    if ([mail isEqualToString:@""] || [password isEqualToString:@""]){
-        NSLog(@"请填写邮箱和密码");
+    // 校验输入不为空
+    if ([phone isEqualToString:@""] || [password isEqualToString:@""]){
+        NSLog(@"请填写手机号和密码");
         return;
     }
     
     _loginButton.backgroundColor = [UIColor lightGrayColor];
     _loginLabel.text = @"登录中...";
     
-    [self connectForLoginWithMail:mail andPassword:password];
+    [self connectForLoginWithPhone:phone andPassword:password];
 }
 
 
 /** 点击注册按钮 */
 - (void)clickSignupButton
 {
-    // 临时...
-//    [self loginSuccessWith:nil];
-//    return;
-    
     if (![_signupLabel.text isEqualToString:@"注册"]) {
         return;
     }
     
-    NSString *mail = _mailTextField.text;
+    NSString *phone = _mailTextField.text;
     NSString *password = _passwordTextField.text;
     NSString *nickname = _nicknameTextField.text;
     
-    if ([mail isEqualToString:@""] || [password isEqualToString:@""] || [nickname isEqualToString:@""]){
-        NSLog(@"请填写邮箱和密码");
+    // 校验输入不为空
+    if ([phone isEqualToString:@""] || [password isEqualToString:@""] || [nickname isEqualToString:@""]){
+        NSLog(@"请填写手机号和密码");
+        return;
+    }
+    // 校验手机号格式
+    NSString *toast = [self valiMobile: phone];
+    if (toast) {
+        [toastView showToastWith:toast isErr:NO duration:2.0 superView:self.view];
         return;
     }
     
     _signupButton.backgroundColor = [UIColor lightGrayColor];
     _signupLabel.text = @"注册中...";
     
-    [self connectForSignupWithMail:mail andPassword:password andNickname:nickname];
+    [self connectForSignupWithPhone:phone andPassword:password andNickname:nickname];
 }
 
 
@@ -276,14 +285,14 @@
 
 #pragma mark - 网络请求
 /** 请求登录接口 */
-- (void)connectForLoginWithMail:(NSString *)mail andPassword:(NSString *)password
+- (void)connectForLoginWithPhone:(NSString *)phone andPassword:(NSString *)password
 {    
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/user/mail_login"];
     
     NSDictionary *parameters = @{
-                                 @"uid": mail,
+                                 @"uid": phone,
                                  @"password": password,
                                  @"plantform": @"ios"
                                  };
@@ -309,7 +318,7 @@
             NSLog(@"用户不存在，请先注册");
             _loginLabel.text = @"登录";
             _loginButton.backgroundColor = [colorManager yellowBackground];
-            [toastView showToastWith:@"邮箱或密码错误" isErr:NO duration:2.0 superView:self.view];
+            [toastView showToastWith:@"手机号或密码错误" isErr:NO duration:2.0 superView:self.view];
             return;
         }
         
@@ -327,17 +336,17 @@
 
 
 /** 注册请求 */
-- (void)connectForSignupWithMail:(NSString *)mail andPassword:(NSString *)password andNickname:(NSString *)nickname
+- (void)connectForSignupWithPhone:(NSString *)phone andPassword:(NSString *)password andNickname:(NSString *)nickname
 {
     // prepare request parameters
     NSString *host = [urlManager urlHost];
     NSString *urlString = [host stringByAppendingString:@"/user/mail_signup"];
     
     NSDictionary *parameters = @{
-                                 @"uid": mail,
+                                 @"uid": phone,
                                  @"password": password,
                                  @"nickname": nickname,
-                                 @"user_type": @"mail",
+                                 @"user_type": @"phone",
                                  @"plantform": @"ios"
                                  };
     // 创建 GET 请求
@@ -360,7 +369,7 @@
         if (errcode == 1002) {  // 用户已注册，无法完成注册
             _signupLabel.text = @"注册";
             _signupButton.backgroundColor = [colorManager yellowBackground];
-            [toastView showToastWith:@"此邮箱已注册过，请直接登录" isErr:NO duration:2.0 superView:self.view];
+            [toastView showToastWith:@"此手机号已注册过，请直接登录" isErr:NO duration:2.0 superView:self.view];
             return;
         }
         
@@ -391,6 +400,7 @@
                               data[@"uid"], @"uid",  // 用户id（对邮箱用户来说就是邮箱号）
                               data[@"portrait"], @"portrait",  // 头像url
                               data[@"login_token"], @"login_token",  // 登录过期、或换设备登录所用
+                              data[@"uid"], @"phone",  // 手机号(为了方便匹配好友，所有用户都有这样一个属性)
                               nil];
     // 账号信息记录到本地
     [FTMUserDefault recordLoginInfo:userData];
@@ -402,6 +412,44 @@
     }];
 }
 
+
+
+
+#pragma mark - 手机号格式校验
+/** 手机号格式校验 */
+- (NSString *)valiMobile:(NSString *)mobile
+{
+    if (mobile.length < 11)
+    {
+        return @"手机号长度只能是11位";
+    }else{
+        /**
+         * 移动号段正则表达式
+         */
+        NSString *CM_NUM = @"^((13[4-9])|(147)|(15[0-2,7-9])|(178)|(18[2-4,7-8]))\\d{8}|(1705)\\d{7}$";
+        /**
+         * 联通号段正则表达式
+         */
+        NSString *CU_NUM = @"^((13[0-2])|(145)|(15[5-6])|(176)|(18[5,6]))\\d{8}|(1709)\\d{7}$";
+        /**
+         * 电信号段正则表达式
+         */
+        NSString *CT_NUM = @"^((133)|(153)|(177)|(18[0,1,9]))\\d{8}$";
+        NSPredicate *pred1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM_NUM];
+        BOOL isMatch1 = [pred1 evaluateWithObject:mobile];
+        NSPredicate *pred2 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU_NUM];
+        BOOL isMatch2 = [pred2 evaluateWithObject:mobile];
+        NSPredicate *pred3 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT_NUM];
+        BOOL isMatch3 = [pred3 evaluateWithObject:mobile];
+        
+        if (isMatch1 || isMatch2 || isMatch3) {
+            return nil;
+        }else{
+            return @"请输入正确的电话号码";
+        }
+    }
+    return nil;
+}
 
 
 @end

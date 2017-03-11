@@ -75,7 +75,7 @@
     [signupButton addTarget:self
                      action:@selector(goToMailLogin)
            forControlEvents:UIControlEventTouchUpInside];
-    [signupButton setTitle:@"邮箱登录/注册" forState:UIControlStateNormal];
+    [signupButton setTitle:@"手机号登录/注册" forState:UIControlStateNormal];
     [signupButton setTitleColor:[colorManager yellowText] forState:UIControlStateNormal];
     signupButton.frame = CGRectMake(15, _screenHeight-15-50, _screenWidth-30, 50);
     signupButton.titleLabel.font = [UIFont fontWithName:@"Helvetica" size:20];

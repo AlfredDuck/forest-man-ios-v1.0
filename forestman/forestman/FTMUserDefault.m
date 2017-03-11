@@ -78,6 +78,7 @@
     [ud setObject:loginInfo[@"nickname"] forKey:@"nickname"];  // 用户昵称，微博用户默认是微博昵称
     [ud setObject:loginInfo[@"portrait"] forKey:@"portrait"];  // 用户头像，微博用户默认是微博头像，邮箱用户默认是默认头像
     [ud setDouble:[loginInfo[@"login_token"] intValue] forKey:@"login_token"];  // 判断过期或其他设备登录
+    [ud setObject:loginInfo[@"phone"] forKey:@"phone"];  // 用户手机号（手机号登录的用户，uid就是手机号，但请分别记录）
     
     if (loginInfo[@"weibo_access_token"] && [loginInfo[@"user_type"] isEqualToString:@"weibo"]) {
         // 若是微博用户，且access_token有值
