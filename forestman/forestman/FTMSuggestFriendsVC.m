@@ -10,10 +10,12 @@
 #import "colorManager.h"
 #import "toastView.h"
 #import "AFNetworking.h"
+#import "urlManager.h"
 #import "FTMUserDefault.h"
 #import "FTMAddFriendCell.h"
 #import "FTMAddFriendViewController.h"
 #import "FTMSearchViewController.h"
+#import "FTMAddressBookManager.h"
 
 @interface FTMSuggestFriendsVC ()
 
@@ -48,6 +50,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    // 读取通讯录
+    [self saveAddressBook];
     
     // [self connectForWeiboFriendsList:@"2.00iCeEXGXyrICC1952a3c3bdE4lV_C" withUID:@"5985523320"];
 }
@@ -275,7 +279,70 @@
 
 
 
+
+
+#pragma mark - 通讯录处理
+/*
+ * 读取并上传通讯录
+ *
+ */
+- (void)saveAddressBook
+{
+    // 检查本地是否已保存通讯录
+    if ([FTMUserDefault readAddressBook]) {
+        NSArray *ab = [FTMUserDefault readAddressBook];
+        NSLog(@"本地已保存通讯录%@", ab);
+        // 上传通讯录
+        [self connectForUploadAddressBook:ab uid:@""];
+    } else {
+        NSLog(@"本地无保存的通讯录");
+        // 读取通讯录
+        FTMAddressBookManager *ab = [[FTMAddressBookManager alloc] init];
+        NSArray * abList= [ab readAddressBook];
+        
+        // 保存通讯录到本地
+        [FTMUserDefault recordAddressBook:abList];
+    }
+}
+
+
+
+
 #pragma mark - 网络请求
+/*
+ * 上传通讯录
+ *
+ */
+- (void)connectForUploadAddressBook:(NSArray *)abList uid:(NSString *)uid
+{
+    NSLog(@"%@", abList);
+    NSError *error = nil;
+    NSString *createJSON = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:abList
+                                                                                          options:NSJSONWritingPrettyPrinted
+                                                                                            error:&error]
+                                                 encoding:NSUTF8StringEncoding];
+    // 准备参数
+    NSString *host = [urlManager urlHost];
+    NSString *urlString = [host stringByAppendingString:@"/upload_ab"];
+    NSDictionary *parameters = @{@"ab": createJSON,
+                                 @"uid": @"",
+                                 @"phone": @"",
+                                 @"user_type": @""};
+    
+    // 创建 POST 请求
+    AFHTTPRequestOperationManager *connectManager = [AFHTTPRequestOperationManager manager];
+    connectManager.requestSerializer.timeoutInterval = 20.0;   //设置超时时间
+    [connectManager POST:urlString parameters: parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        // POST请求成功
+        NSLog(@"post success");
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [toastView showToastWith:@"网络有点问题" isErr:NO duration:3.0 superView:self.view];
+    }];
+}
+
+
 /*
  * 请求微博互粉列表
  *

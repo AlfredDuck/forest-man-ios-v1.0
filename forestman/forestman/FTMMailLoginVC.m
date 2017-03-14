@@ -346,6 +346,7 @@
                                  @"uid": phone,
                                  @"password": password,
                                  @"nickname": nickname,
+                                 @"phone": phone,
                                  @"user_type": @"phone",
                                  @"plantform": @"ios"
                                  };

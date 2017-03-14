@@ -10,7 +10,7 @@
 
 @implementation FTMAddressBookManager
 
--(void)readAddressBook{
+-(NSArray *)readAddressBook{
     NSLog(@"开始读取通讯录");
     
     //定义通讯录
@@ -34,7 +34,7 @@
     if (tmpAddressBook==nil) {
         NSLog(@"获取通讯录失败");
         // [self.delegate readAddressBookFailAlert];
-        return ;
+        return nil;
     };
     
     //将通讯录中的信息用数组方式读出
@@ -44,7 +44,6 @@
     _myFriends = [[NSMutableArray alloc] init];
     
     for(id tmpPerson in tmpPeoples){
-        
         //获取的联系人单一属性:First name
         NSString* tmpFirstName = (__bridge_transfer NSString*)ABRecordCopyValue((__bridge ABRecordRef)(tmpPerson), kABPersonFirstNameProperty);
         //NSLog(@"First name:%@", tmpFirstName);
@@ -80,15 +79,13 @@
             tmpName = [tmpFirstName stringByAppendingFormat:@"%@%@",@" ", tmpLastName];
         }
         
-        NSDictionary *person = [NSDictionary dictionaryWithObjectsAndKeys:tmpName, @"name", tmpCellphone, @"cellphone",nil];
-        NSLog(@"%@", person);
+        NSDictionary *person = [NSDictionary dictionaryWithObjectsAndKeys:tmpName, @"name", tmpCellphone, @"phone",nil];
+        // NSLog(@"%@", person);
         
         [_myFriends addObject:person];
     }
-    
-    //调用代理方法
-    //[self.delegate showAddressBook:_myFriends];
-    
+    NSLog(@"%@", _myFriends);
+    return _myFriends;
 }
 
 @end

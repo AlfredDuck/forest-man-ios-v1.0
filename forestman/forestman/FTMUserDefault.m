@@ -109,6 +109,7 @@
     [ud removeObjectForKey:@"user_type"];
     [ud removeObjectForKey:@"nickname"];
     [ud removeObjectForKey:@"portrait"];
+    [ud removeObjectForKey:@"phone"];
     //
     [ud removeObjectForKey:@"deviceToken"];  // token也需要清理
     return YES;
@@ -151,6 +152,31 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSArray *a = [ud arrayForKey:@"weiboFriends"];
     return a;
+}
+
+
+
+
+/* 手机号&通讯录 */
++ (NSString *)readPhone
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *phone = [ud stringForKey:@"phone"];
+    return phone;
+}
+
++ (BOOL)recordAddressBook:(NSArray *)abList
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:abList forKey:@"addressBookList"];
+    return YES;
+}
+
++ (NSArray *)readAddressBook
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSArray *abList = [ud arrayForKey:@"addressBookList"];
+    return abList;
 }
 
 

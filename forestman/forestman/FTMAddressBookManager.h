@@ -11,6 +11,8 @@
 #import <AddressBook/AddressBook.h>
 
 @interface FTMAddressBookManager : UIViewController
+
 @property(nonatomic, strong) NSMutableArray *myFriends;
--(void)readAddressBook;
+-(NSArray *)readAddressBook;
+
 @end

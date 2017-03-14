@@ -38,4 +38,10 @@
 + (BOOL)recordWeiboFriends:(NSArray *)weiboFriendsArr;
 + (NSArray *)readWeiboFriends;
 
+/* 手机号&通讯录 */
++ (NSString *)readPhone;
++ (BOOL)recordAddressBook:(NSArray *)abList;
++ (NSArray *)readAddressBook;
+
+
 @end
