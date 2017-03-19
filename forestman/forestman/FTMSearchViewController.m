@@ -43,9 +43,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     // 设置状态栏颜色的强力方法
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    /* 构建页面元素 */
-    [self createUIParts];
-    [self connectForSearchResult];
+    
+    if (!_oneTableView) {
+        /* 构建页面元素 */
+        [self createUIParts];
+        [self connectForSearchResult];
+    }
 }
 
 
@@ -86,7 +89,7 @@
     
     /* title */
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((_screenWidth-200)/2, 20, 200, 44)];
-    titleLabel.text = @"添加朋友";
+    titleLabel.text = @"查找结果";
     titleLabel.textColor = [colorManager mainTextColor];
     titleLabel.font = [UIFont fontWithName:@"Helvetica" size: 17.5];
     titleLabel.textAlignment = NSTextAlignmentCenter;
