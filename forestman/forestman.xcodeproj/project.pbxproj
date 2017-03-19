@@ -76,6 +76,8 @@
 		BB168CB11E4B506400C48CCC /* FTMMailLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB01E4B506400C48CCC /* FTMMailLoginVC.m */; };
 		BB168CB41E4B508100C48CCC /* FTMThirdLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB31E4B508100C48CCC /* FTMThirdLoginVC.m */; };
 		BB168CB81E4B513300C48CCC /* toastView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB168CB71E4B513300C48CCC /* toastView.m */; };
+		BB63C0281E7E202700DE6C28 /* white-left.png in Resources */ = {isa = PBXBuildFile; fileRef = BB63C0271E7E202700DE6C28 /* white-left.png */; };
+		BB63C02A1E7E205B00DE6C28 /* white-right.png in Resources */ = {isa = PBXBuildFile; fileRef = BB63C0291E7E205B00DE6C28 /* white-right.png */; };
 		BB6A20D71E48B19800CC810C /* message_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D51E48B19800CC810C /* message_tab_focus.png */; };
 		BB6A20D81E48B19800CC810C /* message_tab.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D61E48B19800CC810C /* message_tab.png */; };
 		BB6A20DB1E48B57600CC810C /* friend_tab_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6A20D91E48B57600CC810C /* friend_tab_focus.png */; };
@@ -221,6 +223,8 @@
 		BB168CB31E4B508100C48CCC /* FTMThirdLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTMThirdLoginVC.m; sourceTree = "<group>"; };
 		BB168CB61E4B513300C48CCC /* toastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = toastView.h; sourceTree = "<group>"; };
 		BB168CB71E4B513300C48CCC /* toastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = toastView.m; sourceTree = "<group>"; };
+		BB63C0271E7E202700DE6C28 /* white-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white-left.png"; path = "../../../coding/salt-App效果图/white-left.png"; sourceTree = "<group>"; };
+		BB63C0291E7E205B00DE6C28 /* white-right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "white-right.png"; path = "../../../coding/salt-App效果图/white-right.png"; sourceTree = "<group>"; };
 		BB6A20D51E48B19800CC810C /* message_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_tab_focus.png; path = "../../../coding/salt-App效果图/message_tab_focus.png"; sourceTree = "<group>"; };
 		BB6A20D61E48B19800CC810C /* message_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = message_tab.png; path = "../../../coding/salt-App效果图/message_tab.png"; sourceTree = "<group>"; };
 		BB6A20D91E48B57600CC810C /* friend_tab_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = friend_tab_focus.png; path = "../../../coding/salt-App效果图/friend_tab_focus.png"; sourceTree = "<group>"; };
@@ -601,6 +605,8 @@
 		BB9EB4C51E3F330100911C8F /* pics */ = {
 			isa = PBXGroup;
 			children = (
+				BB63C0291E7E205B00DE6C28 /* white-right.png */,
+				BB63C0271E7E202700DE6C28 /* white-left.png */,
 				BB75A7CA1E6DAB7F00241B44 /* friends.png */,
 				BB0ACE661E672BB900C4CDE5 /* coco180.png */,
 				BBB809CB1E61CDAD00074C1B /* coco_logo.png */,
@@ -859,6 +865,7 @@
 				BB0ACE5F1E67101500C4CDE5 /* base_059.mp3 in Resources */,
 				BB0ACE421E67101500C4CDE5 /* base_030.mp3 in Resources */,
 				BB0ACE451E67101500C4CDE5 /* base_033.mp3 in Resources */,
+				BB63C0281E7E202700DE6C28 /* white-left.png in Resources */,
 				BBAF10441E5B37D100E22677 /* red_dot.png in Resources */,
 				BB0ACE461E67101500C4CDE5 /* base_034.mp3 in Resources */,
 				BB0ACE581E67101500C4CDE5 /* base_052.mp3 in Resources */,
@@ -883,6 +890,7 @@
 				BB6A20D71E48B19800CC810C /* message_tab_focus.png in Resources */,
 				BB0ACE3E1E67101500C4CDE5 /* base_026.mp3 in Resources */,
 				BB0ACE471E67101500C4CDE5 /* base_035.mp3 in Resources */,
+				BB63C02A1E7E205B00DE6C28 /* white-right.png in Resources */,
 				BB6A20D81E48B19800CC810C /* message_tab.png in Resources */,
 				BB0ACE411E67101500C4CDE5 /* base_029.mp3 in Resources */,
 				BB9EB4DF1E3F617500911C8F /* back_black.png in Resources */,

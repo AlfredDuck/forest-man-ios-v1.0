@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIScrollView *basedScrollView;
 @property (nonatomic, strong) NSArray *audioArr;
 @property (nonatomic) unsigned long selectedAudioIndex;
+@property (nonatomic, strong) UIScrollView *oneScrollView;  // 类别选择srollview（横向）
 @end
 
 @implementation FTMPersonViewController
@@ -54,6 +55,7 @@
     [self createUIParts];
     [self createAudioScrollview];
     [self newButton];
+    [self choiceAudioClassScrollView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -145,7 +147,7 @@
 {
     // 基础scrollview
     unsigned long hh = 226;
-    _basedScrollView = [[FTMMyOwnScrollView alloc] initWithFrame:CGRectMake(0, hh, _screenWidth, _screenHeight-hh)];
+    _basedScrollView = [[FTMMyOwnScrollView alloc] initWithFrame:CGRectMake(0, hh, _screenWidth, _screenHeight-hh-44)];
     [self.view addSubview:_basedScrollView];
     
     //这个属性很重要，它可以决定是横向还是纵向滚动，一般来说也是其中的 View 的总宽度，和总的高度
@@ -172,7 +174,7 @@
 
 
 
-
+/** 提示音文本条按钮 */
 - (void)newButton
 {
     UIView *holdView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, _basedScrollView.frame.size.height+1)];
@@ -181,7 +183,7 @@
     _audioArr = [FTMAudioSourceManager readAudioSource];
     // 循环
     unsigned long basedX = 15;
-    unsigned long basedY = 18;
+    unsigned long basedY = 10;
     for (int i=0; i<[_audioArr count]; i++) {
         // 创建一个自适应宽度的button
         NSString *str = _audioArr[i][@"audio_text"];
@@ -229,6 +231,99 @@
 }
 
 
+
+/** 选择提示音类别 */
+- (void)choiceAudioClassScrollView
+{
+    NSArray *classes = @[@"日常",@"鬼畜",@"Coco",@"雪姨",@"暴走漫画",@"使徒子ol",@"哈哈哈",@"jjj",@"O(∩_∩)O哈！",@"[]~(￣▽￣)~*干杯"];
+    
+    // 背景
+    UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, _screenHeight-44, _screenWidth, 44)];
+    [self.view addSubview:backgroundView];
+    backgroundView.backgroundColor = [UIColor whiteColor];
+    
+    // 分割线
+    UIView *partLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _screenWidth, 0.5)];
+    partLine.backgroundColor = [colorManager lightGrayLineColor];
+    [backgroundView addSubview:partLine];
+    
+    
+    // scrollview容器
+    _oneScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 7, _screenWidth, 30)];
+    [backgroundView addSubview:_oneScrollView];
+    
+    // 遮罩
+    UIImageView *leftView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-left.png"]];
+    leftView.frame = CGRectMake(0, 7, 20, 30); // 设置图片位置和大小
+    [backgroundView addSubview:leftView];
+    UIImageView *rightView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"white-right.png"]];
+    rightView.frame = CGRectMake(_screenWidth-20, 7, 20, 30); // 设置图片位置和大小
+    [backgroundView addSubview:rightView];
+    
+    // 提示音类别文本的总长度
+    unsigned long totalLength = 0;  // 初始化
+    
+    // 设置各个类别的frame
+    unsigned long basedX = 15;
+    for (int i=0; i<[classes count]; i++) {
+        NSString *classText = [classes objectAtIndex:i];
+        UILabel *classLabel = [[UILabel alloc] init];
+        classLabel.font = [UIFont fontWithName:@"Helvetica" size: 15];
+        classLabel.textColor = [colorManager secondTextColor];
+        classLabel.textAlignment = NSTextAlignmentCenter;
+        classLabel.text = classText;
+        classLabel.tag = i+1;
+        
+        // ClassLabel 的 frame
+        CGSize titleSize = [classText sizeWithAttributes:@{NSFontAttributeName: [UIFont fontWithName:classLabel.font.fontName size:classLabel.font.pointSize]}];
+        titleSize.height = 30;
+        titleSize.width += 5;
+        
+        unsigned long x = basedX;
+        basedX += titleSize.width + 12;
+        
+        classLabel.frame = CGRectMake(x, 0, titleSize.width, titleSize.height);
+        totalLength = basedX;
+        
+        // 频道 label 添加点击事件
+        // 一定要先将userInteractionEnabled置为YES，这样才能响应单击事件
+        classLabel.userInteractionEnabled = YES; // 设置图片可以交互
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickClassTab:)]; // 设置手势
+        [classLabel addGestureRecognizer:singleTap];
+        
+        [_oneScrollView addSubview:classLabel];
+        
+        // 默认第一条高亮
+        if (i==0) {
+            classLabel.textColor = [colorManager commonBlue];
+            classLabel.font = [UIFont fontWithName:@"Helvetica Bold" size: 15];
+        }
+    }
+    
+    //这个属性很重要，它可以决定是横向还是纵向滚动，一般来说也是其中的 View 的总宽度，和总的高度
+    //这里同时考虑到每个 View 间的空隙，所以宽度是 200x3＋5＋10＋10＋5＝630
+    //高度上与 ScrollView 相同，只在横向扩展，所以只要在横向上滚动
+    _oneScrollView.contentSize = CGSizeMake(totalLength, 30);
+    
+    //用它指定 ScrollView 中内容的当前位置，即相对于 ScrollView 的左上顶点的偏移
+    _oneScrollView.contentOffset = CGPointMake(0, 0);
+    
+    //按页滚动，总是一次一个宽度，或一个高度单位的滚动
+    //scrollView.pagingEnabled = YES;
+    
+    //隐藏滚动条
+    _oneScrollView.showsVerticalScrollIndicator = FALSE;
+    _oneScrollView.showsHorizontalScrollIndicator = FALSE;
+    
+    // 是否边缘反弹
+    _oneScrollView.bounces = YES;
+    // 不响应点击状态栏的事件（留给uitableview用）
+    _oneScrollView.scrollsToTop =NO;
+}
+
+
+
+
 #pragma mark - IBAction
 /** 点击返回按钮 */
 - (void)clickBackButton
@@ -243,6 +338,52 @@
     UIActionSheet *shareSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"解除朋友关系" otherButtonTitles: nil];
     shareSheet.tag = 11;
     [shareSheet showInView:self.view];
+}
+
+/** 点击提示音分类 */
+- (void)clickClassTab:(UIGestureRecognizer *)sender
+{
+    UILabel *v = (UILabel *)[sender view];  // 获取手势动作的父视图
+    NSLog(@"点击频道标签%ld", (long)v.tag);
+//    _currentChannel = (long)v.tag - 1;
+//    NSLog(@"切换到第%lu个channel", _currentChannel);
+    NSLog(@"%f", v.frame.origin.x);
+    
+    // 修改频道标签
+    [UIView animateWithDuration:0.15 animations:^{  // uiview 动画（无需实例化）
+        // 修改 scrollview 的偏移 (真心觉得以后会看不懂)
+        long middleOfChannelTab = v.frame.origin.x + v.frame.size.width/2.0;
+        long offset = middleOfChannelTab - _screenWidth/2.0;
+        
+        if (_oneScrollView.contentSize.width >= _screenWidth){
+            if (offset >= 0 && offset <= _oneScrollView.contentSize.width - _screenWidth) {
+                offset = offset;
+                NSLog(@"情况一");
+            }
+            else if (offset < 0) {
+                offset = 0;
+                NSLog(@"情况二");
+            }
+            else if (offset > _oneScrollView.contentSize.width - _screenWidth) {
+                offset = _oneScrollView.contentSize.width - _screenWidth;
+                NSLog(@"情况三");
+            }
+            _oneScrollView.contentOffset = CGPointMake(offset, 0);
+        }
+    }];
+    
+    // 高亮显示当前分类
+    for (UIView *sub in [_oneScrollView subviews]) {
+        if ([sub isKindOfClass: [UILabel class]]) {
+            UILabel *subb = (UILabel *)sub;
+            subb.textColor = [colorManager secondTextColor];
+            subb.font = [UIFont fontWithName:@"Helvetica" size: 15];
+
+        }
+    }
+    v.textColor = [colorManager commonBlue];
+    v.font = [UIFont fontWithName:@"Helvetica Bold" size: 15];
+
 }
 
 /** 点击语音按钮 */
